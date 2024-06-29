@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_cnae
+      author: erickmendes
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: cnae
+      changes:
+        - createTable:
+            tableName: cnae
+            columns:
+              - column:
+                  name: codigo
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: cnae_pk
+              - column:
+                  name: descricao
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false

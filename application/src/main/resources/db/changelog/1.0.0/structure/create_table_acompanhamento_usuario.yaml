@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_acompanhamento_usuario
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: acompanhamento_usuario
+      changes:
+        - createTable:
+            tableName: acompanhamento_usuario
+            columns:
+              - column:
+                  name: acompanhamento_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: usuario_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - addForeignKeyConstraint:
+                  constraintName: fk_acompanhamento_usuario_acompanhamento
+                  baseTableName: acompanhamento_usuario
+                  baseColumnNames: acompanhamento_id
+                  referencedTableName: acompanhamento
+                  referencedColumnNames: id
+                  validate: true
+              - addForeignKeyConstraint:
+                  constraintName: fk_acompanhamento_usuario_usuario
+                  baseTableName: acompanhamento_usuario
+                  baseColumnNames: usuario_id
+                  referencedTableName: usuario
+                  referencedColumnNames: id
+                  validate: true

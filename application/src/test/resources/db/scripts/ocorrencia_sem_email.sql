@@ -1,0 +1,2 @@
+INSERT INTO ocorrencia (id, data, processamento_id, ocorrencia_tipo_id, registro_origem_tipo, registro_destino, registro_destino_tipo, email_notificacao, registro_origem, detalhes, registro_pai_tipo, registro_pai, total_registros, registro_destino_complementar) VALUES
+(7, '2023-12-01', 1, 1, 'gov_empresa', NULL, NULL, 'dev.tributario@e-governe.com', '[1]', NULL, 'gov_empresa', '1', 1, NULL);

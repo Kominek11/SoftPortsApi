@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_usuario
+      author: renan_godoy
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: usuario
+      changes:
+        - createTable:
+            tableName: usuario
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: usuario_pk
+              - column:
+                  name: nome
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: id_situacao
+                  type: INTEGER
+              - column:
+                  name: id_keycloak
+                  type: UUID
+  - changeSet:
+      id: create_usuario_id_seq
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            sequenceExists:
+              sequenceName: usuario_id_seq
+      changes:
+        - createSequence:
+            incrementBy: 1
+            minValue: 1
+            sequenceName: usuario_id_seq

@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_acompanhamento
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: acompanhamento
+      changes:
+        - createTable:
+            tableName: acompanhamento
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: acompanhamento_pk
+              - column:
+                  name: cnpj
+                  type: VARCHAR(18)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: situacao
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: data_inicio
+                  type: TIMESTAMP
+              - column:
+                  name: data_conclusao
+                  type: TIMESTAMP
+              - addForeignKeyConstraint:
+                  constraintName: fk_acompanhamento_empresa
+                  baseTableName: acompanhamento
+                  baseColumnNames: cnpj
+                  referencedTableName: empresa
+                  referencedColumnNames: cnpj
+                  validate: true
+  - changeSet:
+      id: create_acompanhamento_id_seq
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            sequenceExists:
+              sequenceName: acompanhamento_id_seq
+      changes:
+        - createSequence:
+            incrementBy: 1
+            minValue: 1
+            sequenceName: acompanhamento_id_seq

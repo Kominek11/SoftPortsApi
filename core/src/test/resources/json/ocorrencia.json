@@ -1,0 +1,66 @@
+{
+  "id": 255381,
+  "data": "2023-12-06",
+  "registroOrigemGovEmpresa": {
+    "id": 541300,
+    "cnpj": "50166586000137",
+    "razaoSocial": "ANA MARIA MAGALHAES BUENO",
+    "naturezaJuridica": "Empresário (Individual)",
+    "qualificacaoResponsavel": "Empresário",
+    "capitalSocial": 0.0,
+    "porteEmpresa": "MICRO EMPRESA",
+    "enteFederativoResponsavel": "",
+    "idMatrizFilial": "MATRIZ",
+    "nomeFantasia": "BAZAR ESPERANCA",
+    "situacaoCadastral": "ATIVA",
+    "dataSituacaoCadastral": "2006-12-02",
+    "motivoSituacaoCadastral": "SEM MOTIVO",
+    "dataInicioAtividade": "1982-05-12",
+    "cnaeFiscalPrincipal": "8888888",
+    "tipoLogradouro": "RUA",
+    "logradouro": "ARI BARROSO",
+    "numero": "213",
+    "complemento": "",
+    "bairro": "PRESIDENTE ALTINO",
+    "cep": "06216240",
+    "uf": "SP",
+    "municipio": "OSASCO",
+    "ddd1": 11,
+    "telefone1": "9999999999",
+    "ddd2": 0,
+    "telefone2": "",
+    "correioEletronico": "",
+    "situacaoEspecial": "",
+    "dataSituacaoEspecial": null
+  },
+  "ocorrenciaTipo": {
+    "id": 1,
+    "nome": "CNPJ Inexistente",
+    "descricao": "CNPJ não cadastrado na base do sistema tributário",
+    "modelo": {
+      "id": 1,
+      "assunto": "Notificação para o CNPJ @CNPJ@",
+      "corpo": "<!DOCTYPE html><head><title>Notificação</title></head><body><h1>Você está sendo notificado!</h1><p>CNPJ: @CNPJ@</p></body></html>"
+    },
+    "variaveis": [
+      {
+        "id": 1,
+        "nome": "CNPJ",
+        "placeholder": "@CNPJ@",
+        "pathPropriedade": "registroOrigemGovEmpresa.cnpj"
+      },
+      {
+        "id": 2,
+        "nome": "Razão Social",
+        "placeholder": "@RAZAO_SOCIAL@",
+        "pathPropriedade": "registroOrigemGovEmpresa.razaoSocial"
+      },
+      {
+        "id": 3,
+        "nome": "Situação Cadastral",
+        "placeholder": "@SIT_CADASTRAL@",
+        "pathPropriedade": "registroOrigemGovEmpresa.situacaoCadastral"
+      }
+    ]
+  }
+}

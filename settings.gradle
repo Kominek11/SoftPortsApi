@@ -1,0 +1,4 @@
+rootProject.name = 'teste'
+
+include 'core'
+include 'application'

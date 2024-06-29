@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_regra_condicao
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: regra_condicao
+      changes:
+        - createTable:
+            tableName: regra_condicao
+            columns:
+              - column:
+                  name: regra_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: condicao_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: valor
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: operador
+                  type: VARCHAR
+              - addForeignKeyConstraint:
+                  constraintName: fk_regra_condicao_regra
+                  baseTableName: regra_condicao
+                  baseColumnNames: regra_id
+                  referencedTableName: regra
+                  referencedColumnNames: id
+                  validate: true
+              - addForeignKeyConstraint:
+                  constraintName: fk_regra_condicao_condicao
+                  baseTableName: regra_condicao
+                  baseColumnNames: condicao_id
+                  referencedTableName: condicao
+                  referencedColumnNames: id
+                  validate: true
+  - changeSet:
+      id: create_regra_condicao_id_seq
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            sequenceExists:
+              sequenceName: regra_condicao_id_seq
+      changes:
+        - createSequence:
+            incrementBy: 1
+            minValue: 1
+            sequenceName: regra_condicao_id_seq

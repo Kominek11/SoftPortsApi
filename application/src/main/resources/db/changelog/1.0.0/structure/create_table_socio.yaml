@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_socio
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: socio
+      changes:
+        - createTable:
+            tableName: socio
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: socio_pk
+              - column:
+                  name: cnpj
+                  type: VARCHAR(18)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: identificador_socio
+                  type: VARCHAR(18)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: nome_socio
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: documento_socio
+                  type: VARCHAR(18)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: qualificacao_socio
+                  type: VARCHAR(255)
+              - column:
+                  name: data_entrada_sociedade
+                  type: DATE
+              - column:
+                  name: pais_socio_estrangeiro
+                  type: VARCHAR(255)
+              - column:
+                  name: representante_legal_documento
+                  type: VARCHAR(18)
+              - column:
+                  name: representante_legal_nome
+                  type: VARCHAR(255)
+              - column:
+                  name: representante_legal_qualificacao
+                  type: VARCHAR(255)
+              - column:
+                  name: faixa_etaria
+                  type: VARCHAR(255)
+              - addForeignKeyConstraint:
+                  constraintName: fk_socio_empresa
+                  baseTableName: socio
+                  baseColumnNames: cnpj
+                  referencedTableName: empresa
+                  referencedColumnNames: cnpj
+                  validate: true
+  - changeSet:
+      id: create_socio_id_seq
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            sequenceExists:
+              sequenceName: socio_id_seq
+      changes:
+        - createSequence:
+            incrementBy: 1
+            minValue: 1
+            sequenceName: socio_id_seq

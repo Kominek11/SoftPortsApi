@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_anotacao
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: anotacao
+      changes:
+        - createTable:
+            tableName: anotacao
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: anotacao_pk
+              - column:
+                  name: descricao
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: acompanhamento_id
+                  type: TEXT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_anotacao_acompanhamento
+            baseTableName: anotacao
+            baseColumnNames: acompanhamento_id
+            referencedTableName: acompanhamento
+            referencedColumnNames: id
+            validate: true
+  - changeSet:
+      id: create_anotacao_id_seq
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            sequenceExists:
+              sequenceName: anotacao_id_seq
+      changes:
+        - createSequence:
+            incrementBy: 1
+            minValue: 1
+            sequenceName: anotacao_id_seq

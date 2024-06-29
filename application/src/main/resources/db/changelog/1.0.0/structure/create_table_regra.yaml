@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_regra
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: regra
+      changes:
+        - createTable:
+            tableName: regra
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: regra_pk
+              - column:
+                  name: nome
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: situacao
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: data_inclusao
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: data_inativacao
+                  type: TIMESTAMP
+  - changeSet:
+      id: create_regra_id_seq
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            sequenceExists:
+              sequenceName: regra_id_seq
+      changes:
+        - createSequence:
+            incrementBy: 1
+            minValue: 1
+            sequenceName: regra_id_seq

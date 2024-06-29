@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_condicao
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: condicao
+      changes:
+        - createTable:
+            tableName: condicao
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: condicao_pk
+              - column:
+                  name: nome
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path_propriedade
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create_condicao_id_seq
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            sequenceExists:
+              sequenceName: condicao_id_seq
+      changes:
+        - createSequence:
+            incrementBy: 1
+            minValue: 1
+            sequenceName: condicao_id_seq

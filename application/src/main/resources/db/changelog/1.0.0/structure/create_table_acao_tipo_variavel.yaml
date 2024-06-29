@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_template_variavel
+      author: luccakominek
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: acao_tipo_variavel
+      changes:
+        - createTable:
+            tableName: acao_tipo_variavel
+            columns:
+              - column:
+                  name: acao_tipo_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: variavel_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - addForeignKeyConstraint:
+                  constraintName: fk_acao_tipo
+                  baseTableName: acao_tipo_variavel
+                  baseColumnNames: acao_tipo_id
+                  referencedTableName: acao_tipo
+                  referencedColumnNames: id
+                  validate: true
+              - addForeignKeyConstraint:
+                  constraintName: fk__variavel
+                  baseTableName: acao_tipo_variavel
+                  baseColumnNames: variavel_id
+                  referencedTableName: variavel
+                  referencedColumnNames: id
+                  validate: true

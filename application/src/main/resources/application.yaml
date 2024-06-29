@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    softports:
+      jpa:
+        properties:
+          format-sql: true
+          show-sql: false
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  hikari:
+    maximum-pool-size: 20
+    idleTimeout: 30000
+    maxLifetime: 600000
+    connectionTimeout: 30000
+    leak-detection-threshold: 30000
+  h2:
+    console.enabled: true
+  mail:
+    host: smtp.office365.com
+    username: sigt.sf@osasco.sp.gov.br
+    password: itipmo@2021
+    port: 587
+    properties:
+#      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
