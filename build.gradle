@@ -1,5 +1,5 @@
 subprojects {
-    group = 'br.com.egoverne'
+    group = 'br.com.softports'
     version = '0.0.1'
 
     apply plugin: 'java'

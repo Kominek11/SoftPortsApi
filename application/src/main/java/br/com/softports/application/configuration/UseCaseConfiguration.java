@@ -1,10 +1,11 @@
 package br.com.softports.application.configuration;
 
 import br.com.softports.core.api.common.usecase.expression.*;
-import br.com.softports.core.api.regra.repository.RegraRepository;
+import br.com.softports.core.api.organizacao.repository.OrganizacaoRepository;
+import br.com.softports.core.api.organizacao.usecase.BuscarOrganizacoes;
 import br.com.softports.core.api.regra.usecase.*;
 import br.com.softports.core.internal.common.usecase.expression.*;
-import br.com.softports.core.internal.regra.usecase.*;
+import br.com.softports.core.internal.organizacao.usecase.BuscarOrganizacoesDefault;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,24 +15,29 @@ import java.util.concurrent.Executor;
 public class UseCaseConfiguration {
 
     @Bean
-    BuscarRegras buscarRegras(RegraRepository regraRepository) {
-        return new BuscarRegrasDefault(regraRepository);
+    BuscarOrganizacoes buscarOrganizacoes(OrganizacaoRepository organizacaoRepository) {
+        return new BuscarOrganizacoesDefault(organizacaoRepository);
     }
 
-    @Bean
-    CriarRegra criarRegra(RegraRepository regraRepository) {
-        return new CriarRegraDefault(regraRepository);
-    }
-
-    @Bean
-    AtualizarSituacaoRegra atualizarSituacaoRegra(RegraRepository regraRepository) {
-        return new AtualizarSituacaoRegraDefault(regraRepository);
-    }
-
-    @Bean
-    DeletarRegra deletarRegra(RegraRepository regraRepository) {
-        return new DeletarRegraDefault(regraRepository);
-    }
+//    @Bean
+//    BuscarRegras buscarRegras(RegraRepository regraRepository) {
+//        return new BuscarRegrasDefault(regraRepository);
+//    }
+//
+//    @Bean
+//    CriarRegra criarRegra(RegraRepository regraRepository) {
+//        return new CriarRegraDefault(regraRepository);
+//    }
+//
+//    @Bean
+//    AtualizarSituacaoRegra atualizarSituacaoRegra(RegraRepository regraRepository) {
+//        return new AtualizarSituacaoRegraDefault(regraRepository);
+//    }
+//
+//    @Bean
+//    DeletarRegra deletarRegra(RegraRepository regraRepository) {
+//        return new DeletarRegraDefault(regraRepository);
+//    }
 
     @Bean
     GerarExpression gerarExpression(GerarPredicadoInteger gerarPredicadoInteger,

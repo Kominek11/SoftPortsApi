@@ -3,6 +3,8 @@ package br.com.softports.application.configuration;
 import br.com.softports.application.infrastructure.service.exception.handler.RestTemplateResponseErrorHandler;
 import br.com.softports.application.interceptor.LoggingInterceptor;
 import br.com.softports.application.properties.InfoProperties;
+import br.com.softports.application.properties.JwtConverterProperties;
+import br.com.softports.application.properties.KeycloakPropertiesDefault;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.javaprop.JavaPropsMapper;
@@ -26,8 +28,9 @@ import java.util.concurrent.Executors;
 @Configuration
 @EnableAsync
 @EnableConfigurationProperties({
-//        KeycloakPropertiesDefault.class,
-        InfoProperties.class
+        KeycloakPropertiesDefault.class,
+        InfoProperties.class,
+        JwtConverterProperties.class
 })
 public class ApplicationConfiguration {
 

@@ -1,6 +1,5 @@
 package br.com.softports.application.configuration;
 
-import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -55,8 +54,11 @@ public class SoftPortsDataSourceConfiguration {
     @Bean
     @Primary
     DataSource dataSource() {
-        return dataSourceProperties().initializeDataSourceBuilder().type(HikariDataSource.class).build();
+        DataSourceProperties properties = dataSourceProperties();
+        System.out.println("Datasource URL: " + properties.getUrl());
+        return properties.initializeDataSourceBuilder().build();
     }
+
 
     @Bean
     @Primary
