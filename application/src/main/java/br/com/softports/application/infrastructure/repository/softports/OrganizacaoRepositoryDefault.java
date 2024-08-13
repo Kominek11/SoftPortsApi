@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public class OrganizacaoRepositoryDefault extends RepositorioDefault<Organizacao, Long> implements OrganizacaoRepository {
 
     public OrganizacaoRepositoryDefault(EntityManager entityManager) {
-        super(Organizacao.class, entityManager, QOrganizacao.organizacao1);
+        super(Organizacao.class, entityManager, QOrganizacao.organizacao);
     }
 }

@@ -10,4 +10,6 @@ public interface BuscarOrganizacoes {
                                          Integer numeroPagina,
                                          String ordenadoPor,
                                          String direcao);
+
+    OrganizacaoResponse executar(Long id);
 }

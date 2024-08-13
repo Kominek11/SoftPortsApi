@@ -5,3 +5,24 @@ spring:
       username: postgres
       password: postgres
       driver-class-name: org.postgresql.Driver
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8090/realms/softports
+
+management:
+  info.env.enabled: true
+  endpoints.web.exposure.include: '*'
+
+jwt:
+  auth:
+    converter:
+      resource-id: softports
+      principal-attribute: preferred_username
+
+keycloak:
+  grant_type: client_credentials
+  client_id: softports
+  client_secret: 24I7IoMFhSkiQUi1r23CJSP2c6PxBMyf
+  url-token-client-secret: http://localhost:8090/realms/softports/protocol/openid-connect/token

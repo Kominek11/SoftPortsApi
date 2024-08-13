@@ -20,5 +20,7 @@ public class Projeto {
     @Column(nullable = false)
     String nome;
 
-
+    @ManyToOne
+    @JoinColumn(name = "organizacao_id", nullable = false)
+    Organizacao organizacao;
 }

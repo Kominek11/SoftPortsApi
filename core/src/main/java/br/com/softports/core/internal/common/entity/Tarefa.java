@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "tarefa")
@@ -49,4 +50,12 @@ public class Tarefa {
     @ManyToOne
     @JoinColumn(name = "projeto_id", nullable = false)
     Projeto projeto;
+
+    @ManyToMany
+    @JoinTable(
+            name = "usuario_tarefa",
+            joinColumns = @JoinColumn(name = "tarefa_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    Set<Usuario> usuarios;
 }

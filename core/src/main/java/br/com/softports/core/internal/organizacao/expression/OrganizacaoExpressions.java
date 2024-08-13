@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class OrganizacaoExpressions {
 
-    private static final QOrganizacao ORGANIZACAO = QOrganizacao.organizacao1;
+    private static final QOrganizacao ORGANIZACAO = QOrganizacao.organizacao;
 
     public static BooleanExpression todos() {
         return null;
