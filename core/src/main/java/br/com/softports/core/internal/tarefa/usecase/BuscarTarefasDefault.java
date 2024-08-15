@@ -8,15 +8,19 @@ import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
 import br.com.softports.core.api.tarefa.usecase.BuscarTarefas;
+import br.com.softports.core.api.usuario.dto.UsuarioResponse;
 import br.com.softports.core.internal.common.entity.Organizacao;
 import br.com.softports.core.internal.common.entity.Projeto;
 import br.com.softports.core.internal.common.entity.Tarefa;
+import br.com.softports.core.internal.common.entity.Usuario;
 import br.com.softports.core.internal.organizacao.expression.OrganizacaoExpressions;
 import br.com.softports.core.internal.tarefa.expression.TarefaExpressions;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 public class BuscarTarefasDefault implements BuscarTarefas {
@@ -64,6 +68,7 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                 .classificacao(tarefa.getClassificacao())
                 .status(tarefa.getStatus())
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
+                .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .build();
     }
 
@@ -73,6 +78,19 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                 projeto.getNome(),
                 gerarOrganizacaoResponse(projeto.getOrganizacao())
         );
+    }
+
+    private Set<UsuarioResponse> gerarUsuarioResponse(Set<Usuario> usuarios) {
+        Set<UsuarioResponse> usuarioResponseSet = new HashSet<>();
+        usuarios.forEach(item -> usuarioResponseSet.add(
+                new UsuarioResponse(
+                        item.getId(),
+                        item.getNome(),
+                        item.getEmail(),
+                        item.getKeycloakId()
+                )
+        ));
+        return usuarioResponseSet;
     }
 
     private OrganizacaoResponse gerarOrganizacaoResponse(Organizacao organizacao) {

@@ -36,18 +36,18 @@ public class OrganizacaoResource {
     }
 
     @PostMapping
-    OrganizacaoResponse criarRegra(@RequestBody CriarOrganizacaoRequest criarOrganizacaoRequest) {
+    OrganizacaoResponse criarOrganizacao(@RequestBody CriarOrganizacaoRequest criarOrganizacaoRequest) {
         return criarOrganizacao.executar(criarOrganizacaoRequest.nome());
     }
 
     @PutMapping()
-    OrganizacaoResponse atualizarSituacaoRegra(@RequestBody AtualizarOrganizacaoRequest atualizarOrganizacaoRequest) {
+    OrganizacaoResponse atualizarOrganizacao(@RequestBody AtualizarOrganizacaoRequest atualizarOrganizacaoRequest) {
         return atualizarOrganizacao.executar(atualizarOrganizacaoRequest.id(), atualizarOrganizacaoRequest.nome()
         );
     }
 
     @DeleteMapping("/{id}")
-    public void excluirRegra(@PathVariable Long id) {
+    public void deletarOrganizacao(@PathVariable Long id) {
         deletarOrganizacao.executar(id);
     }
 }

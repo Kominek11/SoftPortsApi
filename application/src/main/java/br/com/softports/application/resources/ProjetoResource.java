@@ -7,6 +7,7 @@ import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.projeto.usecase.AtualizarProjeto;
 import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
 import br.com.softports.core.api.projeto.usecase.CriarProjeto;
+import br.com.softports.core.api.projeto.usecase.DeletarProjeto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ public class ProjetoResource {
     private final BuscarProjetos buscarProjetos;
     private final CriarProjeto criarProjeto;
     private final AtualizarProjeto atualizarProjeto;
+    private final DeletarProjeto deletarProjeto;
 
     @GetMapping
     Pagina<ProjetoResponse> buscarProjetos(
@@ -44,5 +46,10 @@ public class ProjetoResource {
                 atualizarProjetoRequest.id(),
                 atualizarProjetoRequest.nome(),
                 atualizarProjetoRequest.organizacaoId());
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletarProjeto(@PathVariable Long id) {
+        deletarProjeto.executar(id);
     }
 }

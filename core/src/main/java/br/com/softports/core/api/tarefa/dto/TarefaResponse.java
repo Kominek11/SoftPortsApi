@@ -1,9 +1,12 @@
 package br.com.softports.core.api.tarefa.dto;
 
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
+import br.com.softports.core.api.usuario.dto.UsuarioResponse;
 import lombok.Builder;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Builder
 public record TarefaResponse(
@@ -16,5 +19,6 @@ public record TarefaResponse(
         Long prioridade,
         Long classificacao,
         Long status,
-        ProjetoResponse projeto
+        ProjetoResponse projeto,
+        Set<UsuarioResponse> usuarios
 ) {}

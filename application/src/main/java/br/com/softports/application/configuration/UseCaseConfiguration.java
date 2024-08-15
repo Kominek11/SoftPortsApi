@@ -10,9 +10,12 @@ import br.com.softports.core.api.projeto.repository.ProjetoRepository;
 import br.com.softports.core.api.projeto.usecase.AtualizarProjeto;
 import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
 import br.com.softports.core.api.projeto.usecase.CriarProjeto;
-import br.com.softports.core.api.regra.usecase.*;
+import br.com.softports.core.api.projeto.usecase.DeletarProjeto;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
+import br.com.softports.core.api.tarefa.usecase.AtualizarTarefa;
 import br.com.softports.core.api.tarefa.usecase.BuscarTarefas;
+import br.com.softports.core.api.tarefa.usecase.CriarTarefa;
+import br.com.softports.core.api.tarefa.usecase.DeletarTarefa;
 import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.api.usuario.usecase.BuscarUsuarios;
 import br.com.softports.core.internal.common.usecase.expression.*;
@@ -23,7 +26,11 @@ import br.com.softports.core.internal.organizacao.usecase.DeletarOrganizacaoDefa
 import br.com.softports.core.internal.projeto.usecase.AtualizarProjetoDefault;
 import br.com.softports.core.internal.projeto.usecase.BuscarProjetosDefault;
 import br.com.softports.core.internal.projeto.usecase.CriarProjetoDefault;
+import br.com.softports.core.internal.projeto.usecase.DeletarProjetoDefault;
+import br.com.softports.core.internal.tarefa.usecase.AtualizarTarefaDefault;
 import br.com.softports.core.internal.tarefa.usecase.BuscarTarefasDefault;
+import br.com.softports.core.internal.tarefa.usecase.CriarTarefaDefault;
+import br.com.softports.core.internal.tarefa.usecase.DeletarTarefaDefault;
 import br.com.softports.core.internal.usuario.usecase.BuscarUsuariosDefault;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -69,36 +76,38 @@ public class UseCaseConfiguration {
     }
 
     @Bean
+    DeletarProjeto deletarProjeto(ProjetoRepository projetoRepository) {
+        return new DeletarProjetoDefault(projetoRepository);
+    }
+
+    @Bean
     BuscarTarefas buscarTarefas(TarefaRepository tarefaRepository) {
         return new BuscarTarefasDefault(tarefaRepository);
+    }
+
+    @Bean
+    CriarTarefa criarTarefa(TarefaRepository tarefaRepository, ProjetoRepository projetoRepository,
+                            UsuarioRepository usuarioRepository) {
+        return new CriarTarefaDefault(tarefaRepository, projetoRepository,
+                usuarioRepository);
+    }
+
+    @Bean
+    AtualizarTarefa atualizarTarefa(TarefaRepository tarefaRepository, ProjetoRepository projetoRepository,
+                                    UsuarioRepository usuarioRepository) {
+        return new AtualizarTarefaDefault(tarefaRepository, projetoRepository,
+                usuarioRepository);
+    }
+
+    @Bean
+    DeletarTarefa deletarTarefa(TarefaRepository tarefaRepository) {
+        return new DeletarTarefaDefault(tarefaRepository);
     }
 
     @Bean
     BuscarUsuarios buscarUsuarios(UsuarioRepository usuarioRepository) {
         return new BuscarUsuariosDefault(usuarioRepository);
     }
-
-
-
-//    @Bean
-//    BuscarRegras buscarRegras(RegraRepository regraRepository) {
-//        return new BuscarRegrasDefault(regraRepository);
-//    }
-//
-//    @Bean
-//    CriarRegra criarRegra(RegraRepository regraRepository) {
-//        return new CriarRegraDefault(regraRepository);
-//    }
-//
-//    @Bean
-//    AtualizarSituacaoRegra atualizarSituacaoRegra(RegraRepository regraRepository) {
-//        return new AtualizarSituacaoRegraDefault(regraRepository);
-//    }
-//
-//    @Bean
-//    DeletarRegra deletarRegra(RegraRepository regraRepository) {
-//        return new DeletarRegraDefault(regraRepository);
-//    }
 
     @Bean
     GerarExpression gerarExpression(GerarPredicadoInteger gerarPredicadoInteger,
