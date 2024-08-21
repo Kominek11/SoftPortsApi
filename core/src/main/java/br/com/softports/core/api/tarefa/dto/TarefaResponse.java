@@ -13,6 +13,7 @@ public record TarefaResponse(
         Long id,
         String descricao,
         String so,
+        String screenshots,
         String caminho,
         Date dataCorrecao,
         Date dataCriacao,

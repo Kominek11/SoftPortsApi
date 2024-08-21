@@ -47,7 +47,8 @@ public class TarefaResource {
         return criarTarefa.executar(criarTarefaRequest.titulo(), criarTarefaRequest.descricao(),
                 criarTarefaRequest.so(), criarTarefaRequest.caminho(), criarTarefaRequest.dataCorrecao(),
                 criarTarefaRequest.dataCriacao(), criarTarefaRequest.prioridade(), criarTarefaRequest.classificacao(),
-                criarTarefaRequest.status(), criarTarefaRequest.projetoId(), criarTarefaRequest.usuarioIds());
+                criarTarefaRequest.status(), criarTarefaRequest.projetoId(), criarTarefaRequest.usuarioIds(),
+                criarTarefaRequest.screenshots());
     }
 
     @PutMapping()
@@ -57,7 +58,8 @@ public class TarefaResource {
                 atualizarTarefaRequest.dataCorrecao(), atualizarTarefaRequest.dataCriacao(),
                 atualizarTarefaRequest.prioridade(), atualizarTarefaRequest.classificacao(),
                 atualizarTarefaRequest.status(), atualizarTarefaRequest.projetoId(),
-                atualizarTarefaRequest.usuarioIds());
+                atualizarTarefaRequest.usuarioIds(),
+                atualizarTarefaRequest.screenshots());
     }
 
     @DeleteMapping("/{id}")

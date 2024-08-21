@@ -38,7 +38,7 @@ public class CriarTarefaDefault implements CriarTarefa {
                                    Date dataCorrecao, Date dataCriacao,
                                    Long prioridade, Long classificacao,
                                    Long status, Long projetoId,
-                                   Long usuarioId) {
+                                   Long usuarioId, String screenshots) {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
         BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(usuarioId));
@@ -49,6 +49,7 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
         tarefa.setSo(so);
+        tarefa.setScreenshots(screenshots);
         tarefa.setCaminho(caminho);
         tarefa.setDataCorrecao(dataCorrecao);
         tarefa.setDataCriacao(dataCriacao);
@@ -67,7 +68,7 @@ public class CriarTarefaDefault implements CriarTarefa {
                                    Date dataCorrecao, Date dataCriacao,
                                    Long prioridade, Long classificacao,
                                    Long status, Long projetoId,
-                                   List<Long> usuarioIds) {
+                                   List<Long> usuarioIds, String screenshots) {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
         Set<Usuario> usuarios = new HashSet<>();
@@ -80,6 +81,7 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
         tarefa.setSo(so);
+        tarefa.setScreenshots(screenshots);
         tarefa.setCaminho(caminho);
         tarefa.setDataCorrecao(dataCorrecao);
         tarefa.setDataCriacao(dataCriacao);
@@ -98,6 +100,7 @@ public class CriarTarefaDefault implements CriarTarefa {
                 .id(tarefa.getId())
                 .descricao(tarefa.getDescricao())
                 .so(tarefa.getSo())
+                .screenshots(tarefa.getScreenshots())
                 .caminho(tarefa.getCaminho())
                 .dataCorrecao(tarefa.getDataCorrecao())
                 .dataCriacao(tarefa.getDataCriacao())

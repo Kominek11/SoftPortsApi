@@ -30,6 +30,9 @@ public class Tarefa {
     String so;
 
     @Column
+    String screenshots;
+
+    @Column
     String caminho;
 
     @Column

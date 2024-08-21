@@ -71,7 +71,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: keycloak_id
-                  type: varchar
+                  type: UUID
                   constraints:
                     nullable: false
 
@@ -158,6 +158,11 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: so
+                  type: varchar
+                  constraints:
+                    nullable: true
+              - column:
+                  name: screenshots
                   type: varchar
                   constraints:
                     nullable: true

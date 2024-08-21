@@ -5,6 +5,7 @@ import br.com.softports.core.api.organizacao.repository.OrganizacaoRepository;
 import br.com.softports.core.api.organizacao.usecase.AtualizarOrganizacao;
 import br.com.softports.core.api.organizacao.usecase.CriarOrganizacao;
 import br.com.softports.core.internal.common.entity.Organizacao;
+import br.com.softports.core.internal.organizacao.expression.OrganizacaoExpressions;
 import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class AtualizarOrganizacaoDefault implements AtualizarOrganizacao {
 
     @Override
     public OrganizacaoResponse executar(Long id, String nome) {
-        BooleanBuilder filtro = new BooleanBuilder().and(UsuarioExpressions.id(id));
+        BooleanBuilder filtro = new BooleanBuilder().and(OrganizacaoExpressions.id(id));
             Organizacao organizacao = organizacaoRepository.buscar(filtro).orElseThrow();
             organizacao.setNome(nome);
             organizacaoRepository.salvar(organizacao);

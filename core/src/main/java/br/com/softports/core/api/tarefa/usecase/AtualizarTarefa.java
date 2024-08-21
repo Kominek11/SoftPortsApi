@@ -13,12 +13,14 @@ public interface AtualizarTarefa {
                             String caminho, Date dataCorrecao,
                             Date dataCriacao, Long prioridade,
                             Long classificacao, Long status,
-                            Long projetoId, Long usuarioId);
+                            Long projetoId, Long usuarioId,
+                            String screenshots);
 
     TarefaResponse executar(Long id, String titulo,
                             String descricao, String so,
                             String caminho, Date dataCorrecao,
                             Date dataCriacao, Long prioridade,
                             Long classificacao, Long status,
-                            Long projetoId, List<Long> usuarioIds);
+                            Long projetoId, List<Long> usuarioIds,
+                            String screenshots);
 }

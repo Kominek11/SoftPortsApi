@@ -61,6 +61,7 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                 .id(tarefa.getId())
                 .descricao(tarefa.getDescricao())
                 .so(tarefa.getSo())
+                .screenshots(tarefa.getScreenshots())
                 .caminho(tarefa.getCaminho())
                 .dataCorrecao(tarefa.getDataCorrecao())
                 .dataCriacao(tarefa.getDataCriacao())

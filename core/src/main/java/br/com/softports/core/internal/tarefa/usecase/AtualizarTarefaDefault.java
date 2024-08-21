@@ -39,7 +39,8 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                                    String caminho, Date dataCorrecao,
                                    Date dataCriacao, Long prioridade,
                                    Long classificacao, Long status,
-                                   Long projetoId, Long usuarioId) {
+                                   Long projetoId, Long usuarioId,
+                                   String screenshots) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
@@ -51,6 +52,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
         tarefa.setSo(so);
+        tarefa.setScreenshots(screenshots);
         tarefa.setCaminho(caminho);
         tarefa.setDataCorrecao(dataCorrecao);
         tarefa.setDataCriacao(dataCriacao);
@@ -69,7 +71,8 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                                    String caminho, Date dataCorrecao,
                                    Date dataCriacao, Long prioridade,
                                    Long classificacao, Long status,
-                                   Long projetoId, List<Long> usuarioIds) {
+                                   Long projetoId, List<Long> usuarioIds,
+                                   String screenshots) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
@@ -83,6 +86,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
         tarefa.setSo(so);
+        tarefa.setScreenshots(screenshots);
         tarefa.setCaminho(caminho);
         tarefa.setDataCorrecao(dataCorrecao);
         tarefa.setDataCriacao(dataCriacao);
@@ -100,6 +104,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                 .id(tarefa.getId())
                 .descricao(tarefa.getDescricao())
                 .so(tarefa.getSo())
+                .screenshots(tarefa.getScreenshots())
                 .caminho(tarefa.getCaminho())
                 .dataCorrecao(tarefa.getDataCorrecao())
                 .dataCriacao(tarefa.getDataCriacao())

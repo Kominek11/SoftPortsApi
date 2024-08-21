@@ -15,5 +15,6 @@ public record AtualizarTarefaRequest(
         Long classificacao,
         Long status,
         Long projetoId,
-        List<Long> usuarioIds
+        List<Long> usuarioIds,
+        String screenshots
 ) { }
