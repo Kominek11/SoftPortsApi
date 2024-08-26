@@ -53,8 +53,8 @@ public class TarefaResource {
         return criarTarefa.executar(criarTarefaRequest.titulo(), criarTarefaRequest.descricao(),
                 criarTarefaRequest.so(), criarTarefaRequest.caminho(), criarTarefaRequest.dataCorrecao(),
                 criarTarefaRequest.dataCriacao(), criarTarefaRequest.prioridade(), criarTarefaRequest.classificacao(),
-                criarTarefaRequest.status(), criarTarefaRequest.fechada(), criarTarefaRequest.projetoId(),
-                criarTarefaRequest.usuarioIds(), criarTarefaRequest.screenshots());
+                criarTarefaRequest.status(), criarTarefaRequest.fechada(), criarTarefaRequest.posicao(),
+                criarTarefaRequest.projetoId(), criarTarefaRequest.usuarioIds(), criarTarefaRequest.screenshots());
     }
 
     @PutMapping()
@@ -63,9 +63,9 @@ public class TarefaResource {
                 atualizarTarefaRequest.descricao(), atualizarTarefaRequest.so(), atualizarTarefaRequest.caminho(),
                 atualizarTarefaRequest.dataCorrecao(), atualizarTarefaRequest.dataCriacao(),
                 atualizarTarefaRequest.prioridade(), atualizarTarefaRequest.classificacao(),
-                atualizarTarefaRequest.status(), atualizarTarefaRequest.projetoId(),
-                atualizarTarefaRequest.usuarioIds(),
-                atualizarTarefaRequest.screenshots());
+                atualizarTarefaRequest.status(), atualizarTarefaRequest.fechada(),
+                atualizarTarefaRequest.posicao(),  atualizarTarefaRequest.projetoId(),
+                atualizarTarefaRequest.usuarioIds(), atualizarTarefaRequest.screenshots());
     }
 
     @PutMapping("/status/{id}")

@@ -21,6 +21,7 @@ public record TarefaResponse(
         Long classificacao,
         Long status,
         Boolean fechada,
+        Long posicao,
         ProjetoResponse projeto,
         Set<UsuarioResponse> usuarios
 ) {}

@@ -14,6 +14,8 @@ public record AtualizarTarefaRequest(
         Long prioridade,
         Long classificacao,
         Long status,
+        Boolean fechada,
+        Long posicao,
         Long projetoId,
         List<Long> usuarioIds,
         String screenshots

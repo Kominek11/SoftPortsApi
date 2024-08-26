@@ -39,6 +39,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                                    String caminho, Date dataCorrecao,
                                    Date dataCriacao, Long prioridade,
                                    Long classificacao, Long status,
+                                   Boolean fechada, Long posicao,
                                    Long projetoId, Long usuarioId,
                                    String screenshots) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
@@ -59,6 +60,8 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         tarefa.setPrioridade(prioridade);
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
+        tarefa.setFechada(fechada);
+        tarefa.setPosicao(posicao);
         tarefa.setProjeto(projeto);
         tarefa.setUsuarios(usuarios);
         tarefaRepository.salvar(tarefa);
@@ -71,6 +74,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                                    String caminho, Date dataCorrecao,
                                    Date dataCriacao, Long prioridade,
                                    Long classificacao, Long status,
+                                   Boolean fechada, Long posicao,
                                    Long projetoId, List<Long> usuarioIds,
                                    String screenshots) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
@@ -93,6 +97,8 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         tarefa.setPrioridade(prioridade);
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
+        tarefa.setFechada(fechada);
+        tarefa.setPosicao(posicao);
         tarefa.setProjeto(projeto);
         tarefa.setUsuarios(usuarios);
         tarefaRepository.salvar(tarefa);
@@ -111,6 +117,8 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                 .prioridade(tarefa.getPrioridade())
                 .classificacao(tarefa.getClassificacao())
                 .status(tarefa.getStatus())
+                .fechada(tarefa.getFechada())
+                .posicao(tarefa.getPosicao())
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .build();

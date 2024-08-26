@@ -13,6 +13,7 @@ public interface AtualizarTarefa {
                             String caminho, Date dataCorrecao,
                             Date dataCriacao, Long prioridade,
                             Long classificacao, Long status,
+                            Boolean fechada, Long posicao,
                             Long projetoId, Long usuarioId,
                             String screenshots);
 
@@ -21,6 +22,7 @@ public interface AtualizarTarefa {
                             String caminho, Date dataCorrecao,
                             Date dataCriacao, Long prioridade,
                             Long classificacao, Long status,
+                            Boolean fechada, Long posicao,
                             Long projetoId, List<Long> usuarioIds,
                             String screenshots);
 }
