@@ -70,8 +70,8 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    DeletarProjeto deletarProjeto(ProjetoRepository projetoRepository) {
-        return new DeletarProjetoDefault(projetoRepository);
+    DeletarProjeto deletarProjeto(ProjetoRepository projetoRepository, TarefaRepository tarefaRepository) {
+        return new DeletarProjetoDefault(projetoRepository, tarefaRepository);
     }
 
     @Bean

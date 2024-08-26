@@ -4,6 +4,7 @@ import br.com.softports.core.api.common.dto.Pagina;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public interface BuscarTarefas {
@@ -14,8 +15,8 @@ public interface BuscarTarefas {
                                     String direcao,
                                     Long projetoId,
                                     Boolean fechada,
-                                    Date dataCriacao,
-                                    Date dataCorrecao);
+                                    LocalDate dataCriacao,
+                                    LocalDate dataCorrecao);
 
     TarefaResponse executar(Long id);
 }

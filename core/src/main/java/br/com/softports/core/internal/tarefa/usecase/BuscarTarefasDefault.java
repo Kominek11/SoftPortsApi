@@ -19,6 +19,7 @@ import br.com.softports.core.internal.tarefa.expression.TarefaExpressions;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +34,7 @@ public class BuscarTarefasDefault implements BuscarTarefas {
     public Pagina<TarefaResponse> executar(Integer tamanhoPagina, Integer numeroPagina,
                                            String ordenadoPor, String direcao,
                                            Long projetoId, Boolean fechada,
-                                           Date dataCriacao, Date dataCorrecao) {
+                                           LocalDate dataCriacao, LocalDate dataCorrecao) {
         BooleanBuilder filtro = new BooleanBuilder()
                 .and(ProjetoExpressions.id(projetoId))
                 .and(TarefaExpressions.fechada(fechada))

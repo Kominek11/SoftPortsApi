@@ -15,6 +15,7 @@ import br.com.softports.core.api.tarefa.usecase.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @RestController
@@ -36,8 +37,8 @@ public class TarefaResource {
             @RequestParam(required = false, defaultValue = "asc") String direcao,
             @RequestParam(required = false) Long projetoId,
             @RequestParam(required = false) Boolean fechada,
-            @RequestParam(required = false) Date dataCriacao,
-            @RequestParam(required = false) Date dataCorrecao
+            @RequestParam(required = false) LocalDate dataCriacao,
+            @RequestParam(required = false) LocalDate dataCorrecao
             ) {
         return buscarTarefas.executar(tamanhoPagina, numeroPagina, ordenadoPor, direcao, projetoId,
                 fechada, dataCriacao, dataCorrecao);
