@@ -50,6 +50,9 @@ public class Tarefa {
     @Column
     Long status;
 
+    @Column
+    Boolean fechada;
+
     @ManyToOne
     @JoinColumn(name = "projeto_id", nullable = false)
     Projeto projeto;

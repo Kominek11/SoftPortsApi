@@ -12,10 +12,7 @@ import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
 import br.com.softports.core.api.projeto.usecase.CriarProjeto;
 import br.com.softports.core.api.projeto.usecase.DeletarProjeto;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
-import br.com.softports.core.api.tarefa.usecase.AtualizarTarefa;
-import br.com.softports.core.api.tarefa.usecase.BuscarTarefas;
-import br.com.softports.core.api.tarefa.usecase.CriarTarefa;
-import br.com.softports.core.api.tarefa.usecase.DeletarTarefa;
+import br.com.softports.core.api.tarefa.usecase.*;
 import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.api.usuario.usecase.BuscarUsuarios;
 import br.com.softports.core.internal.common.usecase.expression.*;
@@ -27,10 +24,7 @@ import br.com.softports.core.internal.projeto.usecase.AtualizarProjetoDefault;
 import br.com.softports.core.internal.projeto.usecase.BuscarProjetosDefault;
 import br.com.softports.core.internal.projeto.usecase.CriarProjetoDefault;
 import br.com.softports.core.internal.projeto.usecase.DeletarProjetoDefault;
-import br.com.softports.core.internal.tarefa.usecase.AtualizarTarefaDefault;
-import br.com.softports.core.internal.tarefa.usecase.BuscarTarefasDefault;
-import br.com.softports.core.internal.tarefa.usecase.CriarTarefaDefault;
-import br.com.softports.core.internal.tarefa.usecase.DeletarTarefaDefault;
+import br.com.softports.core.internal.tarefa.usecase.*;
 import br.com.softports.core.internal.usuario.usecase.BuscarUsuariosDefault;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -97,6 +91,11 @@ public class UseCaseConfiguration {
                                     UsuarioRepository usuarioRepository) {
         return new AtualizarTarefaDefault(tarefaRepository, projetoRepository,
                 usuarioRepository);
+    }
+
+    @Bean
+    AtualizarStatusTarefa atualizarStatusTarefa(TarefaRepository tarefaRepository) {
+        return new AtualizarStatusTarefaDefault(tarefaRepository);
     }
 
     @Bean

@@ -14,6 +14,7 @@ public record CriarTarefaRequest(
         Long classificacao,
         Long status,
         Long projetoId,
+        Boolean fechada,
         List<Long> usuarioIds,
         String screenshots
 ) { }

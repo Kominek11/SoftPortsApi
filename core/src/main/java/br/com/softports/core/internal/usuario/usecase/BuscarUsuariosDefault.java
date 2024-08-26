@@ -11,6 +11,7 @@ import br.com.softports.core.api.usuario.usecase.BuscarUsuarios;
 import br.com.softports.core.internal.common.entity.Organizacao;
 import br.com.softports.core.internal.common.entity.Tarefa;
 import br.com.softports.core.internal.common.entity.Usuario;
+import br.com.softports.core.internal.projeto.expression.ProjetoExpressions;
 import br.com.softports.core.internal.tarefa.expression.TarefaExpressions;
 import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import com.querydsl.core.BooleanBuilder;
@@ -25,9 +26,12 @@ public class BuscarUsuariosDefault implements BuscarUsuarios {
 
     @Override
     public Pagina<UsuarioResponse> executar(Integer tamanhoPagina, Integer numeroPagina,
-                                            String ordenadoPor, String direcao) {
+                                            String ordenadoPor, String direcao,
+                                            Long projetoId) {
+        BooleanBuilder filtro = new BooleanBuilder()
+                .and(ProjetoExpressions.id(projetoId));
             List<UsuarioResponse> usuarios = usuarioRepository
-                    .buscarTodos(null,
+                    .buscarTodos(filtro,
                             tamanhoPagina,
                             numeroPagina,
                             ordenadoPor,
@@ -35,7 +39,7 @@ public class BuscarUsuariosDefault implements BuscarUsuarios {
                     .stream()
                     .map(this::gerarUsuarioResponse)
                     .toList();
-        return paginar(tamanhoPagina, numeroPagina, usuarios, null);
+        return paginar(tamanhoPagina, numeroPagina, usuarios, filtro);
     }
 
     @Override

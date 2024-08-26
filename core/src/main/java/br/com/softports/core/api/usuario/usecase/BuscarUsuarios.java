@@ -9,7 +9,8 @@ public interface BuscarUsuarios {
     Pagina<UsuarioResponse> executar(Integer tamanhoPagina,
                                      Integer numeroPagina,
                                      String ordenadoPor,
-                                     String direcao);
+                                     String direcao,
+                                     Long projetoId);
 
     UsuarioResponse executar(Long id);
 }

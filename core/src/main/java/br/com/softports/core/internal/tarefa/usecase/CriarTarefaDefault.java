@@ -37,8 +37,9 @@ public class CriarTarefaDefault implements CriarTarefa {
                                    String so, String caminho,
                                    Date dataCorrecao, Date dataCriacao,
                                    Long prioridade, Long classificacao,
-                                   Long status, Long projetoId,
-                                   Long usuarioId, String screenshots) {
+                                   Long status, Boolean fechada,
+                                   Long projetoId, Long usuarioId,
+                                   String screenshots) {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
         BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(usuarioId));
@@ -56,6 +57,7 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setPrioridade(prioridade);
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
+        tarefa.setFechada(fechada);
         tarefa.setProjeto(projeto);
         tarefa.setUsuarios(usuarios);
         tarefaRepository.salvar(tarefa);
@@ -67,7 +69,7 @@ public class CriarTarefaDefault implements CriarTarefa {
                                    String so, String caminho,
                                    Date dataCorrecao, Date dataCriacao,
                                    Long prioridade, Long classificacao,
-                                   Long status, Long projetoId,
+                                   Long status, Boolean fechada, Long projetoId,
                                    List<Long> usuarioIds, String screenshots) {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
@@ -88,6 +90,7 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setPrioridade(prioridade);
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
+        tarefa.setFechada(fechada);
         tarefa.setProjeto(projeto);
         tarefa.setUsuarios(usuarios);
         tarefaRepository.salvar(tarefa);
@@ -107,6 +110,7 @@ public class CriarTarefaDefault implements CriarTarefa {
                 .prioridade(tarefa.getPrioridade())
                 .classificacao(tarefa.getClassificacao())
                 .status(tarefa.getStatus())
+                .fechada(tarefa.getFechada())
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .build();

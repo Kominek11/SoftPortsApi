@@ -1,21 +1,21 @@
 package br.com.softports.core.internal.tarefa.usecase;
 
-import br.com.softports.core.api.common.dto.Pagina;
 import br.com.softports.core.api.organizacao.dto.OrganizacaoResponse;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.projeto.repository.ProjetoRepository;
-import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
-import br.com.softports.core.api.tarefa.usecase.BuscarTarefas;
+import br.com.softports.core.api.tarefa.usecase.AtualizarStatusTarefa;
+import br.com.softports.core.api.tarefa.usecase.AtualizarTarefa;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
+import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.internal.common.entity.Organizacao;
 import br.com.softports.core.internal.common.entity.Projeto;
 import br.com.softports.core.internal.common.entity.Tarefa;
 import br.com.softports.core.internal.common.entity.Usuario;
-import br.com.softports.core.internal.organizacao.expression.OrganizacaoExpressions;
 import br.com.softports.core.internal.projeto.expression.ProjetoExpressions;
 import br.com.softports.core.internal.tarefa.expression.TarefaExpressions;
+import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 
@@ -25,43 +25,17 @@ import java.util.List;
 import java.util.Set;
 
 @RequiredArgsConstructor
-public class BuscarTarefasDefault implements BuscarTarefas {
+public class AtualizarStatusTarefaDefault implements AtualizarStatusTarefa {
 
     private final TarefaRepository tarefaRepository;
 
     @Override
-    public Pagina<TarefaResponse> executar(Integer tamanhoPagina, Integer numeroPagina,
-                                           String ordenadoPor, String direcao,
-                                           Long projetoId, Boolean fechada,
-                                           Date dataCriacao, Date dataCorrecao) {
-        BooleanBuilder filtro = new BooleanBuilder()
-                .and(ProjetoExpressions.id(projetoId))
-                .and(TarefaExpressions.fechada(fechada))
-                .and(TarefaExpressions.entre(dataCriacao, dataCorrecao));
-            List<TarefaResponse> tarefas = tarefaRepository
-                    .buscarTodos(filtro,
-                            tamanhoPagina,
-                            numeroPagina,
-                            ordenadoPor,
-                            direcao)
-                    .stream()
-                    .map(this::gerarTarefaResponse)
-                    .toList();
-        return paginar(tamanhoPagina, numeroPagina, tarefas, filtro);
-    }
-
-    @Override
-    public TarefaResponse executar(Long id) {
-        BooleanBuilder filtro = new BooleanBuilder().and(TarefaExpressions.id(id));
-        Tarefa tarefa = tarefaRepository.buscar(filtro).orElseThrow();
+    public TarefaResponse executar(Long id, Long status) {
+        BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
+        Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
+        tarefa.setStatus(status);
+        tarefaRepository.salvar(tarefa);
         return gerarTarefaResponse(tarefa);
-    }
-
-    private Pagina<TarefaResponse> paginar(Integer tamanhoPagina, Integer numeroPagina,
-                                                List<TarefaResponse> tarefas, BooleanBuilder filtro) {
-        Long tarefaQuantidade = tarefaRepository.contar(filtro);
-        int quantidadePaginas = (int) Math.ceil((double) tarefaQuantidade / tamanhoPagina);
-        return new Pagina<>(true, numeroPagina, quantidadePaginas, tamanhoPagina, tarefaQuantidade, tarefas);
     }
 
     private TarefaResponse gerarTarefaResponse(Tarefa tarefa) {

@@ -20,8 +20,9 @@ public class UsuarioResource {
             @RequestParam(required = false, defaultValue = "10") Integer tamanhoPagina,
             @RequestParam(required = false, defaultValue = "1") Integer numeroPagina,
             @RequestParam(required = false, defaultValue = "id") String ordenadoPor,
-            @RequestParam(required = false, defaultValue = "asc") String direcao) {
-        return buscarUsuarios.executar(tamanhoPagina, numeroPagina, ordenadoPor, direcao);
+            @RequestParam(required = false, defaultValue = "asc") String direcao,
+            @RequestParam(required = false) Long projetoId) {
+        return buscarUsuarios.executar(tamanhoPagina, numeroPagina, ordenadoPor, direcao, projetoId);
     }
 
     @GetMapping("{id}")

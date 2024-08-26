@@ -12,13 +12,15 @@ public interface CriarTarefa {
                             String so, String caminho,
                             Date dataCorrecao, Date dataCriacao,
                             Long prioridade, Long classificacao,
-                            Long status, Long projetoId,
-                            Long usuarioId, String screenshots);
+                            Long status, Boolean fechada,
+                            Long projetoId, Long usuarioId,
+                            String screenshots);
 
     TarefaResponse executar(String titulo, String descricao,
                             String so, String caminho,
                             Date dataCorrecao, Date dataCriacao,
                             Long prioridade, Long classificacao,
-                            Long status, Long projetoId,
-                            List<Long> usuarioIds, String screenshots);
+                            Long status, Boolean fechada,
+                            Long projetoId, List<Long> usuarioIds,
+                            String screenshots);
 }
