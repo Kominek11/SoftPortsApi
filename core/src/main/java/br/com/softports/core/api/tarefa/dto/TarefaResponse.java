@@ -16,7 +16,7 @@ public record TarefaResponse(
         String titulo,
         String descricao,
         String so,
-        Blob screenshots,
+        byte[] screenshots,
         String caminho,
         Date dataFechamento,
         Date dataCriacao,

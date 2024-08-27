@@ -39,7 +39,7 @@ public class CriarTarefaDefault implements CriarTarefa {
                                    Long prioridade, Long classificacao,
                                    Long status, Boolean fechada,
                                    Long posicao, Long projetoId,
-                                   Long usuarioId, Blob screenshots) {
+                                   Long usuarioId, byte[] screenshots) {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
         BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(usuarioId));
@@ -70,7 +70,7 @@ public class CriarTarefaDefault implements CriarTarefa {
                                    String so, String caminho, Date dataEstimada,
                                    Long prioridade, Long classificacao,
                                    Long status, Boolean fechada, Long posicao,
-                                   Long projetoId, List<Long> usuarioIds, Blob screenshots) {
+                                   Long projetoId, List<Long> usuarioIds, byte[] screenshots) {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
         Set<Usuario> usuarios = new HashSet<>();

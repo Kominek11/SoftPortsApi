@@ -163,7 +163,7 @@ databaseChangeLog:
                     nullable: true
               - column:
                   name: screenshots
-                  type: text
+                  type: bytea
                   constraints:
                     nullable: true
               - column:

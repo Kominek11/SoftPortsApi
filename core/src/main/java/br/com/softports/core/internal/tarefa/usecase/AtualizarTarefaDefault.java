@@ -42,7 +42,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                                    Long classificacao, Long status,
                                    Boolean fechada, Long posicao,
                                    Long projetoId, Long usuarioId,
-                                   Blob screenshots) {
+                                   byte[] screenshots) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
@@ -77,7 +77,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                                    Long classificacao, Long status,
                                    Boolean fechada, Long posicao,
                                    Long projetoId, List<Long> usuarioIds,
-                                   Blob screenshots) {
+                                   byte[] screenshots) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));

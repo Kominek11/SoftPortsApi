@@ -31,7 +31,7 @@ public class Tarefa {
     String so;
 
     @Column
-    Blob screenshots;
+    byte[] screenshots;
 
     @Column
     String caminho;

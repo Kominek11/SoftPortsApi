@@ -17,5 +17,5 @@ public record CriarTarefaRequest(
         Boolean fechada,
         Long posicao,
         List<Long> usuarioIds,
-        Blob screenshots
+        byte[] screenshots
 ) { }

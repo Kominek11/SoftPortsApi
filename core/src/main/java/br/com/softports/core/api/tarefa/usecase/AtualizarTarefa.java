@@ -16,7 +16,7 @@ public interface AtualizarTarefa {
                             Long classificacao, Long status,
                             Boolean fechada, Long posicao,
                             Long projetoId, Long usuarioId,
-                            Blob screenshots);
+                            byte[] screenshots);
 
     TarefaResponse executar(Long id, String titulo,
                             String descricao, String so,
@@ -25,5 +25,5 @@ public interface AtualizarTarefa {
                             Long classificacao, Long status,
                             Boolean fechada, Long posicao,
                             Long projetoId, List<Long> usuarioIds,
-                            Blob screenshots);
+                            byte[] screenshots);
 }

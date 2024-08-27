@@ -19,5 +19,5 @@ public record AtualizarTarefaRequest(
         Long posicao,
         Long projetoId,
         List<Long> usuarioIds,
-        Blob screenshots
+        byte[] screenshots
 ) { }

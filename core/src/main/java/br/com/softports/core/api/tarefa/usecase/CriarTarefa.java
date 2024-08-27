@@ -14,12 +14,12 @@ public interface CriarTarefa {
                             Long prioridade, Long classificacao,
                             Long status, Boolean fechada,
                             Long posicao, Long projetoId,
-                            Long usuarioId, Blob screenshots);
+                            Long usuarioId, byte[] screenshots);
 
     TarefaResponse executar(String titulo, String descricao,
                             String so, String caminho, Date dataEstimada,
                             Long prioridade, Long classificacao,
                             Long status, Boolean fechada,
                             Long posicao, Long projetoId,
-                            List<Long> usuarioIds, Blob screenshots);
+                            List<Long> usuarioIds, byte[] screenshots);
 }
