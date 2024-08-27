@@ -21,6 +21,7 @@ import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 
+import java.sql.Blob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -41,7 +42,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                                    Long classificacao, Long status,
                                    Boolean fechada, Long posicao,
                                    Long projetoId, Long usuarioId,
-                                   String screenshots) {
+                                   Blob screenshots) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
@@ -76,7 +77,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                                    Long classificacao, Long status,
                                    Boolean fechada, Long posicao,
                                    Long projetoId, List<Long> usuarioIds,
-                                   String screenshots) {
+                                   Blob screenshots) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));

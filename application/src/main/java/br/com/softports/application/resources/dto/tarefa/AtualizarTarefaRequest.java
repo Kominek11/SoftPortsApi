@@ -1,5 +1,6 @@
 package br.com.softports.application.resources.dto.tarefa;
 
+import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
 
@@ -18,5 +19,5 @@ public record AtualizarTarefaRequest(
         Long posicao,
         Long projetoId,
         List<Long> usuarioIds,
-        String screenshots
+        Blob screenshots
 ) { }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Blob;
 import java.util.Date;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public class Tarefa {
     String so;
 
     @Column
-    String screenshots;
+    Blob screenshots;
 
     @Column
     String caminho;

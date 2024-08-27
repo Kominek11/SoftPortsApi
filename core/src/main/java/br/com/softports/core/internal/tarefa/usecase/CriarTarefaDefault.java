@@ -19,6 +19,7 @@ import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 
+import java.sql.Blob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -38,7 +39,7 @@ public class CriarTarefaDefault implements CriarTarefa {
                                    Long prioridade, Long classificacao,
                                    Long status, Boolean fechada,
                                    Long posicao, Long projetoId,
-                                   Long usuarioId, String screenshots) {
+                                   Long usuarioId, Blob screenshots) {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
         BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(usuarioId));
@@ -69,7 +70,7 @@ public class CriarTarefaDefault implements CriarTarefa {
                                    String so, String caminho, Date dataEstimada,
                                    Long prioridade, Long classificacao,
                                    Long status, Boolean fechada, Long posicao,
-                                   Long projetoId, List<Long> usuarioIds, String screenshots) {
+                                   Long projetoId, List<Long> usuarioIds, Blob screenshots) {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
         Set<Usuario> usuarios = new HashSet<>();

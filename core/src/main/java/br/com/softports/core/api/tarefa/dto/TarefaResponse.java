@@ -5,6 +5,7 @@ import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
 import lombok.Builder;
 
+import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -15,7 +16,7 @@ public record TarefaResponse(
         String titulo,
         String descricao,
         String so,
-        String screenshots,
+        Blob screenshots,
         String caminho,
         Date dataFechamento,
         Date dataCriacao,

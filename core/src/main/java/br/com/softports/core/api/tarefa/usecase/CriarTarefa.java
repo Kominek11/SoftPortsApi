@@ -3,6 +3,7 @@ package br.com.softports.core.api.tarefa.usecase;
 import br.com.softports.core.api.organizacao.dto.OrganizacaoResponse;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 
+import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
 
@@ -13,12 +14,12 @@ public interface CriarTarefa {
                             Long prioridade, Long classificacao,
                             Long status, Boolean fechada,
                             Long posicao, Long projetoId,
-                            Long usuarioId, String screenshots);
+                            Long usuarioId, Blob screenshots);
 
     TarefaResponse executar(String titulo, String descricao,
                             String so, String caminho, Date dataEstimada,
                             Long prioridade, Long classificacao,
                             Long status, Boolean fechada,
                             Long posicao, Long projetoId,
-                            List<Long> usuarioIds, String screenshots);
+                            List<Long> usuarioIds, Blob screenshots);
 }
