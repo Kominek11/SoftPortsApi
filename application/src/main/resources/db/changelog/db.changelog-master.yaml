@@ -252,3 +252,47 @@ databaseChangeLog:
             constraintName: usuario_tarefa_tarefa_fk
             referencedTableName: tarefa
             referencedColumnNames: id
+
+  - changeSet:
+      id: 6
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          sequenceExists:
+            sequenceName: comentario_id_seq
+      changes:
+        - createSequence:
+            sequenceName: comentario_id_seq
+            startValue: 1
+        - preConditions:
+            onFail: MARK_RAN
+            not:
+              tableExists:
+                tableName: comentario
+        - createTable:
+            tableName: comentario
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  autoIncrement: true
+              - column:
+                  name: conteudo
+                  type: TEXT
+                  constraints:
+                    nullable: true
+              - column:
+                  name: tarefa_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: comentario
+            baseColumnNames: tarefa_id
+            constraintName: comentario_tarefa_fk
+            referencedTableName: tarefa
+            referencedColumnNames: id

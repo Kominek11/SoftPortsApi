@@ -1,5 +1,6 @@
 package br.com.softports.application.configuration;
 
+import br.com.softports.core.api.comentario.repository.ComentarioRepository;
 import br.com.softports.core.api.common.usecase.expression.*;
 import br.com.softports.core.api.organizacao.repository.OrganizacaoRepository;
 import br.com.softports.core.api.organizacao.usecase.AtualizarOrganizacao;
@@ -75,8 +76,8 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    BuscarTarefas buscarTarefas(TarefaRepository tarefaRepository) {
-        return new BuscarTarefasDefault(tarefaRepository);
+    BuscarTarefas buscarTarefas(TarefaRepository tarefaRepository, ComentarioRepository comentarioRepository) {
+        return new BuscarTarefasDefault(tarefaRepository, comentarioRepository);
     }
 
     @Bean
@@ -96,6 +97,12 @@ public class UseCaseConfiguration {
     @Bean
     AtualizarStatusTarefa atualizarStatusTarefa(TarefaRepository tarefaRepository) {
         return new AtualizarStatusTarefaDefault(tarefaRepository);
+    }
+
+    @Bean
+    IncluirComentarioTarefa incluirComentarioTarefa(TarefaRepository tarefaRepository,
+                                                    ComentarioRepository comentarioRepository) {
+        return new IncluirComentarioTarefaDefault(tarefaRepository, comentarioRepository);
     }
 
     @Bean
