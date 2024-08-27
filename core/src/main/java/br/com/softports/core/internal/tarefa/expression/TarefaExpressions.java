@@ -32,6 +32,6 @@ public class TarefaExpressions {
     public static BooleanExpression entre(LocalDate dataInicio, LocalDate dataFim) {
         Date dataInicioFormatada = Date.from(dataInicio.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date dataFimFormatada = Date.from(dataFim.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        return TAREFA.dataCriacao.between(dataInicioFormatada, dataFimFormatada);
+        return TAREFA.dataCorrecao.between(dataInicioFormatada, dataFimFormatada);
     }
 }

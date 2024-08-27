@@ -19,6 +19,7 @@ import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +35,7 @@ public class AtualizarStatusTarefaDefault implements AtualizarStatusTarefa {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
         tarefa.setStatus(status);
+        tarefa.setDataCorrecao(new Date());
         tarefaRepository.salvar(tarefa);
         return gerarTarefaResponse(tarefa);
     }
