@@ -41,15 +41,15 @@ public class TarefaResource {
             @RequestParam(required = false, defaultValue = "asc") String direcao,
             @RequestParam(required = false) Long projetoId,
             @RequestParam(required = false) Boolean fechada,
-            @RequestParam(required = false) LocalDate dataCriacao,
-            @RequestParam(required = false) LocalDate dataFechamento,
+            @RequestParam(required = false) LocalDate dataInicio,
+            @RequestParam(required = false) LocalDate dataFim,
             @RequestParam(required = false) String titulo,
             @RequestParam(required = false) Set<Long> usuarios,
             @RequestParam(required = false) Long prioridade,
             @RequestParam(required = false) Long classificacao
             ) {
         return buscarTarefas.executar(tamanhoPagina, numeroPagina, ordenadoPor, direcao, projetoId,
-                fechada, dataCriacao, dataFechamento, titulo, usuarios, prioridade, classificacao);
+                fechada, dataInicio, dataFim, titulo, usuarios, prioridade, classificacao);
     }
 
     @GetMapping("{id}")

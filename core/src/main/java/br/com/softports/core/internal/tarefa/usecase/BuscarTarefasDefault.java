@@ -35,7 +35,7 @@ public class BuscarTarefasDefault implements BuscarTarefas {
     public Pagina<TarefaResponse> executar(Integer tamanhoPagina, Integer numeroPagina,
                                            String ordenadoPor, String direcao,
                                            Long projetoId, Boolean fechada,
-                                           LocalDate dataCriacao, LocalDate dataFechamento,
+                                           LocalDate dataInicio, LocalDate dataFim,
                                            String titulo, Set<Long> usuarios,
                                            Long prioridade, Long classificacao) {
         Set<Usuario> usuariosSet = new HashSet<>();
@@ -49,7 +49,7 @@ public class BuscarTarefasDefault implements BuscarTarefas {
         BooleanBuilder filtro = new BooleanBuilder()
                 .and(ProjetoExpressions.id(projetoId))
                 .and(TarefaExpressions.fechada(fechada))
-                .and(TarefaExpressions.entre(dataCriacao, dataFechamento))
+                .and(TarefaExpressions.entre(dataInicio, dataFim))
                 .and(TarefaExpressions.titulo(titulo))
                 .and(TarefaExpressions.usuarios(usuariosSet.isEmpty() ? null : usuariosSet))
                 .and(TarefaExpressions.prioridade(prioridade))
