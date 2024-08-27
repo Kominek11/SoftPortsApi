@@ -62,7 +62,7 @@ public class TarefaResource {
         return criarTarefa.executar(criarTarefaRequest.titulo(), criarTarefaRequest.descricao(),
                 criarTarefaRequest.so(), criarTarefaRequest.caminho(),
                 criarTarefaRequest.dataEstimada(), criarTarefaRequest.prioridade(), criarTarefaRequest.classificacao(),
-                criarTarefaRequest.status(), criarTarefaRequest.fechada(), criarTarefaRequest.posicao(),
+                criarTarefaRequest.status(), criarTarefaRequest.posicao(),
                 criarTarefaRequest.projetoId(), criarTarefaRequest.usuarioIds(), criarTarefaRequest.screenshots());
     }
 

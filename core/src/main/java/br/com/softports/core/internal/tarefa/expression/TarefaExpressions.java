@@ -32,7 +32,7 @@ public class TarefaExpressions {
     }
 
     public static BooleanExpression titulo(String titulo) {
-        return Objects.nonNull(titulo) ? TAREFA.titulo.eq(titulo) : null;
+        return Objects.nonNull(titulo) ? TAREFA.titulo.likeIgnoreCase("%" + titulo + "%") : null;
     }
 
     public static BooleanExpression usuarios(Set<Usuario> usuarios) {

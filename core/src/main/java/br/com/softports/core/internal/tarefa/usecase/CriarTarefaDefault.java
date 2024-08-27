@@ -37,7 +37,7 @@ public class CriarTarefaDefault implements CriarTarefa {
     public TarefaResponse executar(String titulo, String descricao,
                                    String so, String caminho, Date dataEstimada,
                                    Long prioridade, Long classificacao,
-                                   Long status, Boolean fechada,
+                                   Long status,
                                    Long posicao, Long projetoId,
                                    Long usuarioId, byte[] screenshots) {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
@@ -57,7 +57,7 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setPrioridade(prioridade);
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
-        tarefa.setFechada(fechada);
+        tarefa.setFechada(false);
         tarefa.setPosicao(posicao);
         tarefa.setProjeto(projeto);
         tarefa.setUsuarios(usuarios);
@@ -69,7 +69,7 @@ public class CriarTarefaDefault implements CriarTarefa {
     public TarefaResponse executar(String titulo, String descricao,
                                    String so, String caminho, Date dataEstimada,
                                    Long prioridade, Long classificacao,
-                                   Long status, Boolean fechada, Long posicao,
+                                   Long status, Long posicao,
                                    Long projetoId, List<Long> usuarioIds, byte[] screenshots) {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
@@ -90,7 +90,7 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setPrioridade(prioridade);
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
-        tarefa.setFechada(fechada);
+        tarefa.setFechada(false);
         tarefa.setPosicao(posicao);
         tarefa.setProjeto(projeto);
         tarefa.setUsuarios(usuarios);
