@@ -24,6 +24,7 @@ public record TarefaResponse(
         Boolean fechada,
         Long posicao,
         ProjetoResponse projeto,
+        String feedback,
         Set<UsuarioResponse> usuarios,
         List<ComentarioResponse> comentarios
 ) {}

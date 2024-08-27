@@ -60,6 +60,9 @@ public class Tarefa {
     @JoinColumn(name = "projeto_id", nullable = false)
     Projeto projeto;
 
+    @Column
+    String feedback;
+
     @ManyToMany
     @JoinTable(
             name = "usuario_tarefa",

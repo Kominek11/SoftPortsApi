@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "projeto")
 @NoArgsConstructor
@@ -23,4 +25,12 @@ public class Projeto {
     @ManyToOne
     @JoinColumn(name = "organizacao_id", nullable = false)
     Organizacao organizacao;
+
+    @ManyToMany
+    @JoinTable(
+            name = "usuario_projeto",
+            joinColumns = @JoinColumn(name = "projeto_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    Set<Usuario> usuarios;
 }

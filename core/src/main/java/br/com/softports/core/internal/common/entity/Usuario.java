@@ -31,4 +31,7 @@ public class Usuario {
 
     @ManyToMany(mappedBy = "usuarios")
     Set<Tarefa> tarefas;
+
+    @ManyToMany(mappedBy = "usuarios")
+    Set<Projeto> projetos;
 }

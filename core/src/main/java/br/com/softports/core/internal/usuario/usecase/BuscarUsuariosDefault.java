@@ -29,7 +29,7 @@ public class BuscarUsuariosDefault implements BuscarUsuarios {
                                             String ordenadoPor, String direcao,
                                             Long projetoId) {
         BooleanBuilder filtro = new BooleanBuilder()
-                .and(ProjetoExpressions.id(projetoId));
+                .and(UsuarioExpressions.projetoId(projetoId));
             List<UsuarioResponse> usuarios = usuarioRepository
                     .buscarTodos(filtro,
                             tamanhoPagina,

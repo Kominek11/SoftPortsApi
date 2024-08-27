@@ -29,6 +29,7 @@ public class TarefaResource {
     private final DeletarTarefa deletarTarefa;
     private final AtualizarStatusTarefa atualizarStatusTarefa;
     private final IncluirComentarioTarefa incluirComentarioTarefa;
+    private final AtualizarFeedbackTarefa atualizarFeedbackTarefa;
 
     @GetMapping
     Pagina<TarefaResponse> buscarTarefas(
@@ -73,6 +74,11 @@ public class TarefaResource {
     @PutMapping("/status/{id}")
     TarefaResponse atualizarStatusTarefa(@PathVariable Long id, Long status) {
         return atualizarStatusTarefa.executar(id, status);
+    }
+
+    @PutMapping("/feedback/{id}")
+    TarefaResponse atualizarFeedbackTarefa(@PathVariable Long id, String feedback) {
+        return atualizarFeedbackTarefa.executar(id, feedback);
     }
 
     @PutMapping("/comentario/{id}")

@@ -77,6 +77,8 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                 .prioridade(tarefa.getPrioridade())
                 .classificacao(tarefa.getClassificacao())
                 .status(tarefa.getStatus())
+                .fechada(tarefa.getFechada())
+                .posicao(tarefa.getPosicao())
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .comentarios(gerarComentarioResponseList(comentarios))

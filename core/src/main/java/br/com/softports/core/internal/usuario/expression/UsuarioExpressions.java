@@ -17,4 +17,8 @@ public class UsuarioExpressions {
     public static BooleanExpression id(Long usuarioId) {
         return Objects.nonNull(usuarioId) ? USUARIO.id.eq(usuarioId) : null;
     }
+
+    public static BooleanExpression projetoId(Long projetoId) {
+        return Objects.nonNull(projetoId) ? USUARIO.projetos.any().id.eq(projetoId) : null;
+    }
 }

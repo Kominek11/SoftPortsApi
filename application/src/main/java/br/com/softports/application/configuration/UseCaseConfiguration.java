@@ -100,6 +100,11 @@ public class UseCaseConfiguration {
     }
 
     @Bean
+    AtualizarFeedbackTarefa atualizarFeedbackTarefa(TarefaRepository tarefaRepository) {
+        return new AtualizarFeedbackTarefaDefault(tarefaRepository);
+    }
+
+    @Bean
     IncluirComentarioTarefa incluirComentarioTarefa(TarefaRepository tarefaRepository,
                                                     ComentarioRepository comentarioRepository) {
         return new IncluirComentarioTarefaDefault(tarefaRepository, comentarioRepository);

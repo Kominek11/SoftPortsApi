@@ -211,6 +211,11 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
+              - column:
+                  name: feedback
+                  type: text
+                  constraints:
+                    nullable: true
         - addForeignKeyConstraint:
             baseTableName: tarefa
             baseColumnNames: projeto_id
@@ -295,4 +300,39 @@ databaseChangeLog:
             baseColumnNames: tarefa_id
             constraintName: comentario_tarefa_fk
             referencedTableName: tarefa
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 7
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: usuario_projeto
+      changes:
+        - createTable:
+            tableName: usuario_projeto
+            columns:
+              - column:
+                  name: usuario_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: projeto_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: usuario_projeto
+            baseColumnNames: usuario_id
+            constraintName: usuario_projeto_usuario_fk
+            referencedTableName: usuario
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: usuario_projeto
+            baseColumnNames: projeto_id
+            constraintName: usuario_projeto_projeto_fk
+            referencedTableName: projeto
             referencedColumnNames: id
