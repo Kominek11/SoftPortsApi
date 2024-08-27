@@ -35,7 +35,7 @@ public class AtualizarStatusTarefaDefault implements AtualizarStatusTarefa {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
         tarefa.setStatus(status);
-        tarefa.setDataCorrecao(new Date());
+        tarefa.setDataFechamento(new Date());
         tarefaRepository.salvar(tarefa);
         return gerarTarefaResponse(tarefa);
     }
@@ -47,7 +47,7 @@ public class AtualizarStatusTarefaDefault implements AtualizarStatusTarefa {
                 .so(tarefa.getSo())
                 .screenshots(tarefa.getScreenshots())
                 .caminho(tarefa.getCaminho())
-                .dataCorrecao(tarefa.getDataCorrecao())
+                .dataFechamento(tarefa.getDataFechamento())
                 .dataCriacao(tarefa.getDataCriacao())
                 .prioridade(tarefa.getPrioridade())
                 .classificacao(tarefa.getClassificacao())

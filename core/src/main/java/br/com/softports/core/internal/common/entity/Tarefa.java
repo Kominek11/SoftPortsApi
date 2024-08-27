@@ -36,10 +36,13 @@ public class Tarefa {
     String caminho;
 
     @Column
-    Date dataCorrecao;
+    Date dataFechamento;
 
     @Column
     Date dataCriacao;
+
+    @Column
+    Date dataEstimada;
 
     @Column
     Long prioridade;

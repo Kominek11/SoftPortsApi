@@ -39,7 +39,7 @@ public class AtualizarFeedbackTarefaDefault implements AtualizarFeedbackTarefa {
                 .so(tarefa.getSo())
                 .screenshots(tarefa.getScreenshots())
                 .caminho(tarefa.getCaminho())
-                .dataCorrecao(tarefa.getDataCorrecao())
+                .dataFechamento(tarefa.getDataFechamento())
                 .dataCriacao(tarefa.getDataCriacao())
                 .prioridade(tarefa.getPrioridade())
                 .classificacao(tarefa.getClassificacao())

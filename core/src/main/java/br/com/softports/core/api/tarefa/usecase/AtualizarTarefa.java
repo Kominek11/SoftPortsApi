@@ -10,8 +10,8 @@ public interface AtualizarTarefa {
 
     TarefaResponse executar(Long id, String titulo,
                             String descricao, String so,
-                            String caminho, Date dataCorrecao,
-                            Date dataCriacao, Long prioridade,
+                            String caminho, Date dataFechamento,
+                            Date dataEstimada, Long prioridade,
                             Long classificacao, Long status,
                             Boolean fechada, Long posicao,
                             Long projetoId, Long usuarioId,
@@ -19,8 +19,8 @@ public interface AtualizarTarefa {
 
     TarefaResponse executar(Long id, String titulo,
                             String descricao, String so,
-                            String caminho, Date dataCorrecao,
-                            Date dataCriacao, Long prioridade,
+                            String caminho, Date dataFechamento,
+                            Date dataEstimada, Long prioridade,
                             Long classificacao, Long status,
                             Boolean fechada, Long posicao,
                             Long projetoId, List<Long> usuarioIds,

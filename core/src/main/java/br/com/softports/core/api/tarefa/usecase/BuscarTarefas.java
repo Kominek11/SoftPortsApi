@@ -3,9 +3,11 @@ package br.com.softports.core.api.tarefa.usecase;
 import br.com.softports.core.api.common.dto.Pagina;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
+import br.com.softports.core.internal.common.entity.Usuario;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 public interface BuscarTarefas {
 
@@ -16,7 +18,11 @@ public interface BuscarTarefas {
                                     Long projetoId,
                                     Boolean fechada,
                                     LocalDate dataCriacao,
-                                    LocalDate dataCorrecao);
+                                    LocalDate dataFechamento,
+                                    String titulo,
+                                    Set<Long> usuarios,
+                                    Long prioridade,
+                                    Long classificacao);
 
     TarefaResponse executar(Long id);
 }

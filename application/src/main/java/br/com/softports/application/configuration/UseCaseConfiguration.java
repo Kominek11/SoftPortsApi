@@ -76,8 +76,9 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    BuscarTarefas buscarTarefas(TarefaRepository tarefaRepository, ComentarioRepository comentarioRepository) {
-        return new BuscarTarefasDefault(tarefaRepository, comentarioRepository);
+    BuscarTarefas buscarTarefas(TarefaRepository tarefaRepository, ComentarioRepository comentarioRepository,
+                                UsuarioRepository usuarioRepository) {
+        return new BuscarTarefasDefault(tarefaRepository, comentarioRepository, usuarioRepository);
     }
 
     @Bean

@@ -9,16 +9,14 @@ import java.util.List;
 public interface CriarTarefa {
 
     TarefaResponse executar(String titulo, String descricao,
-                            String so, String caminho,
-                            Date dataCorrecao, Date dataCriacao,
+                            String so, String caminho, Date dataEstimada,
                             Long prioridade, Long classificacao,
                             Long status, Boolean fechada,
                             Long posicao, Long projetoId,
                             Long usuarioId, String screenshots);
 
     TarefaResponse executar(String titulo, String descricao,
-                            String so, String caminho,
-                            Date dataCorrecao, Date dataCriacao,
+                            String so, String caminho, Date dataEstimada,
                             Long prioridade, Long classificacao,
                             Long status, Boolean fechada,
                             Long posicao, Long projetoId,

@@ -34,8 +34,7 @@ public class CriarTarefaDefault implements CriarTarefa {
 
     @Override
     public TarefaResponse executar(String titulo, String descricao,
-                                   String so, String caminho,
-                                   Date dataCorrecao, Date dataCriacao,
+                                   String so, String caminho, Date dataEstimada,
                                    Long prioridade, Long classificacao,
                                    Long status, Boolean fechada,
                                    Long posicao, Long projetoId,
@@ -52,8 +51,8 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setSo(so);
         tarefa.setScreenshots(screenshots);
         tarefa.setCaminho(caminho);
-        tarefa.setDataCorrecao(dataCorrecao);
-        tarefa.setDataCriacao(dataCriacao);
+        tarefa.setDataEstimada(dataEstimada);
+        tarefa.setDataCriacao(new Date());
         tarefa.setPrioridade(prioridade);
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
@@ -67,8 +66,7 @@ public class CriarTarefaDefault implements CriarTarefa {
 
     @Override
     public TarefaResponse executar(String titulo, String descricao,
-                                   String so, String caminho,
-                                   Date dataCorrecao, Date dataCriacao,
+                                   String so, String caminho, Date dataEstimada,
                                    Long prioridade, Long classificacao,
                                    Long status, Boolean fechada, Long posicao,
                                    Long projetoId, List<Long> usuarioIds, String screenshots) {
@@ -86,8 +84,8 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setSo(so);
         tarefa.setScreenshots(screenshots);
         tarefa.setCaminho(caminho);
-        tarefa.setDataCorrecao(dataCorrecao);
-        tarefa.setDataCriacao(dataCriacao);
+        tarefa.setDataEstimada(dataEstimada);
+        tarefa.setDataCriacao(new Date());
         tarefa.setPrioridade(prioridade);
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
@@ -107,8 +105,9 @@ public class CriarTarefaDefault implements CriarTarefa {
                 .so(tarefa.getSo())
                 .screenshots(tarefa.getScreenshots())
                 .caminho(tarefa.getCaminho())
-                .dataCorrecao(tarefa.getDataCorrecao())
+                .dataFechamento(tarefa.getDataFechamento())
                 .dataCriacao(tarefa.getDataCriacao())
+                .dataEstimada(tarefa.getDataEstimada())
                 .prioridade(tarefa.getPrioridade())
                 .classificacao(tarefa.getClassificacao())
                 .status(tarefa.getStatus())

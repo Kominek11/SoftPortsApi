@@ -12,11 +12,13 @@ import br.com.softports.core.api.projeto.usecase.CriarProjeto;
 import br.com.softports.core.api.projeto.usecase.DeletarProjeto;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.usecase.*;
+import br.com.softports.core.internal.common.entity.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 @RestController
 @RequestMapping("tarefa")
@@ -40,10 +42,14 @@ public class TarefaResource {
             @RequestParam(required = false) Long projetoId,
             @RequestParam(required = false) Boolean fechada,
             @RequestParam(required = false) LocalDate dataCriacao,
-            @RequestParam(required = false) LocalDate dataCorrecao
+            @RequestParam(required = false) LocalDate dataFechamento,
+            @RequestParam(required = false) String titulo,
+            @RequestParam(required = false) Set<Long> usuarios,
+            @RequestParam(required = false) Long prioridade,
+            @RequestParam(required = false) Long classificacao
             ) {
         return buscarTarefas.executar(tamanhoPagina, numeroPagina, ordenadoPor, direcao, projetoId,
-                fechada, dataCriacao, dataCorrecao);
+                fechada, dataCriacao, dataFechamento, titulo, usuarios, prioridade, classificacao);
     }
 
     @GetMapping("{id}")
@@ -54,8 +60,8 @@ public class TarefaResource {
     @PostMapping
     TarefaResponse criarTarefa(@RequestBody CriarTarefaRequest criarTarefaRequest) {
         return criarTarefa.executar(criarTarefaRequest.titulo(), criarTarefaRequest.descricao(),
-                criarTarefaRequest.so(), criarTarefaRequest.caminho(), criarTarefaRequest.dataCorrecao(),
-                criarTarefaRequest.dataCriacao(), criarTarefaRequest.prioridade(), criarTarefaRequest.classificacao(),
+                criarTarefaRequest.so(), criarTarefaRequest.caminho(),
+                criarTarefaRequest.dataEstimada(), criarTarefaRequest.prioridade(), criarTarefaRequest.classificacao(),
                 criarTarefaRequest.status(), criarTarefaRequest.fechada(), criarTarefaRequest.posicao(),
                 criarTarefaRequest.projetoId(), criarTarefaRequest.usuarioIds(), criarTarefaRequest.screenshots());
     }
@@ -64,7 +70,7 @@ public class TarefaResource {
     TarefaResponse atualizarTarefa(@RequestBody AtualizarTarefaRequest atualizarTarefaRequest) {
         return atualizarTarefa.executar(atualizarTarefaRequest.id(), atualizarTarefaRequest.titulo(),
                 atualizarTarefaRequest.descricao(), atualizarTarefaRequest.so(), atualizarTarefaRequest.caminho(),
-                atualizarTarefaRequest.dataCorrecao(), atualizarTarefaRequest.dataCriacao(),
+                atualizarTarefaRequest.dataFechamento(), atualizarTarefaRequest.dataEstimada(),
                 atualizarTarefaRequest.prioridade(), atualizarTarefaRequest.classificacao(),
                 atualizarTarefaRequest.status(), atualizarTarefaRequest.fechada(),
                 atualizarTarefaRequest.posicao(),  atualizarTarefaRequest.projetoId(),

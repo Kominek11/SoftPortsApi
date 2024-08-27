@@ -172,7 +172,7 @@ databaseChangeLog:
                   constraints:
                     nullable: true
               - column:
-                  name: data_correcao
+                  name: data_fechamento
                   type: date
                   constraints:
                     nullable: true
@@ -181,6 +181,11 @@ databaseChangeLog:
                   type: date
                   constraints:
                     nullable: false
+              - column:
+                  name: data_estimada
+                  type: date
+                  constraints:
+                    nullable: true
               - column:
                   name: prioridade
                   type: bigint

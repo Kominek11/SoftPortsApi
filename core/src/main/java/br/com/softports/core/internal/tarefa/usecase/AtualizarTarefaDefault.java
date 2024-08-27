@@ -36,8 +36,8 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
     @Override
     public TarefaResponse executar(Long id, String titulo,
                                    String descricao, String so,
-                                   String caminho, Date dataCorrecao,
-                                   Date dataCriacao, Long prioridade,
+                                   String caminho, Date dataFechamento,
+                                   Date dataEstimada, Long prioridade,
                                    Long classificacao, Long status,
                                    Boolean fechada, Long posicao,
                                    Long projetoId, Long usuarioId,
@@ -55,8 +55,8 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         tarefa.setSo(so);
         tarefa.setScreenshots(screenshots);
         tarefa.setCaminho(caminho);
-        tarefa.setDataCorrecao(dataCorrecao);
-        tarefa.setDataCriacao(dataCriacao);
+        tarefa.setDataFechamento(dataFechamento);
+        tarefa.setDataEstimada(dataEstimada);
         tarefa.setPrioridade(prioridade);
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
@@ -71,8 +71,8 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
     @Override
     public TarefaResponse executar(Long id, String titulo,
                                    String descricao, String so,
-                                   String caminho, Date dataCorrecao,
-                                   Date dataCriacao, Long prioridade,
+                                   String caminho, Date dataFechamento,
+                                   Date dataEstimada, Long prioridade,
                                    Long classificacao, Long status,
                                    Boolean fechada, Long posicao,
                                    Long projetoId, List<Long> usuarioIds,
@@ -92,8 +92,8 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         tarefa.setSo(so);
         tarefa.setScreenshots(screenshots);
         tarefa.setCaminho(caminho);
-        tarefa.setDataCorrecao(dataCorrecao);
-        tarefa.setDataCriacao(dataCriacao);
+        tarefa.setDataFechamento(dataFechamento);
+        tarefa.setDataEstimada(dataEstimada);
         tarefa.setPrioridade(prioridade);
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
@@ -112,8 +112,9 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                 .so(tarefa.getSo())
                 .screenshots(tarefa.getScreenshots())
                 .caminho(tarefa.getCaminho())
-                .dataCorrecao(tarefa.getDataCorrecao())
+                .dataFechamento(tarefa.getDataFechamento())
                 .dataCriacao(tarefa.getDataCriacao())
+                .dataEstimada(tarefa.getDataEstimada())
                 .prioridade(tarefa.getPrioridade())
                 .classificacao(tarefa.getClassificacao())
                 .status(tarefa.getStatus())

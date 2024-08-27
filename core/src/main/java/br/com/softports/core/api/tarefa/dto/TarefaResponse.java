@@ -12,12 +12,14 @@ import java.util.Set;
 @Builder
 public record TarefaResponse(
         Long id,
+        String titulo,
         String descricao,
         String so,
         String screenshots,
         String caminho,
-        Date dataCorrecao,
+        Date dataFechamento,
         Date dataCriacao,
+        Date dataEstimada,
         Long prioridade,
         Long classificacao,
         Long status,

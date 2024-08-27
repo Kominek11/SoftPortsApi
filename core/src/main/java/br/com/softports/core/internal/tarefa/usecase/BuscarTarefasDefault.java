@@ -11,11 +11,13 @@ import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
 import br.com.softports.core.api.tarefa.usecase.BuscarTarefas;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
+import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.internal.comentario.expression.ComentarioExpressions;
 import br.com.softports.core.internal.common.entity.*;
 import br.com.softports.core.internal.organizacao.expression.OrganizacaoExpressions;
 import br.com.softports.core.internal.projeto.expression.ProjetoExpressions;
 import br.com.softports.core.internal.tarefa.expression.TarefaExpressions;
+import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 
@@ -27,16 +29,31 @@ public class BuscarTarefasDefault implements BuscarTarefas {
 
     private final TarefaRepository tarefaRepository;
     private final ComentarioRepository comentarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Override
     public Pagina<TarefaResponse> executar(Integer tamanhoPagina, Integer numeroPagina,
                                            String ordenadoPor, String direcao,
                                            Long projetoId, Boolean fechada,
-                                           LocalDate dataCriacao, LocalDate dataCorrecao) {
+                                           LocalDate dataCriacao, LocalDate dataFechamento,
+                                           String titulo, Set<Long> usuarios,
+                                           Long prioridade, Long classificacao) {
+        Set<Usuario> usuariosSet = new HashSet<>();
+        if (usuarios != null) {
+            usuarios.forEach(item -> {
+                BooleanBuilder filtro = new BooleanBuilder(UsuarioExpressions.id(item));
+                Usuario usuario = usuarioRepository.buscar(filtro).orElseThrow();
+                usuariosSet.add(usuario);
+            });
+        }
         BooleanBuilder filtro = new BooleanBuilder()
                 .and(ProjetoExpressions.id(projetoId))
                 .and(TarefaExpressions.fechada(fechada))
-                .and(TarefaExpressions.entre(dataCriacao, dataCorrecao));
+                .and(TarefaExpressions.entre(dataCriacao, dataFechamento))
+                .and(TarefaExpressions.titulo(titulo))
+                .and(TarefaExpressions.usuarios(usuariosSet.isEmpty() ? null : usuariosSet))
+                .and(TarefaExpressions.prioridade(prioridade))
+                .and(TarefaExpressions.classificacao(classificacao));
             List<TarefaResponse> tarefas = tarefaRepository
                     .buscarTodos(filtro,
                             tamanhoPagina,
@@ -68,11 +85,12 @@ public class BuscarTarefasDefault implements BuscarTarefas {
         List<Comentario> comentarios = comentarioRepository.buscarTodos(filtroComentario);
         return TarefaResponse.builder()
                 .id(tarefa.getId())
+                .titulo(tarefa.getTitulo())
                 .descricao(tarefa.getDescricao())
                 .so(tarefa.getSo())
                 .screenshots(tarefa.getScreenshots())
                 .caminho(tarefa.getCaminho())
-                .dataCorrecao(tarefa.getDataCorrecao())
+                .dataFechamento(tarefa.getDataFechamento())
                 .dataCriacao(tarefa.getDataCriacao())
                 .prioridade(tarefa.getPrioridade())
                 .classificacao(tarefa.getClassificacao())
