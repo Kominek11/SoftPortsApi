@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.sql.Blob;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,7 +32,7 @@ public class Tarefa {
     String so;
 
     @Column
-    byte[] screenshots;
+    byte[][] screenshots;
 
     @Column
     String caminho;
@@ -47,9 +48,6 @@ public class Tarefa {
 
     @Column
     Long prioridade;
-
-    @Column
-    Long classificacao;
 
     @Column
     Long status;
@@ -74,4 +72,12 @@ public class Tarefa {
             inverseJoinColumns = @JoinColumn(name = "usuario_id")
     )
     Set<Usuario> usuarios;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tarefa_classificacao",
+            joinColumns = @JoinColumn(name = "tarefa_id"),
+            inverseJoinColumns = @JoinColumn(name = "classificacao_id")
+    )
+    Set<Classificacao> classificacoes;
 }

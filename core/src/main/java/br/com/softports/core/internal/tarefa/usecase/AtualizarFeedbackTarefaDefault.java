@@ -1,5 +1,6 @@
 package br.com.softports.core.internal.tarefa.usecase;
 
+import br.com.softports.core.api.classificacao.dto.ClassificacaoResponse;
 import br.com.softports.core.api.organizacao.dto.OrganizacaoResponse;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
@@ -7,10 +8,7 @@ import br.com.softports.core.api.tarefa.repository.TarefaRepository;
 import br.com.softports.core.api.tarefa.usecase.AtualizarFeedbackTarefa;
 import br.com.softports.core.api.tarefa.usecase.AtualizarStatusTarefa;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
-import br.com.softports.core.internal.common.entity.Organizacao;
-import br.com.softports.core.internal.common.entity.Projeto;
-import br.com.softports.core.internal.common.entity.Tarefa;
-import br.com.softports.core.internal.common.entity.Usuario;
+import br.com.softports.core.internal.common.entity.*;
 import br.com.softports.core.internal.tarefa.expression.TarefaExpressions;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
@@ -42,11 +40,11 @@ public class AtualizarFeedbackTarefaDefault implements AtualizarFeedbackTarefa {
                 .dataFechamento(tarefa.getDataFechamento())
                 .dataCriacao(tarefa.getDataCriacao())
                 .prioridade(tarefa.getPrioridade())
-                .classificacao(tarefa.getClassificacao())
                 .status(tarefa.getStatus())
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
                 .feedback(tarefa.getFeedback())
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
+                .classificacoes(gerarClassificacaoResponseList(tarefa.getClassificacoes()))
                 .build();
     }
 
@@ -76,5 +74,16 @@ public class AtualizarFeedbackTarefaDefault implements AtualizarFeedbackTarefa {
                 organizacao.getId(),
                 organizacao.getNome()
         );
+    }
+
+    private Set<ClassificacaoResponse> gerarClassificacaoResponseList(Set<Classificacao> classificacoes) {
+        Set<ClassificacaoResponse> classificacaoResponseList = new HashSet<>();
+        classificacoes.forEach(item -> {
+            classificacaoResponseList.add(new ClassificacaoResponse(
+                    item.getId(),
+                    item.getNome()
+            ));
+        });
+        return classificacaoResponseList;
     }
 }

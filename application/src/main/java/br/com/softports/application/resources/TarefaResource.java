@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -32,6 +33,7 @@ public class TarefaResource {
     private final AtualizarStatusTarefa atualizarStatusTarefa;
     private final IncluirComentarioTarefa incluirComentarioTarefa;
     private final AtualizarFeedbackTarefa atualizarFeedbackTarefa;
+    private final AtualizarFechadoTarefa atualizarFechadoTarefa;
 
     @GetMapping
     Pagina<TarefaResponse> buscarTarefas(
@@ -46,7 +48,7 @@ public class TarefaResource {
             @RequestParam(required = false) String titulo,
             @RequestParam(required = false) Set<Long> usuarios,
             @RequestParam(required = false) Long prioridade,
-            @RequestParam(required = false) Long classificacao
+            @RequestParam(required = false) List<Long> classificacao
             ) {
         return buscarTarefas.executar(tamanhoPagina, numeroPagina, ordenadoPor, direcao, projetoId,
                 fechada, dataInicio, dataFim, titulo, usuarios, prioridade, classificacao);
@@ -61,9 +63,10 @@ public class TarefaResource {
     TarefaResponse criarTarefa(@RequestBody CriarTarefaRequest criarTarefaRequest) {
         return criarTarefa.executar(criarTarefaRequest.titulo(), criarTarefaRequest.descricao(),
                 criarTarefaRequest.so(), criarTarefaRequest.caminho(),
-                criarTarefaRequest.dataEstimada(), criarTarefaRequest.prioridade(), criarTarefaRequest.classificacao(),
+                criarTarefaRequest.dataEstimada(), criarTarefaRequest.prioridade(),
                 criarTarefaRequest.status(), criarTarefaRequest.posicao(),
-                criarTarefaRequest.projetoId(), criarTarefaRequest.usuarioIds(), criarTarefaRequest.screenshots());
+                criarTarefaRequest.projetoId(), criarTarefaRequest.usuarioIds(), criarTarefaRequest.screenshots(),
+                criarTarefaRequest.classificacoes());
     }
 
     @PutMapping()
@@ -71,15 +74,21 @@ public class TarefaResource {
         return atualizarTarefa.executar(atualizarTarefaRequest.id(), atualizarTarefaRequest.titulo(),
                 atualizarTarefaRequest.descricao(), atualizarTarefaRequest.so(), atualizarTarefaRequest.caminho(),
                 atualizarTarefaRequest.dataFechamento(), atualizarTarefaRequest.dataEstimada(),
-                atualizarTarefaRequest.prioridade(), atualizarTarefaRequest.classificacao(),
+                atualizarTarefaRequest.prioridade(),
                 atualizarTarefaRequest.status(), atualizarTarefaRequest.fechada(),
                 atualizarTarefaRequest.posicao(),  atualizarTarefaRequest.projetoId(),
-                atualizarTarefaRequest.usuarioIds(), atualizarTarefaRequest.screenshots());
+                atualizarTarefaRequest.usuarioIds(), atualizarTarefaRequest.screenshots(),
+                atualizarTarefaRequest.classificacoes());
     }
 
     @PutMapping("/status/{id}")
     TarefaResponse atualizarStatusTarefa(@PathVariable Long id, Long status) {
         return atualizarStatusTarefa.executar(id, status);
+    }
+
+    @PutMapping("/fechado/{id}")
+    TarefaResponse atualizarFechadoTarefa(@PathVariable Long id, Boolean fechado) {
+        return atualizarFechadoTarefa.executar(id, fechado);
     }
 
     @PutMapping("/feedback/{id}")

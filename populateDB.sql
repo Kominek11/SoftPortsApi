@@ -23,12 +23,20 @@ INSERT INTO public.projeto (id, nome, organizacao_id) VALUES
 (nextval('projeto_id_seq'), 'Projeto Artemis', 5);
 
 -- Populando a tabela tarefa
-INSERT INTO public.tarefa (id, titulo, descricao, so, screenshots, caminho, data_fechamento, data_criacao, data_estimada, prioridade, classificacao, status, fechada, posicao, projeto_id, feedback) VALUES
-(nextval('tarefa_id_seq'), 'Corrigir bug na tela de login', 'Corrigir o erro de autenticação na tela de login', 'Windows', 'screenshot1.png', '/caminho/correcoes', '2024-08-22', '2024-08-21', '2024-08-21', 1, 1, 1, true, 1, 1, 'feedback'),
-(nextval('tarefa_id_seq'), 'Implementar nova funcionalidade', 'Adicionar a funcionalidade de exportação de relatórios', 'Linux', NULL, NULL, NULL, '2024-08-20', '2024-08-21', 2, 2, 2, false, 1, 2, 'feedback'),
-(nextval('tarefa_id_seq'), 'Melhorar desempenho do sistema', 'Otimizar a consulta ao banco de dados', 'MacOS', 'screenshot2.png', '/caminho/melhorias', '2024-08-23', '2024-08-21', '2024-08-21', 1, 1, 1, true, 1, 3, 'feedback'),
-(nextval('tarefa_id_seq'), 'Atualizar documentação', 'Atualizar a documentação do sistema para a versão mais recente', NULL, NULL, '/caminho/documentacao', NULL, '2024-08-21', '2024-08-21', 3, 2, 2, true, 1, 4, 'feedback'),
-(nextval('tarefa_id_seq'), 'Corrigir erro na exportação de dados', 'Corrigir o erro ao exportar dados no formato CSV', 'Windows', 'screenshot3.png', '/caminho/correcoes2', '2024-08-25', '2024-08-21', '2024-08-21', 2, 3, 3, true, 1, 5, 'feedback');
+INSERT INTO public.tarefa (id, titulo, descricao, so, screenshots, caminho, data_fechamento, data_criacao, data_estimada, prioridade, status, fechada, posicao, projeto_id, feedback) VALUES
+(nextval('tarefa_id_seq'), 'Corrigir bug na tela de login', 'Corrigir o erro de autenticação na tela de login', 'Windows', ARRAY[decode('cGluZGVyCg==', 'base64')], '/caminho/correcoes', '2024-08-22', '2024-08-21', '2024-08-21', 1, 1, true, 1, 1, 'feedback'),
+(nextval('tarefa_id_seq'), 'Implementar nova funcionalidade', 'Adicionar a funcionalidade de exportação de relatórios', 'Linux', NULL, NULL, NULL, '2024-08-20', '2024-08-21', 2, 2, false, 1, 2, 'feedback'),
+(nextval('tarefa_id_seq'), 'Melhorar desempenho do sistema', 'Otimizar a consulta ao banco de dados', 'MacOS', ARRAY[decode('cGluZGVyCg==', 'base64')], '/caminho/melhorias', '2024-08-23', '2024-08-21', '2024-08-21', 1, 1, true, 1, 3, 'feedback'),
+(nextval('tarefa_id_seq'), 'Atualizar documentação', 'Atualizar a documentação do sistema para a versão mais recente', NULL, NULL, '/caminho/documentacao', NULL, '2024-08-21', '2024-08-21', 3, 2, true, 1, 4, 'feedback'),
+(nextval('tarefa_id_seq'), 'Corrigir erro na exportação de dados', 'Corrigir o erro ao exportar dados no formato CSV', 'Windows', ARRAY[decode('cGluZGVyCg==', 'base64')], '/caminho/correcoes2', '2024-08-25', '2024-08-21', '2024-08-21', 2, 3, true, 1, 5, 'feedback');
+
+-- Populando a tabela classificacao
+INSERT INTO public.classificacao (id, nome) VALUES
+(nextval('classificacao_id_seq'), 'Classificação 1'),
+(nextval('classificacao_id_seq'), 'Classificação 2'),
+(nextval('classificacao_id_seq'), 'Classificação 3'),
+(nextval('classificacao_id_seq'), 'Classificação 4'),
+(nextval('classificacao_id_seq'), 'Classificação 5');
 
 -- Populando a tabela usuario_tarefa
 INSERT INTO public.usuario_tarefa (usuario_id, tarefa_id) VALUES
@@ -45,6 +53,19 @@ INSERT INTO public.usuario_tarefa (usuario_id, tarefa_id) VALUES
 
 -- Populando a tabela usuario_projeto
 INSERT INTO public.usuario_projeto (usuario_id, projeto_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(1, 3),
+(2, 4),
+(3, 5),
+(4, 1),
+(5, 2);
+
+-- Populando a tabela tarefa_classificacao
+INSERT INTO public.tarefa_classificacao (tarefa_id, classificacao_id) VALUES
 (1, 1),
 (2, 2),
 (3, 3),

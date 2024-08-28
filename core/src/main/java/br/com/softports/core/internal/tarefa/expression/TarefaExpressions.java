@@ -8,6 +8,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -48,8 +49,10 @@ public class TarefaExpressions {
         return Objects.nonNull(prioridade) ? TAREFA.prioridade.eq(prioridade) : null;
     }
 
-    public static BooleanExpression classificacao(Long classificacao) {
-        return Objects.nonNull(classificacao) ? TAREFA.classificacao.eq(classificacao) : null;
+    public static BooleanExpression classificacao(List<Long> classificacoes) {
+        return Objects.nonNull(classificacoes)
+                ? TAREFA.classificacoes.any().id.in(classificacoes)
+                : null;
     }
 
     public static BooleanExpression entre(LocalDate dataInicio, LocalDate dataFim) {

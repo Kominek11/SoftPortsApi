@@ -3,6 +3,7 @@ package br.com.softports.application.resources.dto.tarefa;
 import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public record AtualizarTarefaRequest(
         Long id,
@@ -13,11 +14,11 @@ public record AtualizarTarefaRequest(
         Date dataFechamento,
         Date dataEstimada,
         Long prioridade,
-        Long classificacao,
         Long status,
         Boolean fechada,
         Long posicao,
         Long projetoId,
         List<Long> usuarioIds,
-        byte[] screenshots
+        byte[][] screenshots,
+        Set<Long> classificacoes
 ) { }

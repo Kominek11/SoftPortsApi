@@ -1,5 +1,6 @@
 package br.com.softports.application.configuration;
 
+import br.com.softports.core.api.classificacao.repository.ClassificacaoRepository;
 import br.com.softports.core.api.comentario.repository.ComentarioRepository;
 import br.com.softports.core.api.common.usecase.expression.*;
 import br.com.softports.core.api.organizacao.repository.OrganizacaoRepository;
@@ -83,21 +84,26 @@ public class UseCaseConfiguration {
 
     @Bean
     CriarTarefa criarTarefa(TarefaRepository tarefaRepository, ProjetoRepository projetoRepository,
-                            UsuarioRepository usuarioRepository) {
+                            UsuarioRepository usuarioRepository, ClassificacaoRepository classificacaoRepository) {
         return new CriarTarefaDefault(tarefaRepository, projetoRepository,
-                usuarioRepository);
+                usuarioRepository, classificacaoRepository);
     }
 
     @Bean
     AtualizarTarefa atualizarTarefa(TarefaRepository tarefaRepository, ProjetoRepository projetoRepository,
-                                    UsuarioRepository usuarioRepository) {
+                                    UsuarioRepository usuarioRepository, ClassificacaoRepository classificacaoRepository) {
         return new AtualizarTarefaDefault(tarefaRepository, projetoRepository,
-                usuarioRepository);
+                usuarioRepository, classificacaoRepository);
     }
 
     @Bean
     AtualizarStatusTarefa atualizarStatusTarefa(TarefaRepository tarefaRepository) {
         return new AtualizarStatusTarefaDefault(tarefaRepository);
+    }
+
+    @Bean
+    AtualizarFechadoTarefa atualizarFechadoTarefa(TarefaRepository tarefaRepository) {
+        return new AtualizarFechadoTarefaDefault(tarefaRepository);
     }
 
     @Bean

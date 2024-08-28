@@ -1,8 +1,10 @@
 package br.com.softports.core.api.tarefa.dto;
 
+import br.com.softports.core.api.classificacao.dto.ClassificacaoResponse;
 import br.com.softports.core.api.comentario.dto.ComentarioResponse;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
+import br.com.softports.core.internal.common.entity.Classificacao;
 import lombok.Builder;
 
 import java.sql.Blob;
@@ -16,18 +18,18 @@ public record TarefaResponse(
         String titulo,
         String descricao,
         String so,
-        byte[] screenshots,
+        byte[][] screenshots,
         String caminho,
         Date dataFechamento,
         Date dataCriacao,
         Date dataEstimada,
         Long prioridade,
-        Long classificacao,
         Long status,
         Boolean fechada,
         Long posicao,
         ProjetoResponse projeto,
         String feedback,
         Set<UsuarioResponse> usuarios,
-        List<ComentarioResponse> comentarios
+        List<ComentarioResponse> comentarios,
+        Set<ClassificacaoResponse> classificacoes
 ) {}

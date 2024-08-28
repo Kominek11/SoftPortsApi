@@ -7,6 +7,7 @@ import br.com.softports.core.internal.common.entity.Usuario;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 public interface BuscarTarefas {
@@ -22,7 +23,7 @@ public interface BuscarTarefas {
                                     String titulo,
                                     Set<Long> usuarios,
                                     Long prioridade,
-                                    Long classificacao);
+                                    List<Long> classificacao);
 
     TarefaResponse executar(Long id);
 }

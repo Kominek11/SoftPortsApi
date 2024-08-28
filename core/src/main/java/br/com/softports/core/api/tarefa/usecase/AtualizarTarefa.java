@@ -6,6 +6,7 @@ import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public interface AtualizarTarefa {
 
@@ -13,17 +14,17 @@ public interface AtualizarTarefa {
                             String descricao, String so,
                             String caminho, Date dataFechamento,
                             Date dataEstimada, Long prioridade,
-                            Long classificacao, Long status,
+                            Long status,
                             Boolean fechada, Long posicao,
                             Long projetoId, Long usuarioId,
-                            byte[] screenshots);
+                            byte[][] screenshots, Set<Long> classificacoes);
 
     TarefaResponse executar(Long id, String titulo,
                             String descricao, String so,
                             String caminho, Date dataFechamento,
                             Date dataEstimada, Long prioridade,
-                            Long classificacao, Long status,
+                            Long status,
                             Boolean fechada, Long posicao,
                             Long projetoId, List<Long> usuarioIds,
-                            byte[] screenshots);
+                            byte[][] screenshots, Set<Long> classificacoes);
 }

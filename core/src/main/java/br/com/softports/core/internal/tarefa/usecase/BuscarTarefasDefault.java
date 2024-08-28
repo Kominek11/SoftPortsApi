@@ -1,5 +1,6 @@
 package br.com.softports.core.internal.tarefa.usecase;
 
+import br.com.softports.core.api.classificacao.dto.ClassificacaoResponse;
 import br.com.softports.core.api.comentario.dto.ComentarioResponse;
 import br.com.softports.core.api.comentario.repository.ComentarioRepository;
 import br.com.softports.core.api.common.dto.Pagina;
@@ -37,7 +38,7 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                                            Long projetoId, Boolean fechada,
                                            LocalDate dataInicio, LocalDate dataFim,
                                            String titulo, Set<Long> usuarios,
-                                           Long prioridade, Long classificacao) {
+                                           Long prioridade, List<Long> classificacao) {
         Set<Usuario> usuariosSet = new HashSet<>();
         if (usuarios != null) {
             usuarios.forEach(item -> {
@@ -92,14 +93,15 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                 .caminho(tarefa.getCaminho())
                 .dataFechamento(tarefa.getDataFechamento())
                 .dataCriacao(tarefa.getDataCriacao())
+                .dataEstimada(tarefa.getDataEstimada())
                 .prioridade(tarefa.getPrioridade())
-                .classificacao(tarefa.getClassificacao())
                 .status(tarefa.getStatus())
                 .fechada(tarefa.getFechada())
                 .posicao(tarefa.getPosicao())
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .comentarios(gerarComentarioResponseList(comentarios))
+                .classificacoes(gerarClassificacaoResponseList(tarefa.getClassificacoes()))
                 .build();
     }
 
@@ -140,5 +142,16 @@ public class BuscarTarefasDefault implements BuscarTarefas {
             ));
         });
         return comentarioResponseList;
+    }
+
+    private Set<ClassificacaoResponse> gerarClassificacaoResponseList(Set<Classificacao> classificacoes) {
+        Set<ClassificacaoResponse> classificacaoResponseList = new HashSet<>();
+        classificacoes.forEach(item -> {
+            classificacaoResponseList.add(new ClassificacaoResponse(
+                    item.getId(),
+                    item.getNome()
+            ));
+        });
+        return classificacaoResponseList;
     }
 }
