@@ -13,12 +13,12 @@ public record AtualizarTarefaRequest(
         String caminho,
         Date dataFechamento,
         Date dataEstimada,
-        Long prioridade,
         Long status,
         Boolean fechada,
         Long posicao,
         Long projetoId,
         List<Long> usuarioIds,
         byte[][] screenshots,
-        Set<Long> classificacoes
+        Set<Long> classificacoes,
+        Set<Long> prioridades
 ) { }

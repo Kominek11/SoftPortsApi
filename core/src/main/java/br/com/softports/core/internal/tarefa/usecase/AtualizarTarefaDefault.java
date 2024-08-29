@@ -4,6 +4,8 @@ import br.com.softports.core.api.classificacao.dto.ClassificacaoResponse;
 import br.com.softports.core.api.classificacao.repository.ClassificacaoRepository;
 import br.com.softports.core.api.organizacao.dto.OrganizacaoResponse;
 import br.com.softports.core.api.organizacao.repository.OrganizacaoRepository;
+import br.com.softports.core.api.prioridade.dto.PrioridadeResponse;
+import br.com.softports.core.api.prioridade.repository.PrioridadeRepository;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.projeto.repository.ProjetoRepository;
 import br.com.softports.core.api.projeto.usecase.AtualizarProjeto;
@@ -15,6 +17,7 @@ import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.internal.classificacao.expression.ClassificacaoExpressions;
 import br.com.softports.core.internal.common.entity.*;
 import br.com.softports.core.internal.organizacao.expression.OrganizacaoExpressions;
+import br.com.softports.core.internal.prioridade.expression.PrioridadeExpressions;
 import br.com.softports.core.internal.projeto.expression.ProjetoExpressions;
 import br.com.softports.core.internal.tarefa.expression.TarefaExpressions;
 import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
@@ -34,16 +37,18 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
     private final ProjetoRepository projetoRepository;
     private final UsuarioRepository usuarioRepository;
     private final ClassificacaoRepository classificacaoRepository;
+    private final PrioridadeRepository prioridadeRepository;
 
     @Override
     public TarefaResponse executar(Long id, String titulo,
                                    String descricao, String so,
                                    String caminho, Date dataFechamento,
-                                   Date dataEstimada, Long prioridade,
+                                   Date dataEstimada,
                                    Long status,
                                    Boolean fechada, Long posicao,
                                    Long projetoId, Long usuarioId,
-                                   byte[][] screenshots, Set<Long> classificacoes) {
+                                   byte[][] screenshots, Set<Long> classificacoes,
+                                   Set<Long> prioridades) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
@@ -58,6 +63,12 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
             Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
             classificacoesSet.add(classificacao);
         });
+        Set<Prioridade> prioridadesSet = new HashSet<>();
+        prioridades.forEach(item -> {
+            BooleanBuilder filtroPrioridade = new BooleanBuilder().and(PrioridadeExpressions.id(item));
+            Prioridade prioridade = prioridadeRepository.buscar(filtroPrioridade).orElseThrow();
+            prioridadesSet.add(prioridade);
+        });
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
         tarefa.setSo(so);
@@ -65,13 +76,13 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         tarefa.setCaminho(caminho);
         tarefa.setDataFechamento(dataFechamento);
         tarefa.setDataEstimada(dataEstimada);
-        tarefa.setPrioridade(prioridade);
         tarefa.setClassificacoes(classificacoesSet);
         tarefa.setStatus(status);
         tarefa.setFechada(fechada);
         tarefa.setPosicao(posicao);
         tarefa.setProjeto(projeto);
         tarefa.setUsuarios(usuarios);
+        tarefa.setPrioridades(prioridadesSet);
         tarefaRepository.salvar(tarefa);
         return gerarTarefaResponse(tarefa);
     }
@@ -80,11 +91,12 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
     public TarefaResponse executar(Long id, String titulo,
                                    String descricao, String so,
                                    String caminho, Date dataFechamento,
-                                   Date dataEstimada, Long prioridade,
+                                   Date dataEstimada,
                                    Long status,
                                    Boolean fechada, Long posicao,
                                    Long projetoId, List<Long> usuarioIds,
-                                   byte[][] screenshots, Set<Long> classificacoes) {
+                                   byte[][] screenshots, Set<Long> classificacoes,
+                                   Set<Long> prioridades) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
@@ -101,6 +113,12 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
             Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
             classificacoesSet.add(classificacao);
         });
+        Set<Prioridade> prioridadesSet = new HashSet<>();
+        prioridades.forEach(item -> {
+            BooleanBuilder filtroPrioridade = new BooleanBuilder().and(PrioridadeExpressions.id(item));
+            Prioridade prioridade = prioridadeRepository.buscar(filtroPrioridade).orElseThrow();
+            prioridadesSet.add(prioridade);
+        });
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
         tarefa.setSo(so);
@@ -108,13 +126,13 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         tarefa.setCaminho(caminho);
         tarefa.setDataFechamento(dataFechamento);
         tarefa.setDataEstimada(dataEstimada);
-        tarefa.setPrioridade(prioridade);
         tarefa.setClassificacoes(classificacoesSet);
         tarefa.setStatus(status);
         tarefa.setFechada(fechada);
         tarefa.setPosicao(posicao);
         tarefa.setProjeto(projeto);
         tarefa.setUsuarios(usuarios);
+        tarefa.setPrioridades(prioridadesSet);
         tarefaRepository.salvar(tarefa);
         return gerarTarefaResponse(tarefa);
     }
@@ -129,13 +147,13 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                 .dataFechamento(tarefa.getDataFechamento())
                 .dataCriacao(tarefa.getDataCriacao())
                 .dataEstimada(tarefa.getDataEstimada())
-                .prioridade(tarefa.getPrioridade())
                 .status(tarefa.getStatus())
                 .fechada(tarefa.getFechada())
                 .posicao(tarefa.getPosicao())
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .classificacoes(gerarClassificacaoResponseList(tarefa.getClassificacoes()))
+                .prioridades(gerarPrioridadeResponseList(tarefa.getPrioridades()))
                 .build();
     }
 
@@ -176,5 +194,16 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
             ));
         });
         return classificacaoResponseList;
+    }
+
+    private Set<PrioridadeResponse> gerarPrioridadeResponseList(Set<Prioridade> prioridades) {
+        Set<PrioridadeResponse> prioridadeoResponseList = new HashSet<>();
+        prioridades.forEach(item -> {
+            prioridadeoResponseList.add(new PrioridadeResponse(
+                    item.getId(),
+                    item.getNome()
+            ));
+        });
+        return prioridadeoResponseList;
     }
 }

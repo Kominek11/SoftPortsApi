@@ -5,6 +5,7 @@ import br.com.softports.core.api.comentario.dto.ComentarioResponse;
 import br.com.softports.core.api.comentario.repository.ComentarioRepository;
 import br.com.softports.core.api.common.dto.Pagina;
 import br.com.softports.core.api.organizacao.dto.OrganizacaoResponse;
+import br.com.softports.core.api.prioridade.dto.PrioridadeResponse;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.projeto.repository.ProjetoRepository;
 import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
@@ -38,7 +39,8 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                                            Long projetoId, Boolean fechada,
                                            LocalDate dataInicio, LocalDate dataFim,
                                            String titulo, Set<Long> usuarios,
-                                           Long prioridade, List<Long> classificacao) {
+                                           List<Long> classificacao,
+                                           List<Long> prioridades) {
         Set<Usuario> usuariosSet = new HashSet<>();
         if (usuarios != null) {
             usuarios.forEach(item -> {
@@ -53,7 +55,7 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                 .and(TarefaExpressions.entre(dataInicio, dataFim))
                 .and(TarefaExpressions.titulo(titulo))
                 .and(TarefaExpressions.usuarios(usuariosSet.isEmpty() ? null : usuariosSet))
-                .and(TarefaExpressions.prioridade(prioridade))
+                .and(TarefaExpressions.prioridade(prioridades))
                 .and(TarefaExpressions.classificacao(classificacao));
             List<TarefaResponse> tarefas = tarefaRepository
                     .buscarTodos(filtro,
@@ -94,7 +96,6 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                 .dataFechamento(tarefa.getDataFechamento())
                 .dataCriacao(tarefa.getDataCriacao())
                 .dataEstimada(tarefa.getDataEstimada())
-                .prioridade(tarefa.getPrioridade())
                 .status(tarefa.getStatus())
                 .fechada(tarefa.getFechada())
                 .posicao(tarefa.getPosicao())
@@ -102,6 +103,7 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .comentarios(gerarComentarioResponseList(comentarios))
                 .classificacoes(gerarClassificacaoResponseList(tarefa.getClassificacoes()))
+                .prioridades(gerarPrioridadeResponseList(tarefa.getPrioridades()))
                 .build();
     }
 
@@ -153,5 +155,16 @@ public class BuscarTarefasDefault implements BuscarTarefas {
             ));
         });
         return classificacaoResponseList;
+    }
+
+    private Set<PrioridadeResponse> gerarPrioridadeResponseList(Set<Prioridade> prioridades) {
+        Set<PrioridadeResponse> prioridadeoResponseList = new HashSet<>();
+        prioridades.forEach(item -> {
+            prioridadeoResponseList.add(new PrioridadeResponse(
+                    item.getId(),
+                    item.getNome()
+            ));
+        });
+        return prioridadeoResponseList;
     }
 }

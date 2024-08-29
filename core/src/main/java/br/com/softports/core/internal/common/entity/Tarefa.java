@@ -47,9 +47,6 @@ public class Tarefa {
     Date dataEstimada;
 
     @Column
-    Long prioridade;
-
-    @Column
     Long status;
 
     @Column
@@ -80,4 +77,12 @@ public class Tarefa {
             inverseJoinColumns = @JoinColumn(name = "classificacao_id")
     )
     Set<Classificacao> classificacoes;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tarefa_prioridade",
+            joinColumns = @JoinColumn(name = "tarefa_id"),
+            inverseJoinColumns = @JoinColumn(name = "prioridade_id")
+    )
+    Set<Prioridade> prioridades;
 }

@@ -47,11 +47,11 @@ public class TarefaResource {
             @RequestParam(required = false) LocalDate dataFim,
             @RequestParam(required = false) String titulo,
             @RequestParam(required = false) Set<Long> usuarios,
-            @RequestParam(required = false) Long prioridade,
+            @RequestParam(required = false) List<Long> prioridades,
             @RequestParam(required = false) List<Long> classificacao
             ) {
         return buscarTarefas.executar(tamanhoPagina, numeroPagina, ordenadoPor, direcao, projetoId,
-                fechada, dataInicio, dataFim, titulo, usuarios, prioridade, classificacao);
+                fechada, dataInicio, dataFim, titulo, usuarios, prioridades, classificacao);
     }
 
     @GetMapping("{id}")
@@ -63,10 +63,10 @@ public class TarefaResource {
     TarefaResponse criarTarefa(@RequestBody CriarTarefaRequest criarTarefaRequest) {
         return criarTarefa.executar(criarTarefaRequest.titulo(), criarTarefaRequest.descricao(),
                 criarTarefaRequest.so(), criarTarefaRequest.caminho(),
-                criarTarefaRequest.dataEstimada(), criarTarefaRequest.prioridade(),
+                criarTarefaRequest.dataEstimada(),
                 criarTarefaRequest.status(), criarTarefaRequest.posicao(),
                 criarTarefaRequest.projetoId(), criarTarefaRequest.usuarioIds(), criarTarefaRequest.screenshots(),
-                criarTarefaRequest.classificacoes());
+                criarTarefaRequest.classificacoes(), criarTarefaRequest.prioridades());
     }
 
     @PutMapping()
@@ -74,11 +74,10 @@ public class TarefaResource {
         return atualizarTarefa.executar(atualizarTarefaRequest.id(), atualizarTarefaRequest.titulo(),
                 atualizarTarefaRequest.descricao(), atualizarTarefaRequest.so(), atualizarTarefaRequest.caminho(),
                 atualizarTarefaRequest.dataFechamento(), atualizarTarefaRequest.dataEstimada(),
-                atualizarTarefaRequest.prioridade(),
                 atualizarTarefaRequest.status(), atualizarTarefaRequest.fechada(),
                 atualizarTarefaRequest.posicao(),  atualizarTarefaRequest.projetoId(),
                 atualizarTarefaRequest.usuarioIds(), atualizarTarefaRequest.screenshots(),
-                atualizarTarefaRequest.classificacoes());
+                atualizarTarefaRequest.classificacoes(), atualizarTarefaRequest.prioridades());
     }
 
     @PutMapping("/status/{id}")

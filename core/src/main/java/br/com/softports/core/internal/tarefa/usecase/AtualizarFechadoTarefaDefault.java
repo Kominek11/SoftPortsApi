@@ -2,6 +2,7 @@ package br.com.softports.core.internal.tarefa.usecase;
 
 import br.com.softports.core.api.classificacao.dto.ClassificacaoResponse;
 import br.com.softports.core.api.organizacao.dto.OrganizacaoResponse;
+import br.com.softports.core.api.prioridade.dto.PrioridadeResponse;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
@@ -41,12 +42,12 @@ public class AtualizarFechadoTarefaDefault implements AtualizarFechadoTarefa {
                 .caminho(tarefa.getCaminho())
                 .dataFechamento(tarefa.getDataFechamento())
                 .dataCriacao(tarefa.getDataCriacao())
-                .prioridade(tarefa.getPrioridade())
                 .fechada(tarefa.getFechada())
                 .status(tarefa.getStatus())
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .classificacoes(gerarClassificacaoResponseList(tarefa.getClassificacoes()))
+                .prioridades(gerarPrioridadeResponseList(tarefa.getPrioridades()))
                 .build();
     }
 
@@ -87,5 +88,16 @@ public class AtualizarFechadoTarefaDefault implements AtualizarFechadoTarefa {
             ));
         });
         return classificacaoResponseList;
+    }
+
+    private Set<PrioridadeResponse> gerarPrioridadeResponseList(Set<Prioridade> prioridades) {
+        Set<PrioridadeResponse> prioridadeoResponseList = new HashSet<>();
+        prioridades.forEach(item -> {
+            prioridadeoResponseList.add(new PrioridadeResponse(
+                    item.getId(),
+                    item.getNome()
+            ));
+        });
+        return prioridadeoResponseList;
     }
 }

@@ -12,17 +12,17 @@ public interface CriarTarefa {
 
     TarefaResponse executar(String titulo, String descricao,
                             String so, String caminho, Date dataEstimada,
-                            Long prioridade,
                             Long status,
                             Long posicao, Long projetoId,
                             Long usuarioId, byte[][] screenshots,
-                            Set<Long> classificacoes);
+                            Set<Long> classificacoes,
+                            Set<Long> prioridades);
 
     TarefaResponse executar(String titulo, String descricao,
                             String so, String caminho, Date dataEstimada,
-                            Long prioridade,
                             Long status,
                             Long posicao, Long projetoId,
                             List<Long> usuarioIds, byte[][] screenshots,
-                            Set<Long> classificacoes);
+                            Set<Long> classificacoes,
+                            Set<Long> prioridades);
 }

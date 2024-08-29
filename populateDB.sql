@@ -30,13 +30,28 @@ INSERT INTO public.tarefa (id, titulo, descricao, so, screenshots, caminho, data
 (nextval('tarefa_id_seq'), 'Atualizar documentação', 'Atualizar a documentação do sistema para a versão mais recente', NULL, NULL, '/caminho/documentacao', NULL, '2024-08-21', '2024-08-21', 3, 2, true, 1, 4, 'feedback'),
 (nextval('tarefa_id_seq'), 'Corrigir erro na exportação de dados', 'Corrigir o erro ao exportar dados no formato CSV', 'Windows', ARRAY[decode('cGluZGVyCg==', 'base64')], '/caminho/correcoes2', '2024-08-25', '2024-08-21', '2024-08-21', 2, 3, true, 1, 5, 'feedback');
 
+-- Populando a tabela subclassificacao
+INSERT INTO public.subclassificacao (id, nome) VALUES
+(nextval('subclassificacao_id_seq'), 'Funcional'),
+(nextval('subclassificacao_id_seq'), 'Desempenho'),
+(nextval('subclassificacao_id_seq'), 'Segurança'),
+(nextval('subclassificacao_id_seq'), 'Integração'),
+(nextval('subclassificacao_id_seq'), 'Outro'),
+(nextval('subclassificacao_id_seq'), 'Normal'),
+(nextval('subclassificacao_id_seq'), 'Emergencial');
+
 -- Populando a tabela classificacao
-INSERT INTO public.classificacao (id, nome) VALUES
-(nextval('classificacao_id_seq'), 'Classificação 1'),
-(nextval('classificacao_id_seq'), 'Classificação 2'),
-(nextval('classificacao_id_seq'), 'Classificação 3'),
-(nextval('classificacao_id_seq'), 'Classificação 4'),
-(nextval('classificacao_id_seq'), 'Classificação 5');
+INSERT INTO public.classificacao (id, nome, subclassificacao_id) VALUES
+(nextval('classificacao_id_seq'), 'Incidente', 4),
+(nextval('classificacao_id_seq'), 'Problema', 5),
+(nextval('classificacao_id_seq'), 'Mudança', 6);
+
+-- Populando a tabela prioridade
+INSERT INTO public.prioridade (id, nome) VALUES
+(nextval('prioridade_id_seq'), 'Baixa'),
+(nextval('prioridade_id_seq'), 'Média'),
+(nextval('prioridade_id_seq'), 'Alta'),
+(nextval('prioridade_id_seq'), 'Crítica');
 
 -- Populando a tabela usuario_tarefa
 INSERT INTO public.usuario_tarefa (usuario_id, tarefa_id) VALUES
@@ -69,10 +84,17 @@ INSERT INTO public.tarefa_classificacao (tarefa_id, classificacao_id) VALUES
 (1, 1),
 (2, 2),
 (3, 3),
+(1, 3),
+(4, 1),
+(5, 2);
+
+-- Populando a tabela tarefa_prioridade
+INSERT INTO public.tarefa_prioridade (tarefa_id, prioridade_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
 (4, 4),
-(5, 5),
 (1, 3),
 (2, 4),
-(3, 5),
 (4, 1),
 (5, 2);

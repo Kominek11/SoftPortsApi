@@ -8,6 +8,7 @@ import br.com.softports.core.api.organizacao.usecase.AtualizarOrganizacao;
 import br.com.softports.core.api.organizacao.usecase.BuscarOrganizacoes;
 import br.com.softports.core.api.organizacao.usecase.CriarOrganizacao;
 import br.com.softports.core.api.organizacao.usecase.DeletarOrganizacao;
+import br.com.softports.core.api.prioridade.repository.PrioridadeRepository;
 import br.com.softports.core.api.projeto.repository.ProjetoRepository;
 import br.com.softports.core.api.projeto.usecase.AtualizarProjeto;
 import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
@@ -84,16 +85,18 @@ public class UseCaseConfiguration {
 
     @Bean
     CriarTarefa criarTarefa(TarefaRepository tarefaRepository, ProjetoRepository projetoRepository,
-                            UsuarioRepository usuarioRepository, ClassificacaoRepository classificacaoRepository) {
+                            UsuarioRepository usuarioRepository, ClassificacaoRepository classificacaoRepository,
+                            PrioridadeRepository prioridadeRepository) {
         return new CriarTarefaDefault(tarefaRepository, projetoRepository,
-                usuarioRepository, classificacaoRepository);
+                usuarioRepository, classificacaoRepository, prioridadeRepository);
     }
 
     @Bean
     AtualizarTarefa atualizarTarefa(TarefaRepository tarefaRepository, ProjetoRepository projetoRepository,
-                                    UsuarioRepository usuarioRepository, ClassificacaoRepository classificacaoRepository) {
+                                    UsuarioRepository usuarioRepository, ClassificacaoRepository classificacaoRepository,
+                                    PrioridadeRepository prioridadeRepository) {
         return new AtualizarTarefaDefault(tarefaRepository, projetoRepository,
-                usuarioRepository, classificacaoRepository);
+                usuarioRepository, classificacaoRepository, prioridadeRepository);
     }
 
     @Bean

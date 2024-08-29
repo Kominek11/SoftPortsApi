@@ -45,8 +45,10 @@ public class TarefaExpressions {
                 : null;
     }
 
-    public static BooleanExpression prioridade(Long prioridade) {
-        return Objects.nonNull(prioridade) ? TAREFA.prioridade.eq(prioridade) : null;
+    public static BooleanExpression prioridade(List<Long> prioridades) {
+        return Objects.nonNull(prioridades)
+                ? TAREFA.prioridades.any().id.in(prioridades)
+                : null;
     }
 
     public static BooleanExpression classificacao(List<Long> classificacoes) {

@@ -11,11 +11,11 @@ public record CriarTarefaRequest(
         String so,
         String caminho,
         Date dataEstimada,
-        Long prioridade,
         Long status,
         Long projetoId,
         Long posicao,
         List<Long> usuarioIds,
         byte[][] screenshots,
-        Set<Long> classificacoes
+        Set<Long> classificacoes,
+        Set<Long> prioridades
 ) { }

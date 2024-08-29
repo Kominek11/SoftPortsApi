@@ -309,6 +309,39 @@ databaseChangeLog:
         onFail: MARK_RAN
         not:
           sequenceExists:
+            sequenceName: subclassificacao_id_seq
+      changes:
+        - createSequence:
+            sequenceName: subclassificacao_id_seq
+            startValue: 1
+        - preConditions:
+            onFail: MARK_RAN
+            not:
+              tableExists:
+                tableName: subclassificacao
+        - createTable:
+            tableName: subclassificacao
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  autoIncrement: true
+              - column:
+                  name: nome
+                  type: varchar
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: 8
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          sequenceExists:
             sequenceName: classificacao_id_seq
       changes:
         - createSequence:
@@ -334,9 +367,20 @@ databaseChangeLog:
                   type: varchar
                   constraints:
                     nullable: true
+              - column:
+                  name: subclassificacao_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: classificacao
+            baseColumnNames: subclassificacao_id
+            constraintName: classificacao_subclassificacao_fk
+            referencedTableName: subclassificacao
+            referencedColumnNames: id
 
   - changeSet:
-      id: 8
+      id: 9
       author: luccakominek
       preConditions:
         onFail: MARK_RAN
@@ -371,7 +415,7 @@ databaseChangeLog:
             referencedColumnNames: id
 
   - changeSet:
-      id: 9
+      id: 10
       author: luccakominek
       preConditions:
         onFail: MARK_RAN
@@ -403,4 +447,72 @@ databaseChangeLog:
             baseColumnNames: classificacao_id
             constraintName: tarefa_classificacao_classificacao_fk
             referencedTableName: classificacao
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 11
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          sequenceExists:
+            sequenceName: prioridade_id_seq
+      changes:
+        - createSequence:
+            sequenceName: prioridade_id_seq
+            startValue: 1
+        - preConditions:
+            onFail: MARK_RAN
+            not:
+              tableExists:
+                tableName: prioridade
+        - createTable:
+            tableName: prioridade
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  autoIncrement: true
+              - column:
+                  name: nome
+                  type: varchar
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: 12
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: tarefa_prioridade
+      changes:
+        - createTable:
+            tableName: tarefa_prioridade
+            columns:
+              - column:
+                  name: tarefa_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: prioridade_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: tarefa_prioridade
+            baseColumnNames: tarefa_id
+            constraintName: tarefa_prioridade_tarefa_fk
+            referencedTableName: tarefa
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: tarefa_prioridade
+            baseColumnNames: prioridade_id
+            constraintName: tarefa_prioridade_prioridade_fk
+            referencedTableName: prioridade
             referencedColumnNames: id
