@@ -53,7 +53,7 @@ public class TarefaExpressions {
 
     public static BooleanExpression classificacao(List<Long> classificacoes) {
         return Objects.nonNull(classificacoes)
-                ? TAREFA.classificacoes.any().id.in(classificacoes)
+                ? TAREFA.classificacao.id.in(classificacoes)
                 : null;
     }
 

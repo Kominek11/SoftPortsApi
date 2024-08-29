@@ -16,6 +16,7 @@ public record CriarTarefaRequest(
         Long posicao,
         List<Long> usuarioIds,
         byte[][] screenshots,
-        Set<Long> classificacoes,
+        Long classificacaoId,
+        Long subclassificacaoId,
         Long prioridade
 ) { }

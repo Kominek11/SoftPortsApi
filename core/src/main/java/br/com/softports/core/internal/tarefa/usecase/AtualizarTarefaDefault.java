@@ -7,6 +7,7 @@ import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.projeto.repository.ProjetoRepository;
 import br.com.softports.core.api.projeto.usecase.AtualizarProjeto;
 import br.com.softports.core.api.subclassificacao.dto.SubClassificacaoResponse;
+import br.com.softports.core.api.subclassificacao.repository.SubClassificacaoRepository;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
 import br.com.softports.core.api.tarefa.usecase.AtualizarTarefa;
@@ -15,6 +16,7 @@ import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.internal.classificacao.expression.ClassificacaoExpressions;
 import br.com.softports.core.internal.common.entity.*;
 import br.com.softports.core.internal.projeto.expression.ProjetoExpressions;
+import br.com.softports.core.internal.subclassificacao.expression.SubClassificacaoExpressions;
 import br.com.softports.core.internal.tarefa.expression.TarefaExpressions;
 import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import com.querydsl.core.BooleanBuilder;
@@ -33,6 +35,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
     private final ProjetoRepository projetoRepository;
     private final UsuarioRepository usuarioRepository;
     private final ClassificacaoRepository classificacaoRepository;
+    private final SubClassificacaoRepository subClassificacaoRepository;
 
     @Override
     public TarefaResponse executar(Long id, String titulo,
@@ -42,7 +45,8 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                                    Long status,
                                    Boolean fechada, Long posicao,
                                    Long projetoId, Long usuarioId,
-                                   byte[][] screenshots, Set<Long> classificacoes,
+                                   byte[][] screenshots, Long classificacaoId,
+                                   Long subclassificacaoId,
                                    Long prioridade) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
@@ -52,12 +56,11 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(usuarioId));
         Usuario usuario = usuarioRepository.buscar(filtroUsuario).orElseThrow();
         usuarios.add(usuario);
-        Set<Classificacao> classificacoesSet = new HashSet<>();
-        classificacoes.forEach(item -> {
-            BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(item));
-            Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
-            classificacoesSet.add(classificacao);
-        });
+        BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(classificacaoId));
+        Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
+        BooleanBuilder filtroSubClassificacao = new BooleanBuilder().and(SubClassificacaoExpressions.id(subclassificacaoId));
+        SubClassificacao subClassificacao = subClassificacaoRepository.buscar(filtroSubClassificacao).orElseThrow();
+        classificacao.setSubClassificacao(subClassificacao);
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
         tarefa.setSo(so);
@@ -65,7 +68,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         tarefa.setCaminho(caminho);
         tarefa.setDataFechamento(dataFechamento);
         tarefa.setDataEstimada(dataEstimada);
-        tarefa.setClassificacoes(classificacoesSet);
+        tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
         tarefa.setFechada(fechada);
         tarefa.setPosicao(posicao);
@@ -84,7 +87,8 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                                    Long status,
                                    Boolean fechada, Long posicao,
                                    Long projetoId, List<Long> usuarioIds,
-                                   byte[][] screenshots, Set<Long> classificacoes,
+                                   byte[][] screenshots, Long classificacaoId,
+                                   Long subclassificacaoId,
                                    Long prioridade) {
         BooleanBuilder filtroTarefa = new BooleanBuilder().and(TarefaExpressions.id(id));
         Tarefa tarefa = tarefaRepository.buscar(filtroTarefa).orElseThrow();
@@ -96,12 +100,11 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
             Usuario usuario = usuarioRepository.buscar(filtroUsuario).orElseThrow();
             usuarios.add(usuario);
         });
-        Set<Classificacao> classificacoesSet = new HashSet<>();
-        classificacoes.forEach(item -> {
-            BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(item));
-            Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
-            classificacoesSet.add(classificacao);
-        });
+        BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(classificacaoId));
+        Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
+        BooleanBuilder filtroSubClassificacao = new BooleanBuilder().and(SubClassificacaoExpressions.id(subclassificacaoId));
+        SubClassificacao subClassificacao = subClassificacaoRepository.buscar(filtroSubClassificacao).orElseThrow();
+        classificacao.setSubClassificacao(subClassificacao);
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
         tarefa.setSo(so);
@@ -109,7 +112,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         tarefa.setCaminho(caminho);
         tarefa.setDataFechamento(dataFechamento);
         tarefa.setDataEstimada(dataEstimada);
-        tarefa.setClassificacoes(classificacoesSet);
+        tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
         tarefa.setFechada(fechada);
         tarefa.setPosicao(posicao);
@@ -135,7 +138,7 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
                 .posicao(tarefa.getPosicao())
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
-                .classificacoes(gerarClassificacaoResponseList(tarefa.getClassificacoes()))
+                .classificacao(gerarClassificacaoResponse(tarefa.getClassificacao()))
                 .prioridade(tarefa.getPrioridade())
                 .build();
     }
@@ -168,16 +171,11 @@ public class AtualizarTarefaDefault implements AtualizarTarefa {
         );
     }
 
-    private Set<ClassificacaoResponse> gerarClassificacaoResponseList(Set<Classificacao> classificacoes) {
-        Set<ClassificacaoResponse> classificacaoResponseList = new HashSet<>();
-        classificacoes.forEach(item -> {
-            classificacaoResponseList.add(new ClassificacaoResponse(
-                    item.getId(),
-                    item.getNome(),
-                    gerarSubClassificacaoResponse(item.getSubClassificacao())
-            ));
-        });
-        return classificacaoResponseList;
+    private ClassificacaoResponse gerarClassificacaoResponse(Classificacao classificacao) {
+        return new ClassificacaoResponse(
+                classificacao.getId(),
+                gerarSubClassificacaoResponse(classificacao.getSubClassificacao()).id()
+        );
     }
 
     private SubClassificacaoResponse gerarSubClassificacaoResponse(SubClassificacao subClassificacao) {

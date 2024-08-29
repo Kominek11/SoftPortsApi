@@ -126,6 +126,83 @@ databaseChangeLog:
         onFail: MARK_RAN
         not:
           sequenceExists:
+            sequenceName: subclassificacao_id_seq
+      changes:
+        - createSequence:
+            sequenceName: subclassificacao_id_seq
+            startValue: 4
+        - preConditions:
+            onFail: MARK_RAN
+            not:
+              tableExists:
+                tableName: subclassificacao
+        - createTable:
+            tableName: subclassificacao
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  autoIncrement: true
+              - column:
+                  name: nome
+                  type: varchar
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: 5
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          sequenceExists:
+            sequenceName: classificacao_id_seq
+      changes:
+        - createSequence:
+            sequenceName: classificacao_id_seq
+            startValue: 1
+        - preConditions:
+            onFail: MARK_RAN
+            not:
+              tableExists:
+                tableName: classificacao
+        - createTable:
+            tableName: classificacao
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  autoIncrement: true
+              - column:
+                  name: nome
+                  type: varchar
+                  constraints:
+                    nullable: true
+              - column:
+                  name: subclassificacao_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: classificacao
+            baseColumnNames: subclassificacao_id
+            constraintName: classificacao_subclassificacao_fk
+            referencedTableName: subclassificacao
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 6
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          sequenceExists:
             sequenceName: tarefa_id_seq
       changes:
         - createSequence:
@@ -216,15 +293,26 @@ databaseChangeLog:
                   type: text
                   constraints:
                     nullable: true
+              - column:
+                  name: classificacao_id
+                  type: bigint
+                  constraints:
+                    nullable: true
         - addForeignKeyConstraint:
             baseTableName: tarefa
             baseColumnNames: projeto_id
             constraintName: tarefa_projeto_fk
             referencedTableName: projeto
             referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: tarefa
+            baseColumnNames: classificacao_id
+            constraintName: tarefa_classificacao_fk
+            referencedTableName: classificacao
+            referencedColumnNames: id
 
   - changeSet:
-      id: 5
+      id: 7
       author: luccakominek
       preConditions:
         onFail: MARK_RAN
@@ -259,7 +347,7 @@ databaseChangeLog:
             referencedColumnNames: id
 
   - changeSet:
-      id: 6
+      id: 8
       author: luccakominek
       preConditions:
         onFail: MARK_RAN
@@ -302,82 +390,7 @@ databaseChangeLog:
             referencedTableName: tarefa
             referencedColumnNames: id
 
-  - changeSet:
-      id: 7
-      author: luccakominek
-      preConditions:
-        onFail: MARK_RAN
-        not:
-          sequenceExists:
-            sequenceName: subclassificacao_id_seq
-      changes:
-        - createSequence:
-            sequenceName: subclassificacao_id_seq
-            startValue: 4
-        - preConditions:
-            onFail: MARK_RAN
-            not:
-              tableExists:
-                tableName: subclassificacao
-        - createTable:
-            tableName: subclassificacao
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-                  autoIncrement: true
-              - column:
-                  name: nome
-                  type: varchar
-                  constraints:
-                    nullable: true
 
-  - changeSet:
-      id: 8
-      author: luccakominek
-      preConditions:
-        onFail: MARK_RAN
-        not:
-          sequenceExists:
-            sequenceName: classificacao_id_seq
-      changes:
-        - createSequence:
-            sequenceName: classificacao_id_seq
-            startValue: 1
-        - preConditions:
-            onFail: MARK_RAN
-            not:
-              tableExists:
-                tableName: classificacao
-        - createTable:
-            tableName: classificacao
-            columns:
-              - column:
-                  name: id
-                  type: bigint
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-                  autoIncrement: true
-              - column:
-                  name: nome
-                  type: varchar
-                  constraints:
-                    nullable: true
-              - column:
-                  name: subclassificacao_id
-                  type: bigint
-                  constraints:
-                    nullable: false
-        - addForeignKeyConstraint:
-            baseTableName: classificacao
-            baseColumnNames: subclassificacao_id
-            constraintName: classificacao_subclassificacao_fk
-            referencedTableName: subclassificacao
-            referencedColumnNames: id
 
   - changeSet:
       id: 9
@@ -412,39 +425,4 @@ databaseChangeLog:
             baseColumnNames: projeto_id
             constraintName: usuario_projeto_projeto_fk
             referencedTableName: projeto
-            referencedColumnNames: id
-
-  - changeSet:
-      id: 10
-      author: luccakominek
-      preConditions:
-        onFail: MARK_RAN
-        not:
-          tableExists:
-            tableName: tarefa_classificacao
-      changes:
-        - createTable:
-            tableName: tarefa_classificacao
-            columns:
-              - column:
-                  name: tarefa_id
-                  type: bigint
-                  constraints:
-                    nullable: false
-              - column:
-                  name: classificacao_id
-                  type: bigint
-                  constraints:
-                    nullable: false
-        - addForeignKeyConstraint:
-            baseTableName: tarefa_classificacao
-            baseColumnNames: tarefa_id
-            constraintName: tarefa_classificacao_tarefa_fk
-            referencedTableName: tarefa
-            referencedColumnNames: id
-        - addForeignKeyConstraint:
-            baseTableName: tarefa_classificacao
-            baseColumnNames: classificacao_id
-            constraintName: tarefa_classificacao_classificacao_fk
-            referencedTableName: classificacao
             referencedColumnNames: id

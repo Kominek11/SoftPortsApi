@@ -44,7 +44,7 @@ public class AtualizarFeedbackTarefaDefault implements AtualizarFeedbackTarefa {
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
                 .feedback(tarefa.getFeedback())
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
-                .classificacoes(gerarClassificacaoResponseList(tarefa.getClassificacoes()))
+                .classificacao(gerarClassificacaoResponse(tarefa.getClassificacao()))
                 .prioridade(tarefa.getPrioridade())
                 .build();
     }
@@ -77,16 +77,11 @@ public class AtualizarFeedbackTarefaDefault implements AtualizarFeedbackTarefa {
         );
     }
 
-    private Set<ClassificacaoResponse> gerarClassificacaoResponseList(Set<Classificacao> classificacoes) {
-        Set<ClassificacaoResponse> classificacaoResponseList = new HashSet<>();
-        classificacoes.forEach(item -> {
-            classificacaoResponseList.add(new ClassificacaoResponse(
-                    item.getId(),
-                    item.getNome(),
-                    gerarSubClassificacaoResponse(item.getSubClassificacao())
-            ));
-        });
-        return classificacaoResponseList;
+    private ClassificacaoResponse gerarClassificacaoResponse(Classificacao classificacao) {
+        return new ClassificacaoResponse(
+                classificacao.getId(),
+                gerarSubClassificacaoResponse(classificacao.getSubClassificacao()).id()
+        );
     }
 
     private SubClassificacaoResponse gerarSubClassificacaoResponse(SubClassificacao subClassificacao) {

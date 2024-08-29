@@ -54,7 +54,7 @@ public class IncluirComentarioTarefaDefault implements IncluirComentarioTarefa {
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .comentarios(gerarComentarioResponseList(comentarios))
-                .classificacoes(gerarClassificacaoResponseList(tarefa.getClassificacoes()))
+                .classificacao(gerarClassificacaoResponse(tarefa.getClassificacao()))
                 .prioridade(tarefa.getPrioridade())
                 .build();
     }
@@ -98,16 +98,11 @@ public class IncluirComentarioTarefaDefault implements IncluirComentarioTarefa {
         return comentarioResponseList;
     }
 
-    private Set<ClassificacaoResponse> gerarClassificacaoResponseList(Set<Classificacao> classificacoes) {
-        Set<ClassificacaoResponse> classificacaoResponseList = new HashSet<>();
-        classificacoes.forEach(item -> {
-            classificacaoResponseList.add(new ClassificacaoResponse(
-                    item.getId(),
-                    item.getNome(),
-                    gerarSubClassificacaoResponse(item.getSubClassificacao())
-            ));
-        });
-        return classificacaoResponseList;
+    private ClassificacaoResponse gerarClassificacaoResponse(Classificacao classificacao) {
+        return new ClassificacaoResponse(
+                classificacao.getId(),
+                gerarSubClassificacaoResponse(classificacao.getSubClassificacao()).id()
+        );
     }
 
     private SubClassificacaoResponse gerarSubClassificacaoResponse(SubClassificacao subClassificacao) {

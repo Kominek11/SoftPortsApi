@@ -73,11 +73,7 @@ public class Tarefa {
     )
     Set<Usuario> usuarios;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tarefa_classificacao",
-            joinColumns = @JoinColumn(name = "tarefa_id"),
-            inverseJoinColumns = @JoinColumn(name = "classificacao_id")
-    )
-    Set<Classificacao> classificacoes;
+    @OneToOne
+    @JoinColumn(name = "classificacao_id")
+    Classificacao classificacao;
 }

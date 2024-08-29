@@ -96,11 +96,12 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                 .dataEstimada(tarefa.getDataEstimada())
                 .status(tarefa.getStatus())
                 .fechada(tarefa.getFechada())
+                .feedback(tarefa.getFeedback())
                 .posicao(tarefa.getPosicao())
                 .projeto(gerarProjetoResponse(tarefa.getProjeto()))
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .comentarios(gerarComentarioResponseList(comentarios))
-                .classificacoes(gerarClassificacaoResponseList(tarefa.getClassificacoes()))
+                .classificacao(gerarClassificacaoResponse(tarefa.getClassificacao()))
                 .prioridade(tarefa.getPrioridade())
                 .build();
     }
@@ -144,16 +145,11 @@ public class BuscarTarefasDefault implements BuscarTarefas {
         return comentarioResponseList;
     }
 
-    private Set<ClassificacaoResponse> gerarClassificacaoResponseList(Set<Classificacao> classificacoes) {
-        Set<ClassificacaoResponse> classificacaoResponseList = new HashSet<>();
-        classificacoes.forEach(item -> {
-            classificacaoResponseList.add(new ClassificacaoResponse(
-                    item.getId(),
-                    item.getNome(),
-                    gerarSubClassificacaoResponse(item.getSubClassificacao())
-            ));
-        });
-        return classificacaoResponseList;
+    private ClassificacaoResponse gerarClassificacaoResponse(Classificacao classificacao) {
+        return new ClassificacaoResponse(
+                classificacao.getId(),
+                gerarSubClassificacaoResponse(classificacao.getSubClassificacao()).id()
+        );
     }
 
     private SubClassificacaoResponse gerarSubClassificacaoResponse(SubClassificacao subClassificacao) {

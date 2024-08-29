@@ -23,9 +23,6 @@ public class Classificacao {
     @Column
     String nome;
 
-    @ManyToMany(mappedBy = "classificacoes")
-    Set<Tarefa> tarefas;
-
     @OneToOne
     @JoinColumn(name = "subclassificacao_id")
     SubClassificacao subClassificacao;

@@ -66,7 +66,8 @@ public class TarefaResource {
                 criarTarefaRequest.dataEstimada(),
                 criarTarefaRequest.status(), criarTarefaRequest.posicao(),
                 criarTarefaRequest.projetoId(), criarTarefaRequest.usuarioIds(), criarTarefaRequest.screenshots(),
-                criarTarefaRequest.classificacoes(), criarTarefaRequest.prioridade());
+                criarTarefaRequest.classificacaoId(), criarTarefaRequest.subclassificacaoId(),
+                criarTarefaRequest.prioridade());
     }
 
     @PutMapping()
@@ -77,7 +78,8 @@ public class TarefaResource {
                 atualizarTarefaRequest.status(), atualizarTarefaRequest.fechada(),
                 atualizarTarefaRequest.posicao(),  atualizarTarefaRequest.projetoId(),
                 atualizarTarefaRequest.usuarioIds(), atualizarTarefaRequest.screenshots(),
-                atualizarTarefaRequest.classificacoes(), atualizarTarefaRequest.prioridade());
+                atualizarTarefaRequest.classificacaoId(), atualizarTarefaRequest.subclassificacaoId(),
+                atualizarTarefaRequest.prioridade());
     }
 
     @PutMapping("/status/{id}")

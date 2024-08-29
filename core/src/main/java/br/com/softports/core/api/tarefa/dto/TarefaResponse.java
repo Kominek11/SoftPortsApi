@@ -31,5 +31,5 @@ public record TarefaResponse(
         String feedback,
         Set<UsuarioResponse> usuarios,
         List<ComentarioResponse> comentarios,
-        Set<ClassificacaoResponse> classificacoes
+        ClassificacaoResponse classificacao
 ) {}

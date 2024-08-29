@@ -6,6 +6,5 @@ import lombok.Builder;
 @Builder
 public record ClassificacaoResponse(
         Long id,
-        String nome,
-        SubClassificacaoResponse subclassificacao
+        Long subclassificacaoId
 ) {}

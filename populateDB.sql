@@ -22,14 +22,6 @@ INSERT INTO public.projeto (id, nome, organizacao_id) VALUES
 (nextval('projeto_id_seq'), 'Projeto Zeus', 4),
 (nextval('projeto_id_seq'), 'Projeto Artemis', 5);
 
--- Populando a tabela tarefa
-INSERT INTO public.tarefa (id, titulo, descricao, so, screenshots, caminho, data_fechamento, data_criacao, data_estimada, prioridade, status, fechada, posicao, projeto_id, feedback) VALUES
-(nextval('tarefa_id_seq'), 'Corrigir bug na tela de login', 'Corrigir o erro de autenticação na tela de login', 'Windows', ARRAY[decode('cGluZGVyCg==', 'base64')], '/caminho/correcoes', '2024-08-22', '2024-08-21', '2024-08-21', 1, 1, true, 1, 1, 'feedback'),
-(nextval('tarefa_id_seq'), 'Implementar nova funcionalidade', 'Adicionar a funcionalidade de exportação de relatórios', 'Linux', NULL, NULL, NULL, '2024-08-20', '2024-08-21', 2, 2, false, 1, 2, 'feedback'),
-(nextval('tarefa_id_seq'), 'Melhorar desempenho do sistema', 'Otimizar a consulta ao banco de dados', 'MacOS', ARRAY[decode('cGluZGVyCg==', 'base64')], '/caminho/melhorias', '2024-08-23', '2024-08-21', '2024-08-21', 1, 1, true, 1, 3, 'feedback'),
-(nextval('tarefa_id_seq'), 'Atualizar documentação', 'Atualizar a documentação do sistema para a versão mais recente', NULL, NULL, '/caminho/documentacao', NULL, '2024-08-21', '2024-08-21', 3, 2, true, 1, 4, 'feedback'),
-(nextval('tarefa_id_seq'), 'Corrigir erro na exportação de dados', 'Corrigir o erro ao exportar dados no formato CSV', 'Windows', ARRAY[decode('cGluZGVyCg==', 'base64')], '/caminho/correcoes2', '2024-08-25', '2024-08-21', '2024-08-21', 2, 3, true, 1, 5, 'feedback');
-
 -- Populando a tabela subclassificacao
 INSERT INTO public.subclassificacao (id, nome) VALUES
 (nextval('subclassificacao_id_seq'), 'Funcional'),
@@ -45,6 +37,14 @@ INSERT INTO public.classificacao (id, nome, subclassificacao_id) VALUES
 (nextval('classificacao_id_seq'), 'Incidente', 4),
 (nextval('classificacao_id_seq'), 'Problema', 5),
 (nextval('classificacao_id_seq'), 'Mudança', 6);
+
+-- Populando a tabela tarefa
+INSERT INTO public.tarefa (id, titulo, descricao, so, screenshots, caminho, data_fechamento, data_criacao, data_estimada, prioridade, status, fechada, posicao, projeto_id, feedback, classificacao_id) VALUES
+(nextval('tarefa_id_seq'), 'Corrigir bug na tela de login', 'Corrigir o erro de autenticação na tela de login', 'Windows', ARRAY[decode('cGluZGVyCg==', 'base64')], '/caminho/correcoes', '2024-08-22', '2024-08-21', '2024-08-21', 1, 1, true, 1, 1, 'feedback', 1),
+(nextval('tarefa_id_seq'), 'Implementar nova funcionalidade', 'Adicionar a funcionalidade de exportação de relatórios', 'Linux', NULL, NULL, NULL, '2024-08-20', '2024-08-21', 2, 2, false, 1, 2, 'feedback', 2),
+(nextval('tarefa_id_seq'), 'Melhorar desempenho do sistema', 'Otimizar a consulta ao banco de dados', 'MacOS', ARRAY[decode('cGluZGVyCg==', 'base64')], '/caminho/melhorias', '2024-08-23', '2024-08-21', '2024-08-21', 1, 1, true, 1, 3, 'feedback', 3),
+(nextval('tarefa_id_seq'), 'Atualizar documentação', 'Atualizar a documentação do sistema para a versão mais recente', NULL, NULL, '/caminho/documentacao', NULL, '2024-08-21', '2024-08-21', 3, 2, true, 1, 4, 'feedback', 2),
+(nextval('tarefa_id_seq'), 'Corrigir erro na exportação de dados', 'Corrigir o erro ao exportar dados no formato CSV', 'Windows', ARRAY[decode('cGluZGVyCg==', 'base64')], '/caminho/correcoes2', '2024-08-25', '2024-08-21', '2024-08-21', 2, 3, true, 1, 5, 'feedback', 1);
 
 -- Populando a tabela usuario_tarefa
 INSERT INTO public.usuario_tarefa (usuario_id, tarefa_id) VALUES
@@ -69,14 +69,5 @@ INSERT INTO public.usuario_projeto (usuario_id, projeto_id) VALUES
 (1, 3),
 (2, 4),
 (3, 5),
-(4, 1),
-(5, 2);
-
--- Populando a tabela tarefa_classificacao
-INSERT INTO public.tarefa_classificacao (tarefa_id, classificacao_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(1, 3),
 (4, 1),
 (5, 2);

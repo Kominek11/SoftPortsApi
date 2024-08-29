@@ -19,6 +19,7 @@ public record AtualizarTarefaRequest(
         Long projetoId,
         List<Long> usuarioIds,
         byte[][] screenshots,
-        Set<Long> classificacoes,
+        Long classificacaoId,
+        Long subclassificacaoId,
         Long prioridade
 ) { }
