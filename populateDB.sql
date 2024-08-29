@@ -46,13 +46,6 @@ INSERT INTO public.classificacao (id, nome, subclassificacao_id) VALUES
 (nextval('classificacao_id_seq'), 'Problema', 5),
 (nextval('classificacao_id_seq'), 'Mudança', 6);
 
--- Populando a tabela prioridade
-INSERT INTO public.prioridade (id, nome) VALUES
-(nextval('prioridade_id_seq'), 'Baixa'),
-(nextval('prioridade_id_seq'), 'Média'),
-(nextval('prioridade_id_seq'), 'Alta'),
-(nextval('prioridade_id_seq'), 'Crítica');
-
 -- Populando a tabela usuario_tarefa
 INSERT INTO public.usuario_tarefa (usuario_id, tarefa_id) VALUES
 (1, 1),
@@ -85,16 +78,5 @@ INSERT INTO public.tarefa_classificacao (tarefa_id, classificacao_id) VALUES
 (2, 2),
 (3, 3),
 (1, 3),
-(4, 1),
-(5, 2);
-
--- Populando a tabela tarefa_prioridade
-INSERT INTO public.tarefa_prioridade (tarefa_id, prioridade_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(1, 3),
-(2, 4),
 (4, 1),
 (5, 2);

@@ -5,10 +5,8 @@ import br.com.softports.core.api.comentario.dto.ComentarioResponse;
 import br.com.softports.core.api.comentario.repository.ComentarioRepository;
 import br.com.softports.core.api.common.dto.Pagina;
 import br.com.softports.core.api.organizacao.dto.OrganizacaoResponse;
-import br.com.softports.core.api.prioridade.dto.PrioridadeResponse;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
-import br.com.softports.core.api.projeto.repository.ProjetoRepository;
-import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
+import br.com.softports.core.api.subclassificacao.dto.SubClassificacaoResponse;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
 import br.com.softports.core.api.tarefa.usecase.BuscarTarefas;
@@ -16,7 +14,6 @@ import br.com.softports.core.api.usuario.dto.UsuarioResponse;
 import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.internal.comentario.expression.ComentarioExpressions;
 import br.com.softports.core.internal.common.entity.*;
-import br.com.softports.core.internal.organizacao.expression.OrganizacaoExpressions;
 import br.com.softports.core.internal.projeto.expression.ProjetoExpressions;
 import br.com.softports.core.internal.tarefa.expression.TarefaExpressions;
 import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
@@ -39,8 +36,9 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                                            Long projetoId, Boolean fechada,
                                            LocalDate dataInicio, LocalDate dataFim,
                                            String titulo, Set<Long> usuarios,
-                                           List<Long> classificacao,
-                                           List<Long> prioridades) {
+                                           List<Long> prioridades,
+                                           List<Long> classificacao
+                                           ) {
         Set<Usuario> usuariosSet = new HashSet<>();
         if (usuarios != null) {
             usuarios.forEach(item -> {
@@ -103,7 +101,7 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .comentarios(gerarComentarioResponseList(comentarios))
                 .classificacoes(gerarClassificacaoResponseList(tarefa.getClassificacoes()))
-                .prioridades(gerarPrioridadeResponseList(tarefa.getPrioridades()))
+                .prioridade(tarefa.getPrioridade())
                 .build();
     }
 
@@ -151,20 +149,17 @@ public class BuscarTarefasDefault implements BuscarTarefas {
         classificacoes.forEach(item -> {
             classificacaoResponseList.add(new ClassificacaoResponse(
                     item.getId(),
-                    item.getNome()
+                    item.getNome(),
+                    gerarSubClassificacaoResponse(item.getSubClassificacao())
             ));
         });
         return classificacaoResponseList;
     }
 
-    private Set<PrioridadeResponse> gerarPrioridadeResponseList(Set<Prioridade> prioridades) {
-        Set<PrioridadeResponse> prioridadeoResponseList = new HashSet<>();
-        prioridades.forEach(item -> {
-            prioridadeoResponseList.add(new PrioridadeResponse(
-                    item.getId(),
-                    item.getNome()
-            ));
-        });
-        return prioridadeoResponseList;
+    private SubClassificacaoResponse gerarSubClassificacaoResponse(SubClassificacao subClassificacao) {
+        return new SubClassificacaoResponse(
+                subClassificacao.getId(),
+                subClassificacao.getNome()
+        );
     }
 }

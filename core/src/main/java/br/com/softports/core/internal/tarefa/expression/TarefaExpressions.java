@@ -47,7 +47,7 @@ public class TarefaExpressions {
 
     public static BooleanExpression prioridade(List<Long> prioridades) {
         return Objects.nonNull(prioridades)
-                ? TAREFA.prioridades.any().id.in(prioridades)
+                ? TAREFA.prioridade.in(prioridades)
                 : null;
     }
 

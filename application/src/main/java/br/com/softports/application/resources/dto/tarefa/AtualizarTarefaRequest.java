@@ -20,5 +20,5 @@ public record AtualizarTarefaRequest(
         List<Long> usuarioIds,
         byte[][] screenshots,
         Set<Long> classificacoes,
-        Set<Long> prioridades
+        Long prioridade
 ) { }

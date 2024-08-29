@@ -16,7 +16,7 @@ public interface CriarTarefa {
                             Long posicao, Long projetoId,
                             Long usuarioId, byte[][] screenshots,
                             Set<Long> classificacoes,
-                            Set<Long> prioridades);
+                            Long prioridade);
 
     TarefaResponse executar(String titulo, String descricao,
                             String so, String caminho, Date dataEstimada,
@@ -24,5 +24,5 @@ public interface CriarTarefa {
                             Long posicao, Long projetoId,
                             List<Long> usuarioIds, byte[][] screenshots,
                             Set<Long> classificacoes,
-                            Set<Long> prioridades);
+                            Long prioridade);
 }

@@ -4,8 +4,8 @@ import br.com.softports.core.api.classificacao.dto.ClassificacaoResponse;
 import br.com.softports.core.api.comentario.dto.ComentarioResponse;
 import br.com.softports.core.api.comentario.repository.ComentarioRepository;
 import br.com.softports.core.api.organizacao.dto.OrganizacaoResponse;
-import br.com.softports.core.api.prioridade.dto.PrioridadeResponse;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
+import br.com.softports.core.api.subclassificacao.dto.SubClassificacaoResponse;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
 import br.com.softports.core.api.tarefa.usecase.AtualizarStatusTarefa;
@@ -55,7 +55,7 @@ public class IncluirComentarioTarefaDefault implements IncluirComentarioTarefa {
                 .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
                 .comentarios(gerarComentarioResponseList(comentarios))
                 .classificacoes(gerarClassificacaoResponseList(tarefa.getClassificacoes()))
-                .prioridades(gerarPrioridadeResponseList(tarefa.getPrioridades()))
+                .prioridade(tarefa.getPrioridade())
                 .build();
     }
 
@@ -103,20 +103,18 @@ public class IncluirComentarioTarefaDefault implements IncluirComentarioTarefa {
         classificacoes.forEach(item -> {
             classificacaoResponseList.add(new ClassificacaoResponse(
                     item.getId(),
-                    item.getNome()
+                    item.getNome(),
+                    gerarSubClassificacaoResponse(item.getSubClassificacao())
             ));
         });
         return classificacaoResponseList;
     }
 
-    private Set<PrioridadeResponse> gerarPrioridadeResponseList(Set<Prioridade> prioridades) {
-        Set<PrioridadeResponse> prioridadeoResponseList = new HashSet<>();
-        prioridades.forEach(item -> {
-            prioridadeoResponseList.add(new PrioridadeResponse(
-                    item.getId(),
-                    item.getNome()
-            ));
-        });
-        return prioridadeoResponseList;
+    private SubClassificacaoResponse gerarSubClassificacaoResponse(SubClassificacao subClassificacao) {
+        return new SubClassificacaoResponse(
+                subClassificacao.getId(),
+                subClassificacao.getNome()
+        );
     }
+
 }

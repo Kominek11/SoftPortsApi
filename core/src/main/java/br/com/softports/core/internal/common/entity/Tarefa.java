@@ -55,6 +55,9 @@ public class Tarefa {
     @Column
     Long posicao;
 
+    @Column
+    Long prioridade;
+
     @ManyToOne
     @JoinColumn(name = "projeto_id", nullable = false)
     Projeto projeto;
@@ -77,12 +80,4 @@ public class Tarefa {
             inverseJoinColumns = @JoinColumn(name = "classificacao_id")
     )
     Set<Classificacao> classificacoes;
-
-    @ManyToMany
-    @JoinTable(
-            name = "tarefa_prioridade",
-            joinColumns = @JoinColumn(name = "tarefa_id"),
-            inverseJoinColumns = @JoinColumn(name = "prioridade_id")
-    )
-    Set<Prioridade> prioridades;
 }
