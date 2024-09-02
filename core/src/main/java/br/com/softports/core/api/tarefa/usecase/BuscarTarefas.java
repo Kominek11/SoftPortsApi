@@ -22,8 +22,9 @@ public interface BuscarTarefas {
                                     LocalDate dataFim,
                                     String titulo,
                                     Set<Long> usuarios,
+                                    List<Long> prioridades,
                                     List<Long> classificacao,
-                                    List<Long> prioridades);
+                                    List<Long> subClassificacao);
 
     TarefaResponse executar(Long id);
 }

@@ -37,7 +37,8 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                                            LocalDate dataInicio, LocalDate dataFim,
                                            String titulo, Set<Long> usuarios,
                                            List<Long> prioridades,
-                                           List<Long> classificacao
+                                           List<Long> classificacao,
+                                           List<Long> subClassificacao
                                            ) {
         Set<Usuario> usuariosSet = new HashSet<>();
         if (usuarios != null) {
@@ -54,7 +55,8 @@ public class BuscarTarefasDefault implements BuscarTarefas {
                 .and(TarefaExpressions.titulo(titulo))
                 .and(TarefaExpressions.usuarios(usuariosSet.isEmpty() ? null : usuariosSet))
                 .and(TarefaExpressions.prioridade(prioridades))
-                .and(TarefaExpressions.classificacao(classificacao));
+                .and(TarefaExpressions.classificacao(classificacao))
+                .and(TarefaExpressions.subClassificacao(subClassificacao));
             List<TarefaResponse> tarefas = tarefaRepository
                     .buscarTodos(filtro,
                             tamanhoPagina,

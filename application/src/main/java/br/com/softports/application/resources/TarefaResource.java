@@ -48,10 +48,11 @@ public class TarefaResource {
             @RequestParam(required = false) String titulo,
             @RequestParam(required = false) Set<Long> usuarios,
             @RequestParam(required = false) List<Long> prioridades,
-            @RequestParam(required = false) List<Long> classificacao
+            @RequestParam(required = false) List<Long> classificacao,
+            @RequestParam(required = false) List<Long> subClassificacao
             ) {
         return buscarTarefas.executar(tamanhoPagina, numeroPagina, ordenadoPor, direcao, projetoId,
-                fechada, dataInicio, dataFim, titulo, usuarios, prioridades, classificacao);
+                fechada, dataInicio, dataFim, titulo, usuarios, prioridades, classificacao, subClassificacao);
     }
 
     @GetMapping("{id}")

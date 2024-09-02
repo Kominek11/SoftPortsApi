@@ -8,10 +8,6 @@ import br.com.softports.core.internal.common.dto.HttpRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.net.ssl.*;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -41,7 +37,6 @@ public class ObterTokenDefault implements ObterToken {
         Map<String, String> payload = gerarRequest(grantType, clientId, clientSecret);
 
         try {
-            getAllCertificatePermit();
             HttpRequest<Map<String, String>, AutenticacaoTokenResponse> request
                     = new HttpRequest<>(url, payload);
 
@@ -55,23 +50,6 @@ public class ObterTokenDefault implements ObterToken {
         }
     }
 
-    private void getAllCertificatePermit() throws NoSuchAlgorithmException, KeyManagementException {
-        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-            public X509Certificate[] getAcceptedIssuers() { return null; }
-            public void checkClientTrusted(X509Certificate[] certs, String authType) { }
-            public void checkServerTrusted(X509Certificate[] certs, String authType) { }
-        } };
-
-        SSLContext sc = SSLContext.getInstance("SSL");
-        sc.init(null, trustAllCerts, new java.security.SecureRandom());
-        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
-        HostnameVerifier allHostsValid = new HostnameVerifier() {
-            public boolean verify(String hostname, SSLSession session) { return true; }
-        };
-        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-    }
-
     private Map<String, String> gerarRequest(String grantType, String clientId, String clientSecret) {
         Map<String, String> mapRequest = new HashMap<>();
         mapRequest.put(GRANT_TYPE, grantType);
@@ -80,5 +58,4 @@ public class ObterTokenDefault implements ObterToken {
 
         return mapRequest;
     }
-
 }

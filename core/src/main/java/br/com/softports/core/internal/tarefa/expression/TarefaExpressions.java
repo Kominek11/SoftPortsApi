@@ -57,6 +57,12 @@ public class TarefaExpressions {
                 : null;
     }
 
+    public static BooleanExpression subClassificacao(List<Long> subClassificacoes) {
+        return Objects.nonNull(subClassificacoes)
+                ? TAREFA.classificacao.subClassificacao.id.in(subClassificacoes)
+                : null;
+    }
+
     public static BooleanExpression entre(LocalDate dataInicio, LocalDate dataFim) {
         if (dataInicio == null || dataFim == null) {
             return null;
