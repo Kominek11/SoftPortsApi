@@ -1,6 +1,9 @@
 package br.com.softports.application.resources.dto.projeto;
 
+import java.util.List;
+
 public record CriarProjetoRequest(
         String nome,
-        Long organizacaoId
+        Long organizacaoId,
+        List<Long> usuarios
 ) { }

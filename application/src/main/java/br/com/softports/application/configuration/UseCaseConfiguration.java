@@ -2,6 +2,7 @@ package br.com.softports.application.configuration;
 
 import br.com.softports.core.api.classificacao.repository.ClassificacaoRepository;
 import br.com.softports.core.api.comentario.repository.ComentarioRepository;
+import br.com.softports.core.api.common.service.HttpService;
 import br.com.softports.core.api.common.usecase.expression.*;
 import br.com.softports.core.api.organizacao.repository.OrganizacaoRepository;
 import br.com.softports.core.api.organizacao.usecase.AtualizarOrganizacao;
@@ -13,11 +14,12 @@ import br.com.softports.core.api.projeto.usecase.AtualizarProjeto;
 import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
 import br.com.softports.core.api.projeto.usecase.CriarProjeto;
 import br.com.softports.core.api.projeto.usecase.DeletarProjeto;
+import br.com.softports.core.api.properties.KeycloakProperties;
 import br.com.softports.core.api.subclassificacao.repository.SubClassificacaoRepository;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
 import br.com.softports.core.api.tarefa.usecase.*;
 import br.com.softports.core.api.usuario.repository.UsuarioRepository;
-import br.com.softports.core.api.usuario.usecase.BuscarUsuarios;
+import br.com.softports.core.api.usuario.usecase.*;
 import br.com.softports.core.internal.common.usecase.expression.*;
 import br.com.softports.core.internal.organizacao.usecase.AtualizarOrganizacaoDefault;
 import br.com.softports.core.internal.organizacao.usecase.BuscarOrganizacoesDefault;
@@ -28,7 +30,7 @@ import br.com.softports.core.internal.projeto.usecase.BuscarProjetosDefault;
 import br.com.softports.core.internal.projeto.usecase.CriarProjetoDefault;
 import br.com.softports.core.internal.projeto.usecase.DeletarProjetoDefault;
 import br.com.softports.core.internal.tarefa.usecase.*;
-import br.com.softports.core.internal.usuario.usecase.BuscarUsuariosDefault;
+import br.com.softports.core.internal.usuario.usecase.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -63,13 +65,15 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    CriarProjeto criarProjeto(ProjetoRepository projetoRepository, OrganizacaoRepository organizacaoRepository) {
-        return new CriarProjetoDefault(projetoRepository, organizacaoRepository);
+    CriarProjeto criarProjeto(ProjetoRepository projetoRepository, OrganizacaoRepository organizacaoRepository,
+                              UsuarioRepository usuarioRepository) {
+        return new CriarProjetoDefault(projetoRepository, organizacaoRepository, usuarioRepository);
     }
 
     @Bean
-    AtualizarProjeto atualizarProjeto(ProjetoRepository projetoRepository, OrganizacaoRepository organizacaoRepository) {
-        return new AtualizarProjetoDefault(projetoRepository, organizacaoRepository);
+    AtualizarProjeto atualizarProjeto(ProjetoRepository projetoRepository, OrganizacaoRepository organizacaoRepository,
+                                      UsuarioRepository usuarioRepository) {
+        return new AtualizarProjetoDefault(projetoRepository, organizacaoRepository, usuarioRepository);
     }
 
     @Bean
@@ -128,6 +132,40 @@ public class UseCaseConfiguration {
     @Bean
     BuscarUsuarios buscarUsuarios(UsuarioRepository usuarioRepository) {
         return new BuscarUsuariosDefault(usuarioRepository);
+    }
+
+    @Bean
+    CriarUsuario criarUsuario(CriarUsuarioKeycloak criarUsuarioKeycloak,
+                              BuscarUsuarioKeycloak buscarUsuarioKeycloak,
+                              UsuarioRepository usuarioRepository,
+                              UsuarioToUsuarioResponse usuarioToUsuarioResponse) {
+        return new CriarUsuarioDefault(criarUsuarioKeycloak, buscarUsuarioKeycloak,
+                usuarioRepository, usuarioToUsuarioResponse);
+    }
+
+    @Bean
+    CriarUsuarioKeycloak criarUsuarioKeycloak(KeycloakProperties keycloakProperties,
+                                              ObterToken obterToken,
+                                              HttpService httpService) {
+        return new CriarUsuarioKeycloakDefault(keycloakProperties, obterToken, httpService);
+    }
+
+    @Bean
+    ObterToken obterToken(KeycloakProperties keycloakProperties,
+                          HttpService httpService) {
+        return new ObterTokenDefault(keycloakProperties, httpService);
+    }
+
+    @Bean
+    UsuarioToUsuarioResponse usuarioToUsuarioResponse() {
+        return new UsuarioToUsuarioResponseDefault();
+    }
+
+    @Bean
+    BuscarUsuarioKeycloak buscarUsuarioKeycloak(KeycloakProperties keycloakProperties,
+                                                ObterToken obterToken,
+                                                HttpService httpService) {
+        return new BuscarUsuarioKeycloakDefault(keycloakProperties, obterToken, httpService);
     }
 
     @Bean

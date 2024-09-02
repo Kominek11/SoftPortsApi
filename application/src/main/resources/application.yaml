@@ -26,3 +26,5 @@ keycloak:
   client_id: softports
   client_secret: 24I7IoMFhSkiQUi1r23CJSP2c6PxBMyf
   url-token-client-secret: http://localhost:8090/realms/softports/protocol/openid-connect/token
+  url-end-point-users: https://localhost:8090/realms/softports/users
+  defaultPassword: Mudar@123

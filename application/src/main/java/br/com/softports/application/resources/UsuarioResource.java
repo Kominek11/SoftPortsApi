@@ -3,8 +3,10 @@ package br.com.softports.application.resources;
 import br.com.softports.core.api.common.dto.Pagina;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.usecase.BuscarTarefas;
+import br.com.softports.core.api.usuario.dto.CriarUsuarioRequest;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
 import br.com.softports.core.api.usuario.usecase.BuscarUsuarios;
+import br.com.softports.core.api.usuario.usecase.CriarUsuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,13 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioResource {
 
     private final BuscarUsuarios buscarUsuarios;
+    private final CriarUsuario criarUsuario;
+
+    @PostMapping
+    UsuarioResponse criarUsuario(@RequestBody CriarUsuarioRequest criarUsuarioRequest) {
+        return criarUsuario.executar(criarUsuarioRequest.nome(), criarUsuarioRequest.email(),
+                criarUsuarioRequest.username());
+    }
 
     @GetMapping
     Pagina<UsuarioResponse> buscarUsuarios(

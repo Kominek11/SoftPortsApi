@@ -37,7 +37,8 @@ public class ProjetoResource {
 
     @PostMapping
     ProjetoResponse criarProjeto(@RequestBody CriarProjetoRequest criarProjetoRequest) {
-        return criarProjeto.executar(criarProjetoRequest.nome(), criarProjetoRequest.organizacaoId());
+        return criarProjeto.executar(criarProjetoRequest.nome(), criarProjetoRequest.organizacaoId(),
+                criarProjetoRequest.usuarios());
     }
 
     @PutMapping()
@@ -45,7 +46,8 @@ public class ProjetoResource {
         return atualizarProjeto.executar(
                 atualizarProjetoRequest.id(),
                 atualizarProjetoRequest.nome(),
-                atualizarProjetoRequest.organizacaoId());
+                atualizarProjetoRequest.organizacaoId(),
+                atualizarProjetoRequest.usuarios());
     }
 
     @DeleteMapping("/{id}")
