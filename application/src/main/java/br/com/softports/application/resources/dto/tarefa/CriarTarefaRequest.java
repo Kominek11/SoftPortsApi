@@ -13,7 +13,6 @@ public record CriarTarefaRequest(
         Date dataEstimada,
         Long status,
         Long projetoId,
-        Long posicao,
         List<Long> usuarioIds,
         byte[][] screenshots,
         Long classificacaoId,

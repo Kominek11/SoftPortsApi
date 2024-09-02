@@ -31,6 +31,9 @@ import br.com.softports.core.internal.projeto.usecase.CriarProjetoDefault;
 import br.com.softports.core.internal.projeto.usecase.DeletarProjetoDefault;
 import br.com.softports.core.internal.tarefa.usecase.*;
 import br.com.softports.core.internal.usuario.usecase.*;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -38,6 +41,14 @@ import java.util.concurrent.Executor;
 
 @Configuration
 public class UseCaseConfiguration {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Bean
+    public JPAQueryFactory jpaQueryFactory() {
+        return new JPAQueryFactory(entityManager);
+    }
 
     @Bean
     BuscarOrganizacoes buscarOrganizacoes(OrganizacaoRepository organizacaoRepository) {

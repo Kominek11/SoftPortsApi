@@ -12,8 +12,7 @@ public interface CriarTarefa {
 
     TarefaResponse executar(String titulo, String descricao,
                             String so, String caminho, Date dataEstimada,
-                            Long status,
-                            Long posicao, Long projetoId,
+                            Long status, Long projetoId,
                             Long usuarioId, byte[][] screenshots,
                             Long classificacaoId,
                             Long subclassificacaoId,
@@ -21,8 +20,7 @@ public interface CriarTarefa {
 
     TarefaResponse executar(String titulo, String descricao,
                             String so, String caminho, Date dataEstimada,
-                            Long status,
-                            Long posicao, Long projetoId,
+                            Long status, Long projetoId,
                             List<Long> usuarioIds, byte[][] screenshots,
                             Long classificacaoId,
                             Long subclassificacaoId,

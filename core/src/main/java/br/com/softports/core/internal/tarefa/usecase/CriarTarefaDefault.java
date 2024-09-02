@@ -39,8 +39,7 @@ public class CriarTarefaDefault implements CriarTarefa {
     @Override
     public TarefaResponse executar(String titulo, String descricao,
                                    String so, String caminho, Date dataEstimada,
-                                   Long status,
-                                   Long posicao, Long projetoId,
+                                   Long status, Long projetoId,
                                    Long usuarioId, byte[][] screenshots,
                                    Long classificacaoId,
                                    Long subclassificacaoId,
@@ -67,7 +66,7 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
         tarefa.setFechada(false);
-        tarefa.setPosicao(posicao);
+        tarefa.setPosicao(gerarPosicaoTarefa(tarefa.getStatus()));
         tarefa.setProjeto(projeto);
         tarefa.setUsuarios(usuarios);
         tarefa.setPrioridade(prioridade);
@@ -78,7 +77,7 @@ public class CriarTarefaDefault implements CriarTarefa {
     @Override
     public TarefaResponse executar(String titulo, String descricao,
                                    String so, String caminho, Date dataEstimada,
-                                   Long status, Long posicao,
+                                   Long status,
                                    Long projetoId, List<Long> usuarioIds, byte[][] screenshots,
                                    Long classificacaoId,
                                    Long subclassificacaoId,
@@ -107,7 +106,7 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
         tarefa.setFechada(false);
-        tarefa.setPosicao(posicao);
+        tarefa.setPosicao(gerarPosicaoTarefa(tarefa.getStatus()));
         tarefa.setProjeto(projeto);
         tarefa.setUsuarios(usuarios);
         tarefa.setPrioridade(prioridade);
@@ -134,6 +133,10 @@ public class CriarTarefaDefault implements CriarTarefa {
                 .classificacao(gerarClassificacaoResponse(tarefa.getClassificacao()))
                 .prioridade(tarefa.getPrioridade())
                 .build();
+    }
+
+    private Long gerarPosicaoTarefa(Long status) {
+        return tarefaRepository.findMaxPosicao(status).orElse(0L) + 1;
     }
 
     private ProjetoResponse gerarProjetoResponse(Projeto projeto) {
