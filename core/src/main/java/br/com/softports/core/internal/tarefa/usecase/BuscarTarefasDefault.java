@@ -141,7 +141,9 @@ public class BuscarTarefasDefault implements BuscarTarefas {
         comentarios.forEach(item -> {
             comentarioResponseList.add(new ComentarioResponse(
                     item.getId(),
-                    item.getConteudo()
+                    item.getConteudo(),
+                    item.getDataCriacao(),
+                    item.getUsuario().getNome()
             ));
         });
         return comentarioResponseList;

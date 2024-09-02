@@ -4,5 +4,5 @@ import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 
 public interface IncluirComentarioTarefa {
 
-    TarefaResponse executar(Long id, String conteudo);
+    TarefaResponse executar(Long id, String conteudo, Long usuarioId);
 }

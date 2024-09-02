@@ -99,8 +99,8 @@ public class TarefaResource {
     }
 
     @PutMapping("/comentario/{id}")
-    TarefaResponse incluirComentarioTarefa(@PathVariable Long id, String conteudo) {
-        return incluirComentarioTarefa.executar(id, conteudo);
+    TarefaResponse incluirComentarioTarefa(@PathVariable Long id, String conteudo, Long usuarioId) {
+        return incluirComentarioTarefa.executar(id, conteudo, usuarioId);
     }
 
     @DeleteMapping("/{id}")

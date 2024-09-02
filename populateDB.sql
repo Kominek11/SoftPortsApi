@@ -46,6 +46,13 @@ INSERT INTO public.tarefa (id, titulo, descricao, so, screenshots, caminho, data
 (nextval('tarefa_id_seq'), 'Atualizar documentação', 'Atualizar a documentação do sistema para a versão mais recente', NULL, NULL, '/caminho/documentacao', NULL, '2024-08-21', '2024-08-21', 3, 2, true, 1, 4, 'feedback', 2),
 (nextval('tarefa_id_seq'), 'Corrigir erro na exportação de dados', 'Corrigir o erro ao exportar dados no formato CSV', 'Windows', ARRAY[decode('cGluZGVyCg==', 'base64')], '/caminho/correcoes2', '2024-08-25', '2024-08-21', '2024-08-21', 2, 3, true, 1, 5, 'feedback', 1);
 
+INSERT INTO public.comentario (id, conteudo, tarefa_id, data_criacao, usuario_id) VALUES
+(nextval('comentario_id_seq'), 'Comentario 1', 1, NOW(), 1),
+(nextval('comentario_id_seq'), 'Comentario 2', 2, NOW(), 2),
+(nextval('comentario_id_seq'), 'Comentario 3', 3, NOW(), 3),
+(nextval('comentario_id_seq'), 'Comentario 4', 4, NOW(), 4),
+(nextval('comentario_id_seq'), 'Comentario 5', 5, NOW(), 5);
+
 -- Populando a tabela usuario_tarefa
 INSERT INTO public.usuario_tarefa (usuario_id, tarefa_id) VALUES
 (1, 1),

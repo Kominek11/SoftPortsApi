@@ -383,14 +383,28 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
+              - column:
+                  name: data_criacao
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: usuario_id
+                  type: bigint
+                  constraints:
+                    nullable: false
         - addForeignKeyConstraint:
             baseTableName: comentario
             baseColumnNames: tarefa_id
             constraintName: comentario_tarefa_fk
             referencedTableName: tarefa
             referencedColumnNames: id
-
-
+        - addForeignKeyConstraint:
+            baseTableName: comentario
+            baseColumnNames: usuario_id
+            constraintName: comentario_usuario_fk
+            referencedTableName: usuario
+            referencedColumnNames: id
 
   - changeSet:
       id: 9

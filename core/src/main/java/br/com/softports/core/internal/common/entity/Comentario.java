@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Entity
 @Table(name = "comentario")
 @NoArgsConstructor
@@ -23,4 +26,11 @@ public class Comentario {
     @ManyToOne
     @JoinColumn(name = "tarefa_id", nullable = false)
     Tarefa tarefa;
+
+    @Column
+    LocalDateTime dataCriacao;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    Usuario usuario;
 }

@@ -131,8 +131,9 @@ public class UseCaseConfiguration {
 
     @Bean
     IncluirComentarioTarefa incluirComentarioTarefa(TarefaRepository tarefaRepository,
-                                                    ComentarioRepository comentarioRepository) {
-        return new IncluirComentarioTarefaDefault(tarefaRepository, comentarioRepository);
+                                                    ComentarioRepository comentarioRepository,
+                                                    UsuarioRepository usuarioRepository) {
+        return new IncluirComentarioTarefaDefault(tarefaRepository, comentarioRepository, usuarioRepository);
     }
 
     @Bean
