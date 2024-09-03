@@ -137,8 +137,8 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    DeletarTarefa deletarTarefa(TarefaRepository tarefaRepository) {
-        return new DeletarTarefaDefault(tarefaRepository);
+    DeletarTarefa deletarTarefa(TarefaRepository tarefaRepository, ComentarioRepository comentarioRepository) {
+        return new DeletarTarefaDefault(tarefaRepository, comentarioRepository);
     }
 
     @Bean
