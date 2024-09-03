@@ -21,4 +21,8 @@ public class UsuarioExpressions {
     public static BooleanExpression projetoId(Long projetoId) {
         return Objects.nonNull(projetoId) ? USUARIO.projetos.any().id.eq(projetoId) : null;
     }
+
+    public static BooleanExpression nome(String nome) {
+        return Objects.nonNull(nome) ? USUARIO.nome.likeIgnoreCase("%" + nome + "%") : null;
+    }
 }

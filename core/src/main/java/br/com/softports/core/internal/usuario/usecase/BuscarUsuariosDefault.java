@@ -27,9 +27,10 @@ public class BuscarUsuariosDefault implements BuscarUsuarios {
     @Override
     public Pagina<UsuarioResponse> executar(Integer tamanhoPagina, Integer numeroPagina,
                                             String ordenadoPor, String direcao,
-                                            Long projetoId) {
+                                            Long projetoId, String nomeUsuario) {
         BooleanBuilder filtro = new BooleanBuilder()
-                .and(UsuarioExpressions.projetoId(projetoId));
+                .and(UsuarioExpressions.projetoId(projetoId))
+                .and(UsuarioExpressions.nome(nomeUsuario));
             List<UsuarioResponse> usuarios = usuarioRepository
                     .buscarTodos(filtro,
                             tamanhoPagina,
