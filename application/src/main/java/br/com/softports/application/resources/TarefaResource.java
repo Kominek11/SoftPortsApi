@@ -2,6 +2,7 @@ package br.com.softports.application.resources;
 
 import br.com.softports.application.resources.dto.projeto.AtualizarProjetoRequest;
 import br.com.softports.application.resources.dto.projeto.CriarProjetoRequest;
+import br.com.softports.application.resources.dto.tarefa.AtualizarPosicoesTarefaRequest;
 import br.com.softports.application.resources.dto.tarefa.AtualizarTarefaRequest;
 import br.com.softports.application.resources.dto.tarefa.CriarTarefaRequest;
 import br.com.softports.core.api.common.dto.Pagina;
@@ -10,6 +11,7 @@ import br.com.softports.core.api.projeto.usecase.AtualizarProjeto;
 import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
 import br.com.softports.core.api.projeto.usecase.CriarProjeto;
 import br.com.softports.core.api.projeto.usecase.DeletarProjeto;
+import br.com.softports.core.api.tarefa.dto.TarefaPosicaoResponse;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.usecase.*;
 import br.com.softports.core.internal.common.entity.Usuario;
@@ -34,6 +36,7 @@ public class TarefaResource {
     private final IncluirComentarioTarefa incluirComentarioTarefa;
     private final AtualizarFeedbackTarefa atualizarFeedbackTarefa;
     private final AtualizarFechadoTarefa atualizarFechadoTarefa;
+    private final AtualizarPosicoesTarefa atualizarPosicoesTarefa;
 
     @GetMapping
     Pagina<TarefaResponse> buscarTarefas(
@@ -101,6 +104,12 @@ public class TarefaResource {
     @PutMapping("/comentario/{id}")
     TarefaResponse incluirComentarioTarefa(@PathVariable Long id, String conteudo, Long usuarioId) {
         return incluirComentarioTarefa.executar(id, conteudo, usuarioId);
+    }
+
+    @PutMapping("/posicoes")
+    List<TarefaPosicaoResponse> atualizarPosicoesTarefa(@RequestBody AtualizarPosicoesTarefaRequest
+                                                                     atualizarPosicoesTarefaRequest) {
+        return atualizarPosicoesTarefa.executar(atualizarPosicoesTarefaRequest.tarefas());
     }
 
     @DeleteMapping("/{id}")

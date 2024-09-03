@@ -11,6 +11,7 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -33,5 +34,15 @@ public class TarefaRepositoryDefault extends RepositorioDefault<Tarefa, Long> im
                 .where(tarefa.status.eq(status))
                 .fetchOne();
         return Optional.ofNullable(maxPosicao);
+    }
+
+    @Override
+    public List<Tarefa> findAllByIds(List<Long> ids) {
+        QTarefa tarefa = QTarefa.tarefa;
+
+        return queryFactory
+                .selectFrom(tarefa)
+                .where(tarefa.id.in(ids))
+                .fetch();
     }
 }
