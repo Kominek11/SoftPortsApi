@@ -7,8 +7,11 @@ import br.com.softports.core.api.usuario.dto.CriarUsuarioRequest;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
 import br.com.softports.core.api.usuario.usecase.BuscarUsuarios;
 import br.com.softports.core.api.usuario.usecase.CriarUsuario;
+import br.com.softports.core.api.usuario.usecase.DeletarUsuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("usuario")
@@ -17,6 +20,7 @@ public class UsuarioResource {
 
     private final BuscarUsuarios buscarUsuarios;
     private final CriarUsuario criarUsuario;
+    private final DeletarUsuario deletarUsuario;
 
     @PostMapping
     UsuarioResponse criarUsuario(@RequestBody CriarUsuarioRequest criarUsuarioRequest) {
@@ -38,5 +42,10 @@ public class UsuarioResource {
     @GetMapping("{id}")
     UsuarioResponse buscarUsuario(@PathVariable Long id) {
         return buscarUsuarios.executar(id);
+    }
+
+    @DeleteMapping("{id}")
+    void deletarUsuario(@PathVariable UUID id) {
+        deletarUsuario.executar(id);
     }
 }

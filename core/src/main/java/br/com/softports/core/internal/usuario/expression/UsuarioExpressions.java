@@ -5,6 +5,7 @@ import br.com.softports.core.internal.common.entity.QUsuario;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class UsuarioExpressions {
 
@@ -24,5 +25,9 @@ public class UsuarioExpressions {
 
     public static BooleanExpression nome(String nome) {
         return Objects.nonNull(nome) ? USUARIO.nome.likeIgnoreCase("%" + nome + "%") : null;
+    }
+
+    public static BooleanExpression keycloakId(UUID keycloakId) {
+        return Objects.nonNull(keycloakId) ? USUARIO.keycloakId.eq(keycloakId) : null;
     }
 }

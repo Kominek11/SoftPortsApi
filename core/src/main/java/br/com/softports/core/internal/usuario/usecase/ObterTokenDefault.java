@@ -39,11 +39,8 @@ public class ObterTokenDefault implements ObterToken {
         try {
             HttpRequest<Map<String, String>, AutenticacaoTokenResponse> request
                     = new HttpRequest<>(url, payload);
-
             request =  httpService.postUrlEncoded(request, AutenticacaoTokenResponse.class);
-
             AutenticacaoTokenResponse response = request.getResponse();
-
             return Objects.requireNonNull(response.accessToken(), "Token vazio");
         } catch (Exception e) {
             throw new RuntimeException("Erro ao gerar token no serviço de autenticação");

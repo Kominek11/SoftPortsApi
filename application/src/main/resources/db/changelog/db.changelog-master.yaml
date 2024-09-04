@@ -392,7 +392,7 @@ databaseChangeLog:
                   name: usuario_id
                   type: bigint
                   constraints:
-                    nullable: false
+                    nullable: true
         - addForeignKeyConstraint:
             baseTableName: comentario
             baseColumnNames: tarefa_id

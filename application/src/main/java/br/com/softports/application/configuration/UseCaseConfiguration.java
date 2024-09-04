@@ -163,6 +163,20 @@ public class UseCaseConfiguration {
     }
 
     @Bean
+    DeletarUsuario deletarUsuario(DeletarUsuarioKeycloak deletarUsuarioKeycloak,
+                                  UsuarioRepository usuarioRepository,
+                                  TarefaRepository tarefaRepository) {
+        return new DeletarUsuarioDefault(deletarUsuarioKeycloak, usuarioRepository, tarefaRepository);
+    }
+
+    @Bean
+    DeletarUsuarioKeycloak deletarUsuarioKeycloak(KeycloakProperties keycloakProperties,
+                                                  ObterToken obterToken,
+                                                  HttpService httpService) {
+        return new DeletarUsuarioKeycloakDefault(keycloakProperties, obterToken, httpService);
+    }
+
+    @Bean
     ObterToken obterToken(KeycloakProperties keycloakProperties,
                           HttpService httpService) {
         return new ObterTokenDefault(keycloakProperties, httpService);

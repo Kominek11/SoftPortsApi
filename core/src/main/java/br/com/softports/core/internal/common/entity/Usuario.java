@@ -34,4 +34,7 @@ public class Usuario {
 
     @ManyToMany(mappedBy = "usuarios")
     Set<Projeto> projetos;
+
+    @OneToMany(mappedBy = "usuario")
+    Set<Comentario> comentarios;
 }

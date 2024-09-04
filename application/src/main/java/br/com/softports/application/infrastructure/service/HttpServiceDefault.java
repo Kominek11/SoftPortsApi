@@ -39,6 +39,11 @@ public class HttpServiceDefault implements HttpService {
         return this.exchange(request, responseType, MediaType.APPLICATION_JSON, HttpMethod.PUT);
     }
 
+    @Override
+    public <T, S> HttpRequest<T, S> delete(HttpRequest<T, S> request, Class<S> responseType) {
+        return this.exchange(request, responseType, null, HttpMethod.DELETE);
+    }
+
     private <T, S> HttpRequest<T, S> exchange(HttpRequest<T, S> request, Class<S> responseType,
                                              MediaType contentType, HttpMethod method) {
         HttpEntity<?> httpEntity = generateHttpEntity(request, contentType);
