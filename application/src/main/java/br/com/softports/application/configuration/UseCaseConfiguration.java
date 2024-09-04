@@ -120,13 +120,18 @@ public class UseCaseConfiguration {
     }
 
     @Bean
+    AtualizarFeedbackTarefa atualizarFeedbackTarefa(TarefaRepository tarefaRepository) {
+        return new AtualizarFeedbackTarefaDefault(tarefaRepository);
+    }
+
+    @Bean
     AtualizarFechadoTarefa atualizarFechadoTarefa(TarefaRepository tarefaRepository) {
         return new AtualizarFechadoTarefaDefault(tarefaRepository);
     }
 
     @Bean
-    AtualizarFeedbackTarefa atualizarFeedbackTarefa(TarefaRepository tarefaRepository) {
-        return new AtualizarFeedbackTarefaDefault(tarefaRepository);
+    AtualizarPosicoesTarefa atualizarPosicoesTarefa(TarefaRepository tarefaRepository) {
+        return new AtualizarPosicoesTarefaDefault(tarefaRepository);
     }
 
     @Bean
