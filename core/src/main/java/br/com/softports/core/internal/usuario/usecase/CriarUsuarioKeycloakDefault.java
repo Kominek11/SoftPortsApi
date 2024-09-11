@@ -24,10 +24,12 @@ public class CriarUsuarioKeycloakDefault implements CriarUsuarioKeycloak {
     private final HttpService httpService;
 
     @Override
-    public UUID executar(String nome, String sobrenome, String email, Boolean emailVerified, String username) {
+    public UUID executar(String nome, String sobrenome, String email,
+                         Boolean emailVerified, String username, List<String> realmRoles) {
         String bearerToken = obterToken.executar();
         String url = keycloakProperties.urlEndPointUsers();
-        CriarUsuarioKeycloakRequest payload = gerarRequest(nome, sobrenome, email, emailVerified, username);
+        CriarUsuarioKeycloakRequest payload = gerarRequest(nome, sobrenome, email,
+                emailVerified, username, realmRoles);
         try {
             HttpRequest<CriarUsuarioKeycloakRequest, CriarUsuarioKeycloakResponse> request
                     = new HttpRequest<>(url, payload, bearerToken);
@@ -41,7 +43,7 @@ public class CriarUsuarioKeycloakDefault implements CriarUsuarioKeycloak {
 
     private CriarUsuarioKeycloakRequest gerarRequest(String nome, String sobrenome,
                                                      String email, Boolean emailVerified,
-                                                     String username) {
+                                                     String username, List<String> realmRoles) {
         return CriarUsuarioKeycloakRequest.builder()
                 .nome(nome)
                 .sobrenome(sobrenome)
@@ -53,6 +55,7 @@ public class CriarUsuarioKeycloakDefault implements CriarUsuarioKeycloak {
                         new CredencialUsuarioKeycloak("password",
                                 true,
                                 keycloakProperties.defaultPassword())))
+                .realmRoles(realmRoles)
                 .build();
     }
 }

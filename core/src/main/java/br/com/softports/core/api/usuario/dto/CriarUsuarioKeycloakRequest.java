@@ -15,6 +15,7 @@ public record CriarUsuarioKeycloakRequest(
         Boolean emailVerified,
         String enabled,
         String username,
-        List<CredencialUsuarioKeycloak> credentials
+        List<CredencialUsuarioKeycloak> credentials,
+        List<String> realmRoles
 ) {
 }

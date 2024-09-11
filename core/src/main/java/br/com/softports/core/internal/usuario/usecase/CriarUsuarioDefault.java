@@ -11,6 +11,7 @@ import br.com.softports.core.internal.common.entity.Usuario;
 import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,9 +26,10 @@ public class CriarUsuarioDefault implements CriarUsuario {
 
     @Override
     public UsuarioResponse executar(String nome, String sobrenome, String email,
-                                    Boolean emailVerified, String username) {
+                                    Boolean emailVerified, String username, List<String> realmRoles) {
         Usuario usuarioTemporario = criarUsuario(nome, email, UsuarioRole.GESTOR);
-        UUID uuidUsuarioKeycloak =  criarUsuarioKeycloak.executar(nome, sobrenome, email, emailVerified, username);
+        UUID uuidUsuarioKeycloak =  criarUsuarioKeycloak.executar(nome, sobrenome, email,
+                emailVerified, username, realmRoles);
         Usuario usuario = atualizarIdKeycloakUsuario(usuarioTemporario.getId(), uuidUsuarioKeycloak)
                 .orElseThrow(() -> new RuntimeException("Falha ao atualizar identificador do usuário"));
         return usuarioToUsuarioResponse.executar(usuario);
