@@ -24,9 +24,10 @@ public class CriarUsuarioDefault implements CriarUsuario {
     private final UsuarioToUsuarioResponse usuarioToUsuarioResponse;
 
     @Override
-    public UsuarioResponse executar(String nome, String email, String username) {
+    public UsuarioResponse executar(String nome, String sobrenome, String email,
+                                    Boolean emailVerified, String username) {
         Usuario usuarioTemporario = criarUsuario(nome, email, UsuarioRole.GESTOR);
-        UUID uuidUsuarioKeycloak =  criarUsuarioKeycloak.executar(nome, email, username);
+        UUID uuidUsuarioKeycloak =  criarUsuarioKeycloak.executar(nome, sobrenome, email, emailVerified, username);
         Usuario usuario = atualizarIdKeycloakUsuario(usuarioTemporario.getId(), uuidUsuarioKeycloak)
                 .orElseThrow(() -> new RuntimeException("Falha ao atualizar identificador do usuário"));
         return usuarioToUsuarioResponse.executar(usuario);

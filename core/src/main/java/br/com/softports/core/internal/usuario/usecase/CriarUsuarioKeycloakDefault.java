@@ -24,10 +24,10 @@ public class CriarUsuarioKeycloakDefault implements CriarUsuarioKeycloak {
     private final HttpService httpService;
 
     @Override
-    public UUID executar(String nomeSobrenome, String email, String username) {
+    public UUID executar(String nome, String sobrenome, String email, Boolean emailVerified, String username) {
         String bearerToken = obterToken.executar();
         String url = keycloakProperties.urlEndPointUsers();
-        CriarUsuarioKeycloakRequest payload = gerarRequest(nomeSobrenome, email, username);
+        CriarUsuarioKeycloakRequest payload = gerarRequest(nome, sobrenome, email, emailVerified, username);
         try {
             HttpRequest<CriarUsuarioKeycloakRequest, CriarUsuarioKeycloakResponse> request
                     = new HttpRequest<>(url, payload, bearerToken);
@@ -39,11 +39,14 @@ public class CriarUsuarioKeycloakDefault implements CriarUsuarioKeycloak {
         }
     }
 
-    private CriarUsuarioKeycloakRequest gerarRequest(String nomeSobrenome, String email, String username) {
+    private CriarUsuarioKeycloakRequest gerarRequest(String nome, String sobrenome,
+                                                     String email, Boolean emailVerified,
+                                                     String username) {
         return CriarUsuarioKeycloakRequest.builder()
-                .nome(nomeSobrenome)
-                .sobrenome("")
+                .nome(nome)
+                .sobrenome(sobrenome)
                 .email(email)
+                .emailVerified(emailVerified)
                 .enabled(Boolean.TRUE.toString())
                 .username(username)
                 .credentials(List.of(

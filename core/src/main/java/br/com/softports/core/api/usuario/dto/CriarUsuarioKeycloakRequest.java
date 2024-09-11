@@ -12,11 +12,9 @@ public record CriarUsuarioKeycloakRequest(
         @JsonProperty("lastName")
         String sobrenome,
         String email,
-
+        Boolean emailVerified,
         String enabled,
-
         String username,
-
         List<CredencialUsuarioKeycloak> credentials
 ) {
 }

@@ -24,8 +24,11 @@ public class UsuarioResource {
 
     @PostMapping
     UsuarioResponse criarUsuario(@RequestBody CriarUsuarioRequest criarUsuarioRequest) {
-        return criarUsuario.executar(criarUsuarioRequest.nome(), criarUsuarioRequest.email(),
-                criarUsuarioRequest.username());
+        return criarUsuario.executar(criarUsuarioRequest.nome(),
+                                     criarUsuarioRequest.sobrenome(),
+                                     criarUsuarioRequest.email(),
+                                     criarUsuarioRequest.emailVerified(),
+                                     criarUsuarioRequest.username());
     }
 
     @GetMapping

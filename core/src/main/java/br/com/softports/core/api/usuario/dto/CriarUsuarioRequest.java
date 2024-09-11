@@ -6,6 +6,8 @@ import lombok.Builder;
 @Builder
 public record CriarUsuarioRequest(
         String nome,
+        String sobrenome,
         String email,
+        Boolean emailVerified,
         String username
 ) {}
