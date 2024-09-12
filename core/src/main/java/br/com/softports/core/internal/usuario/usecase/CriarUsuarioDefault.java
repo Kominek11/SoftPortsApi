@@ -1,5 +1,6 @@
 package br.com.softports.core.internal.usuario.usecase;
 
+import br.com.softports.core.api.usuario.dto.KeycloakRoleResponse;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
 import br.com.softports.core.api.usuario.enumerate.UsuarioRole;
 import br.com.softports.core.api.usuario.usecase.BuscarUsuarioKeycloak;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class CriarUsuarioDefault implements CriarUsuario {
@@ -26,8 +28,11 @@ public class CriarUsuarioDefault implements CriarUsuario {
 
     @Override
     public UsuarioResponse executar(String nome, String sobrenome, String email,
-                                    Boolean emailVerified, String username, List<String> realmRoles) {
-        Usuario usuarioTemporario = criarUsuario(nome, email, UsuarioRole.GESTOR);
+                                    Boolean emailVerified, String username, List<KeycloakRoleResponse> realmRoles) {
+        Optional<UUID> usuarioKeycloak = buscarUsuarioKeycloak.executar(email);
+        if (usuarioKeycloak.isPresent())
+            throw new RuntimeException("Usuário já existente");
+        Usuario usuarioTemporario = criarUsuario(nome, email, realmRoles);
         UUID uuidUsuarioKeycloak =  criarUsuarioKeycloak.executar(nome, sobrenome, email,
                 emailVerified, username, realmRoles);
         Usuario usuario = atualizarIdKeycloakUsuario(usuarioTemporario.getId(), uuidUsuarioKeycloak)
@@ -35,10 +40,13 @@ public class CriarUsuarioDefault implements CriarUsuario {
         return usuarioToUsuarioResponse.executar(usuario);
     }
 
-    public Usuario criarUsuario(String nomeSobrenome, String email, UsuarioRole role) {
+    public Usuario criarUsuario(String nomeSobrenome, String email, List<KeycloakRoleResponse> realmRoles) {
         Usuario usuario = new Usuario();
         usuario.setNome(nomeSobrenome);
         usuario.setEmail(email);
+        usuario.setRoles(realmRoles.stream()
+                .map(KeycloakRoleResponse::name)
+                .collect(Collectors.joining(", ")));
         return usuarioRepository.salvar(usuario);
     }
 

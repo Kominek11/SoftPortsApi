@@ -79,7 +79,8 @@ public class IncluirComentarioTarefaDefault implements IncluirComentarioTarefa {
                         item.getId(),
                         item.getNome(),
                         item.getEmail(),
-                        item.getKeycloakId()
+                        item.getKeycloakId(),
+                        item.getRoles() == null ? new ArrayList<>() :List.of(item.getRoles().split(","))
                 )
         ));
         return usuarioResponseSet;

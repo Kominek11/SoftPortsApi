@@ -17,6 +17,7 @@ import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -62,7 +63,8 @@ public class BuscarUsuariosDefault implements BuscarUsuarios {
                 usuario.getId(),
                 usuario.getNome(),
                 usuario.getEmail(),
-                usuario.getKeycloakId()
+                usuario.getKeycloakId(),
+                usuario.getRoles() == null ? new ArrayList<>() :List.of(usuario.getRoles().split(","))
         );
     }
 }

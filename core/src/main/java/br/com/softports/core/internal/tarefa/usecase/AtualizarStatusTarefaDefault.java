@@ -19,10 +19,7 @@ import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class AtualizarStatusTarefaDefault implements AtualizarStatusTarefa {
@@ -71,7 +68,8 @@ public class AtualizarStatusTarefaDefault implements AtualizarStatusTarefa {
                         item.getId(),
                         item.getNome(),
                         item.getEmail(),
-                        item.getKeycloakId()
+                        item.getKeycloakId(),
+                        item.getRoles() == null ? new ArrayList<>() :List.of(item.getRoles().split(","))
                 )
         ));
         return usuarioResponseSet;

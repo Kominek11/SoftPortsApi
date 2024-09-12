@@ -27,4 +27,6 @@ keycloak:
   client_secret: bCanTO2WJyL2g2BLigzv65XzdKRzunJk
   url-token-client-secret: http://localhost:8090/realms/softports/protocol/openid-connect/token
   url-end-point-users: http://localhost:8090/admin/realms/softports/users
+  url-endpoint-add-user-role: http://localhost:8090/admin/realms/softports/users/usuarioIdKeycloak/role-mappings/realm
   defaultPassword: Mudar@123
+

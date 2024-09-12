@@ -14,7 +14,9 @@ import br.com.softports.core.internal.tarefa.expression.TarefaExpressions;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -64,8 +66,8 @@ public class AtualizarFeedbackTarefaDefault implements AtualizarFeedbackTarefa {
                         item.getId(),
                         item.getNome(),
                         item.getEmail(),
-                        item.getKeycloakId()
-                )
+                        item.getKeycloakId(),
+                        item.getRoles() == null ? new ArrayList<>() :List.of(item.getRoles().split(","))                )
         ));
         return usuarioResponseSet;
     }

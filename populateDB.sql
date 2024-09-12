@@ -7,12 +7,12 @@ INSERT INTO public.organizacao (id, nome) VALUES
 (nextval('organizacao_id_seq'), 'Organização Epsilon');
 
 -- Populando a tabela usuario com UUIDs para o campo keycloak_id
-INSERT INTO public.usuario (id, nome, email, keycloak_id) VALUES
-(nextval('usuario_id_seq'), 'Alice Silva', 'alice.silva@example.com', '550e8400-e29b-41d4-a716-446655440000'),
-(nextval('usuario_id_seq'), 'Bruno Santos', 'bruno.santos@example.com', '550e8400-e29b-41d4-a716-446655440001'),
-(nextval('usuario_id_seq'), 'Carla Pereira', 'carla.pereira@example.com', '550e8400-e29b-41d4-a716-446655440002'),
-(nextval('usuario_id_seq'), 'Daniel Costa', 'daniel.costa@example.com', '550e8400-e29b-41d4-a716-446655440003'),
-(nextval('usuario_id_seq'), 'Elena Almeida', 'elena.almeida@example.com', '550e8400-e29b-41d4-a716-446655440004');
+INSERT INTO public.usuario (id, nome, email, keycloak_id, roles) VALUES
+(nextval('usuario_id_seq'), 'Alice Silva', 'alice.silva@example.com', '550e8400-e29b-41d4-a716-446655440000', NULL),
+(nextval('usuario_id_seq'), 'Bruno Santos', 'bruno.santos@example.com', '550e8400-e29b-41d4-a716-446655440001', NULL),
+(nextval('usuario_id_seq'), 'Carla Pereira', 'carla.pereira@example.com', '550e8400-e29b-41d4-a716-446655440002', NULL),
+(nextval('usuario_id_seq'), 'Daniel Costa', 'daniel.costa@example.com', '550e8400-e29b-41d4-a716-446655440003', NULL),
+(nextval('usuario_id_seq'), 'Elena Almeida', 'elena.almeida@example.com', '550e8400-e29b-41d4-a716-446655440004', NULL);
 
 -- Populando a tabela projeto
 INSERT INTO public.projeto (id, nome, organizacao_id) VALUES

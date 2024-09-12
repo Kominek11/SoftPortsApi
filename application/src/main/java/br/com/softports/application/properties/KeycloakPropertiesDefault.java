@@ -11,6 +11,7 @@ public class KeycloakPropertiesDefault implements KeycloakProperties {
     private final String clientSecret;
     private final String urlTokenClientSecret;
     private final String urlEndPointUsers;
+    private final String urlEndpointAddUserRole;
     private final String defaultPassword;
 
     public KeycloakPropertiesDefault(
@@ -19,6 +20,7 @@ public class KeycloakPropertiesDefault implements KeycloakProperties {
             String clientSecret,
             String urlTokenClientSecret,
             String urlEndPointUsers,
+            String urlEndpointAddUserRole,
             String defaultPassword
     ) {
         this.grantType = grantType;
@@ -26,6 +28,7 @@ public class KeycloakPropertiesDefault implements KeycloakProperties {
         this.clientSecret = clientSecret;
         this.urlTokenClientSecret = urlTokenClientSecret;
         this.urlEndPointUsers = urlEndPointUsers;
+        this.urlEndpointAddUserRole = urlEndpointAddUserRole;
         this.defaultPassword = defaultPassword;
     }
     @Override
@@ -48,6 +51,11 @@ public class KeycloakPropertiesDefault implements KeycloakProperties {
     @Override
     public String urlEndPointUsers() {
         return this.urlEndPointUsers;
+    }
+
+    @Override
+    public String urlEndpointAddUserRole() {
+        return this.urlEndpointAddUserRole;
     }
 
     @Override

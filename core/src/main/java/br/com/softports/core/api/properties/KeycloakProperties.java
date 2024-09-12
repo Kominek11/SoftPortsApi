@@ -12,6 +12,8 @@ public interface KeycloakProperties {
 
     String urlEndPointUsers();
 
+    String urlEndpointAddUserRole();
+
     String defaultPassword();
 
 }

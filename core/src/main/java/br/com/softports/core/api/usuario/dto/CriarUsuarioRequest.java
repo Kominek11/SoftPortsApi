@@ -12,5 +12,5 @@ public record CriarUsuarioRequest(
         String email,
         Boolean emailVerified,
         String username,
-        List<String> realmRoles
+        List<KeycloakRoleResponse> realmRoles
 ) {}

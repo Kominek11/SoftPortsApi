@@ -74,6 +74,11 @@ databaseChangeLog:
                   type: UUID
                   constraints:
                     nullable: true
+              - column:
+                  name: roles
+                  type: varchar
+                  constraints:
+                    nullable: true
 
   - changeSet:
       id: 3

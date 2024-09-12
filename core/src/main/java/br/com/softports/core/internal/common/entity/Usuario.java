@@ -29,6 +29,9 @@ public class Usuario {
     @Column
     UUID keycloakId;
 
+    @Column
+    String roles;
+
     @ManyToMany(mappedBy = "usuarios")
     Set<Tarefa> tarefas;
 

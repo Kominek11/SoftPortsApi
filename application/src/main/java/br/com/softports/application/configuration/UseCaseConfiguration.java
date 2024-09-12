@@ -162,9 +162,18 @@ public class UseCaseConfiguration {
 
     @Bean
     CriarUsuarioKeycloak criarUsuarioKeycloak(KeycloakProperties keycloakProperties,
+                                              AtribuirRoleUsuarioKeycloak atribuirRoleUsuarioKeycloak,
                                               ObterToken obterToken,
                                               HttpService httpService) {
-        return new CriarUsuarioKeycloakDefault(keycloakProperties, obterToken, httpService);
+        return new CriarUsuarioKeycloakDefault(keycloakProperties, atribuirRoleUsuarioKeycloak,
+                obterToken, httpService);
+    }
+
+    @Bean
+    AtribuirRoleUsuarioKeycloak atribuirRoleUsuarioKeycloak(KeycloakProperties keycloakProperties,
+                                                            ObterToken obterToken,
+                                                            HttpService httpService) {
+        return new AtribuirRoleUsuarioKeycloakDefault(keycloakProperties, obterToken, httpService);
     }
 
     @Bean

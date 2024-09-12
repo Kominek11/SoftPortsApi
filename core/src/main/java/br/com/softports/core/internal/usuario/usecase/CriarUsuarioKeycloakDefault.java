@@ -6,6 +6,8 @@ import br.com.softports.core.api.properties.KeycloakProperties;
 import br.com.softports.core.api.usuario.dto.CredencialUsuarioKeycloak;
 import br.com.softports.core.api.usuario.dto.CriarUsuarioKeycloakRequest;
 import br.com.softports.core.api.usuario.dto.CriarUsuarioKeycloakResponse;
+import br.com.softports.core.api.usuario.dto.KeycloakRoleResponse;
+import br.com.softports.core.api.usuario.usecase.AtribuirRoleUsuarioKeycloak;
 import br.com.softports.core.api.usuario.usecase.CriarUsuarioKeycloak;
 import br.com.softports.core.api.usuario.usecase.ObterToken;
 import br.com.softports.core.internal.common.dto.HttpRequest;
@@ -20,30 +22,38 @@ import java.util.UUID;
 public class CriarUsuarioKeycloakDefault implements CriarUsuarioKeycloak {
 
     private final KeycloakProperties keycloakProperties;
+    private final AtribuirRoleUsuarioKeycloak atribuirRoleUsuarioKeycloak;
     private final ObterToken obterToken;
     private final HttpService httpService;
 
     @Override
     public UUID executar(String nome, String sobrenome, String email,
-                         Boolean emailVerified, String username, List<String> realmRoles) {
+                         Boolean emailVerified, String username, List<KeycloakRoleResponse> realmRoles) {
         String bearerToken = obterToken.executar();
-        String url = keycloakProperties.urlEndPointUsers();
+        String urlCriarUsuario = keycloakProperties.urlEndPointUsers();
         CriarUsuarioKeycloakRequest payload = gerarRequest(nome, sobrenome, email,
-                emailVerified, username, realmRoles);
+                emailVerified, username);
+        UUID usuarioId;
         try {
             HttpRequest<CriarUsuarioKeycloakRequest, CriarUsuarioKeycloakResponse> request
-                    = new HttpRequest<>(url, payload, bearerToken);
-            return ObjectUtils.getUUIDFromLocationHeader(httpService.post(request,
-                            CriarUsuarioKeycloakResponse.class)
-                    .getLocation());
+                    = new HttpRequest<>(urlCriarUsuario, payload, bearerToken);
+            try {
+                 usuarioId = ObjectUtils.getUUIDFromLocationHeader(httpService.post(request,
+                        CriarUsuarioKeycloakResponse.class)
+                        .getLocation());
+            } catch (Exception e) {
+                throw new GenericException(e.getMessage());
+            }
+            atribuirRoleUsuarioKeycloak.executar(usuarioId, realmRoles);
         } catch (Exception e) {
             throw new GenericException(e.getMessage());
         }
+        return usuarioId;
     }
 
     private CriarUsuarioKeycloakRequest gerarRequest(String nome, String sobrenome,
                                                      String email, Boolean emailVerified,
-                                                     String username, List<String> realmRoles) {
+                                                     String username) {
         return CriarUsuarioKeycloakRequest.builder()
                 .nome(nome)
                 .sobrenome(sobrenome)
@@ -55,7 +65,6 @@ public class CriarUsuarioKeycloakDefault implements CriarUsuarioKeycloak {
                         new CredencialUsuarioKeycloak("password",
                                 true,
                                 keycloakProperties.defaultPassword())))
-                .realmRoles(realmRoles)
                 .build();
     }
 }
