@@ -3,8 +3,10 @@ package br.com.softports.application.resources;
 import br.com.softports.core.api.common.dto.Pagina;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.usecase.BuscarTarefas;
+import br.com.softports.core.api.usuario.dto.AtualizarUsuarioRequest;
 import br.com.softports.core.api.usuario.dto.CriarUsuarioRequest;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
+import br.com.softports.core.api.usuario.usecase.AtualizarUsuario;
 import br.com.softports.core.api.usuario.usecase.BuscarUsuarios;
 import br.com.softports.core.api.usuario.usecase.CriarUsuario;
 import br.com.softports.core.api.usuario.usecase.DeletarUsuario;
@@ -21,6 +23,7 @@ public class UsuarioResource {
     private final BuscarUsuarios buscarUsuarios;
     private final CriarUsuario criarUsuario;
     private final DeletarUsuario deletarUsuario;
+    private final AtualizarUsuario atualizarUsuario;
 
     @PostMapping
     UsuarioResponse criarUsuario(@RequestBody CriarUsuarioRequest criarUsuarioRequest) {
@@ -46,6 +49,15 @@ public class UsuarioResource {
     @GetMapping("{id}")
     UsuarioResponse buscarUsuario(@PathVariable Long id) {
         return buscarUsuarios.executar(id);
+    }
+
+    @PutMapping("{id}")
+    UsuarioResponse atualizarUsuario(@PathVariable UUID id,
+                                     @RequestBody AtualizarUsuarioRequest atualizarUsuarioRequest) {
+        return atualizarUsuario.executar(id,
+                                         atualizarUsuarioRequest.firstName(),
+                                         atualizarUsuarioRequest.email(),
+                                         atualizarUsuarioRequest.username());
     }
 
     @DeleteMapping("{id}")

@@ -177,6 +177,20 @@ public class UseCaseConfiguration {
     }
 
     @Bean
+    AtualizarUsuario atualizarUsuario(AtualizarUsuarioKeycloak atualizarUsuarioKeycloak,
+                                      UsuarioRepository usuarioRepository,
+                                      UsuarioToUsuarioResponse usuarioToUsuarioResponse) {
+        return new AtualizarUsuarioDefault(atualizarUsuarioKeycloak, usuarioRepository, usuarioToUsuarioResponse);
+    }
+
+    @Bean
+    AtualizarUsuarioKeycloak atualizarUsuarioKeycloak(KeycloakProperties keycloakProperties,
+                                                      ObterToken obterToken,
+                                                      HttpService httpService) {
+        return new AtualizarUsuarioKeycloakDefault(keycloakProperties, obterToken, httpService);
+    }
+
+    @Bean
     DeletarUsuario deletarUsuario(DeletarUsuarioKeycloak deletarUsuarioKeycloak,
                                   UsuarioRepository usuarioRepository,
                                   TarefaRepository tarefaRepository) {

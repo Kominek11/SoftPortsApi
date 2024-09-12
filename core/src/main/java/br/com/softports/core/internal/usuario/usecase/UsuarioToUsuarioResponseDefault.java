@@ -23,5 +23,4 @@ public class UsuarioToUsuarioResponseDefault implements UsuarioToUsuarioResponse
                         List.of(usuario.getRoles().split(",")))
                 .build();
     }
-
 }
