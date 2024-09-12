@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
 
-import java.sql.Blob;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
+@Audited(withModifiedFlag = true)
 @Entity
 @Table(name = "tarefa")
 @NoArgsConstructor

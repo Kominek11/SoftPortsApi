@@ -28,6 +28,7 @@ public class AtualizarUsuarioDefault implements AtualizarUsuario {
         Usuario usuario = usuarioRepository.buscar(filtro).orElseThrow();
         usuario.setNome(nome);
         usuario.setEmail(email);
+        usuarioRepository.salvar(usuario);
         atualizarUsuarioKeycloak.executar(id, nome, email, username);
         return usuarioToUsuarioResponse.executar(usuario);
     }

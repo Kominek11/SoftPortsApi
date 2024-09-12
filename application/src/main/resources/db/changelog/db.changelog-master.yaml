@@ -445,3 +445,669 @@ databaseChangeLog:
             constraintName: usuario_projeto_projeto_fk
             referencedTableName: projeto
             referencedColumnNames: id
+  - changeSet:
+      id: 10
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          sequenceExists:
+            sequenceName: revinfo_seq
+      changes:
+        - createSequence:
+            sequenceName: revinfo_seq
+            startValue: 1
+            incrementBy: 50
+        - preConditions:
+            onFail: MARK_RAN
+            not:
+              tableExists:
+                tableName: revinfo
+        - createTable:
+            tableName: revinfo
+            columns:
+              - column:
+                  name: rev
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: revtstmp
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 11
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: tarefa_aud
+      changes:
+        - createTable:
+            tableName: tarefa_aud
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: titulo
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: descricao
+                  type: VARCHAR(255)
+              - column:
+                  name: so
+                  type: VARCHAR(255)
+              - column:
+                  name: screenshots
+                  type: BYTEA
+              - column:
+                  name: caminho
+                  type: VARCHAR(255)
+              - column:
+                  name: dataFechamento
+                  type: TIMESTAMP
+              - column:
+                  name: dataCriacao
+                  type: TIMESTAMP
+              - column:
+                  name: dataEstimada
+                  type: TIMESTAMP
+              - column:
+                  name: status
+                  type: BIGINT
+              - column:
+                  name: fechada
+                  type: BOOLEAN
+              - column:
+                  name: posicao
+                  type: BIGINT
+              - column:
+                  name: prioridade
+                  type: BIGINT
+              - column:
+                  name: projeto_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: feedback
+                  type: VARCHAR(255)
+              - column:
+                  name: classificacao_id
+                  type: BIGINT
+              - column:
+                  name: REV
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REVTYPE
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: titulo_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: descricao_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: so_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: screenshots_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: caminho_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: dataFechamento_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: dataCriacao_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: dataEstimada_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: status_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: fechada_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: posicao_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: prioridade_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: projeto_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: feedback_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: classificacao_id_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: usuarios_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: classificacao_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+        - addForeignKeyConstraint:
+            baseTableName: tarefa_aud
+            baseColumnNames: REV
+            constraintName: tarefa_REV_fk
+            referencedTableName: revinfo
+            referencedColumnNames: rev
+  - changeSet:
+      id: 12
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: projeto_aud
+      changes:
+        - createTable:
+            tableName: projeto_aud
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: nome
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: organizacao_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REV
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REVTYPE
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: nome_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: organizacao_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: usuarios_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+        - addForeignKeyConstraint:
+            baseTableName: projeto_aud
+            baseColumnNames: REV
+            constraintName: projeto_REV_fk
+            referencedTableName: revinfo
+            referencedColumnNames: rev
+  - changeSet:
+      id: 13
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: usuario_aud
+      changes:
+        - createTable:
+            tableName: usuario_aud
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: nome
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: keycloak_id
+                  type: UUID
+                  constraints:
+                    nullable: true
+              - column:
+                  name: roles
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: REV
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REVTYPE
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: nome_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: email_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: keycloak_id_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: roles_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: comentarios_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: projetos_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: tarefas_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+        - addForeignKeyConstraint:
+            baseTableName: usuario_aud
+            baseColumnNames: REV
+            constraintName: usuario_REV_fk
+            referencedTableName: revinfo
+            referencedColumnNames: rev
+  - changeSet:
+      id: 14
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: comentario_aud
+      changes:
+        - createTable:
+            tableName: comentario_aud
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: conteudo
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: tarefa_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+              - column:
+                  name: data_criacao
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name: usuario_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+              - column:
+                  name: REV
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REVTYPE
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: conteudo_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: tarefa_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: data_criacao_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: usuario_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+        - addForeignKeyConstraint:
+            baseTableName: comentario_aud
+            baseColumnNames: REV
+            constraintName: comentario_REV_fk
+            referencedTableName: revinfo
+            referencedColumnNames: rev
+  - changeSet:
+      id: 15
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: classificacao_aud
+      changes:
+        - createTable:
+            tableName: classificacao_aud
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: nome
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: subclassificacao_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+              - column:
+                  name: REV
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REVTYPE
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: nome_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: subclassificacao_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+        - addForeignKeyConstraint:
+            baseTableName: classificacao_aud
+            baseColumnNames: REV
+            constraintName: classificacao_REV_fk
+            referencedTableName: revinfo
+            referencedColumnNames: rev
+  - changeSet:
+      id: 16
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: subclassificacao_aud
+      changes:
+        - createTable:
+            tableName: subclassificacao_aud
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: nome
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: REV
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REVTYPE
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: nome_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+        - addForeignKeyConstraint:
+            baseTableName: subclassificacao_aud
+            baseColumnNames: REV
+            constraintName: subclassificacao_REV_fk
+            referencedTableName: revinfo
+            referencedColumnNames: rev
+  - changeSet:
+      id: 17
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: usuario_projeto_aud
+      changes:
+        - createTable:
+            tableName: usuario_projeto_aud
+            columns:
+              - column:
+                  name: usuario_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: projeto_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REV
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REVTYPE
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: usuario_id_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: projeto_id_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+        - addForeignKeyConstraint:
+            baseTableName: usuario_projeto_aud
+            baseColumnNames: REV
+            constraintName: usuario_projeto_REV_fk
+            referencedTableName: revinfo
+            referencedColumnNames: rev
+  - changeSet:
+      id: 18
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: usuario_tarefa_aud
+      changes:
+        - createTable:
+            tableName: usuario_tarefa_aud
+            columns:
+              - column:
+                  name: usuario_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tarefa_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REV
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REVTYPE
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: usuario_id_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+              - column:
+                  name: tarefa_id_mod
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+        - addForeignKeyConstraint:
+            baseTableName: usuario_tarefa_aud
+            baseColumnNames: REV
+            constraintName: usuario_tarefa_REV_fk
+            referencedTableName: revinfo
+            referencedColumnNames: rev

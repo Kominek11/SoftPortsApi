@@ -11,6 +11,15 @@ spring:
         jwt:
           issuer-uri: http://localhost:8090/realms/softports
 
+hibernate:
+  envers:
+    audit_table_suffix: "_aud"
+    store_data_at_delete: true
+    revision_field_name: REV
+    revision_type_field_name: REVTYPE
+    track_entities_changed_in_revision: true
+    global_with_modified_flag: true
+
 management:
   info.env.enabled: true
   endpoints.web.exposure.include: '*'

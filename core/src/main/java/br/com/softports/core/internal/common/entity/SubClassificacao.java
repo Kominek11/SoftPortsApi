@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
 
 import java.util.Set;
 
+@Audited(withModifiedFlag = true)
 @Entity
 @Table(name = "subclassificacao")
 @NoArgsConstructor

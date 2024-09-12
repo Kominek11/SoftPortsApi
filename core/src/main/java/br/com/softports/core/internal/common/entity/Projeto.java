@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import java.util.Set;
 
+@Audited(withModifiedFlag = true)
 @Entity
 @Table(name = "projeto")
 @NoArgsConstructor
@@ -24,6 +27,7 @@ public class Projeto {
 
     @ManyToOne
     @JoinColumn(name = "organizacao_id", nullable = false)
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     Organizacao organizacao;
 
     @ManyToMany
