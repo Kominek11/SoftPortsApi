@@ -29,8 +29,6 @@ databaseChangeLog:
               - column:
                   name: nome
                   type: varchar
-                  constraints:
-                    nullable: false
 
   - changeSet:
       id: 2
@@ -62,23 +60,15 @@ databaseChangeLog:
               - column:
                   name: nome
                   type: varchar
-                  constraints:
-                    nullable: false
               - column:
                   name: email
                   type: varchar
-                  constraints:
-                    nullable: false
               - column:
                   name: keycloak_id
                   type: UUID
-                  constraints:
-                    nullable: true
               - column:
                   name: roles
                   type: varchar
-                  constraints:
-                    nullable: true
 
   - changeSet:
       id: 3
@@ -110,19 +100,16 @@ databaseChangeLog:
               - column:
                   name: nome
                   type: varchar
-                  constraints:
-                    nullable: false
               - column:
                   name: organizacao_id
                   type: bigint
-                  constraints:
-                    nullable: false
         - addForeignKeyConstraint:
             baseTableName: projeto
             baseColumnNames: organizacao_id
             constraintName: projeto_organizacao_fk
             referencedTableName: organizacao
             referencedColumnNames: id
+            onDelete: CASCADE
 
   - changeSet:
       id: 4
@@ -154,8 +141,6 @@ databaseChangeLog:
               - column:
                   name: nome
                   type: varchar
-                  constraints:
-                    nullable: true
 
   - changeSet:
       id: 5
@@ -187,19 +172,16 @@ databaseChangeLog:
               - column:
                   name: nome
                   type: varchar
-                  constraints:
-                    nullable: true
               - column:
                   name: subclassificacao_id
                   type: bigint
-                  constraints:
-                    nullable: false
         - addForeignKeyConstraint:
             baseTableName: classificacao
             baseColumnNames: subclassificacao_id
             constraintName: classificacao_subclassificacao_fk
             referencedTableName: subclassificacao
             referencedColumnNames: id
+            onDelete: CASCADE
 
   - changeSet:
       id: 6
@@ -231,90 +213,62 @@ databaseChangeLog:
               - column:
                   name: titulo
                   type: varchar
-                  constraints:
-                    nullable: false
               - column:
                   name: descricao
                   type: varchar
-                  constraints:
-                    nullable: false
               - column:
                   name: so
                   type: varchar
-                  constraints:
-                    nullable: true
               - column:
                   name: screenshots
                   type: bytea[]
-                  constraints:
-                    nullable: true
               - column:
                   name: caminho
                   type: varchar
-                  constraints:
-                    nullable: true
               - column:
                   name: data_fechamento
                   type: date
-                  constraints:
-                    nullable: true
               - column:
                   name: data_criacao
                   type: date
-                  constraints:
-                    nullable: false
               - column:
                   name: data_estimada
                   type: date
-                  constraints:
-                    nullable: true
               - column:
                   name: prioridade
                   type: bigint
-                  constraints:
-                    nullable: false
               - column:
                   name: status
                   type: bigint
-                  constraints:
-                    nullable: false
               - column:
                   name: fechada
                   type: boolean
-                  constraints:
-                    nullable: false
               - column:
                   name: posicao
                   type: bigint
-                  constraints:
-                    nullable: true
               - column:
                   name: projeto_id
                   type: bigint
-                  constraints:
-                    nullable: false
               - column:
                   name: feedback
                   type: text
-                  constraints:
-                    nullable: true
               - column:
                   name: classificacao_id
                   type: bigint
-                  constraints:
-                    nullable: true
         - addForeignKeyConstraint:
             baseTableName: tarefa
             baseColumnNames: projeto_id
             constraintName: tarefa_projeto_fk
             referencedTableName: projeto
             referencedColumnNames: id
+            onDelete: CASCADE
         - addForeignKeyConstraint:
             baseTableName: tarefa
             baseColumnNames: classificacao_id
             constraintName: tarefa_classificacao_fk
             referencedTableName: classificacao
             referencedColumnNames: id
+            onDelete: CASCADE
 
   - changeSet:
       id: 7
@@ -331,25 +285,23 @@ databaseChangeLog:
               - column:
                   name: usuario_id
                   type: bigint
-                  constraints:
-                    nullable: false
               - column:
                   name: tarefa_id
                   type: bigint
-                  constraints:
-                    nullable: false
         - addForeignKeyConstraint:
             baseTableName: usuario_tarefa
             baseColumnNames: usuario_id
             constraintName: usuario_tarefa_usuario_fk
             referencedTableName: usuario
             referencedColumnNames: id
+            onDelete: CASCADE
         - addForeignKeyConstraint:
             baseTableName: usuario_tarefa
             baseColumnNames: tarefa_id
             constraintName: usuario_tarefa_tarefa_fk
             referencedTableName: tarefa
             referencedColumnNames: id
+            onDelete: CASCADE
 
   - changeSet:
       id: 8
@@ -381,35 +333,29 @@ databaseChangeLog:
               - column:
                   name: conteudo
                   type: TEXT
-                  constraints:
-                    nullable: true
               - column:
                   name: tarefa_id
                   type: bigint
-                  constraints:
-                    nullable: false
               - column:
                   name: data_criacao
                   type: timestamp
-                  constraints:
-                    nullable: false
               - column:
                   name: usuario_id
                   type: bigint
-                  constraints:
-                    nullable: true
         - addForeignKeyConstraint:
             baseTableName: comentario
             baseColumnNames: tarefa_id
             constraintName: comentario_tarefa_fk
             referencedTableName: tarefa
             referencedColumnNames: id
+            onDelete: CASCADE
         - addForeignKeyConstraint:
             baseTableName: comentario
             baseColumnNames: usuario_id
             constraintName: comentario_usuario_fk
             referencedTableName: usuario
             referencedColumnNames: id
+            onDelete: CASCADE
 
   - changeSet:
       id: 9
@@ -426,25 +372,23 @@ databaseChangeLog:
               - column:
                   name: usuario_id
                   type: bigint
-                  constraints:
-                    nullable: false
               - column:
                   name: projeto_id
                   type: bigint
-                  constraints:
-                    nullable: false
         - addForeignKeyConstraint:
             baseTableName: usuario_projeto
             baseColumnNames: usuario_id
             constraintName: usuario_projeto_usuario_fk
             referencedTableName: usuario
             referencedColumnNames: id
+            onDelete: CASCADE
         - addForeignKeyConstraint:
             baseTableName: usuario_projeto
             baseColumnNames: projeto_id
             constraintName: usuario_projeto_projeto_fk
             referencedTableName: projeto
             referencedColumnNames: id
+            onDelete: CASCADE
   - changeSet:
       id: 10
       author: luccakominek
@@ -473,10 +417,17 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
+                  name: id
+                  type: BIGINT
+              - column:
                   name: revtstmp
                   type: BIGINT
-                  constraints:
-                    nullable: false
+              - column:
+                  name: timestamp
+                  type: BIGINT
+              - column:
+                  name: keycloak_id
+                  type: UUID
   - changeSet:
       id: 11
       author: luccakominek
@@ -492,13 +443,9 @@ databaseChangeLog:
               - column:
                   name: id
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: titulo
                   type: VARCHAR(255)
-                  constraints:
-                    nullable: false
               - column:
                   name: descricao
                   type: VARCHAR(255)
@@ -507,18 +454,18 @@ databaseChangeLog:
                   type: VARCHAR(255)
               - column:
                   name: screenshots
-                  type: BYTEA
+                  type: bytea[]
               - column:
                   name: caminho
                   type: VARCHAR(255)
               - column:
-                  name: dataFechamento
+                  name: data_fechamento
                   type: TIMESTAMP
               - column:
-                  name: dataCriacao
+                  name: data_criacao
                   type: TIMESTAMP
               - column:
-                  name: dataEstimada
+                  name: data_estimada
                   type: TIMESTAMP
               - column:
                   name: status
@@ -535,8 +482,6 @@ databaseChangeLog:
               - column:
                   name: projeto_id
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: feedback
                   type: VARCHAR(255)
@@ -546,114 +491,76 @@ databaseChangeLog:
               - column:
                   name: REV
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: REVTYPE
                   type: TINYINT
-                  constraints:
-                    nullable: false
               - column:
                   name: titulo_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: descricao_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: so_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: screenshots_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: caminho_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
-                  name: dataFechamento_mod
+                  name: data_fechamento_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
-                  name: dataCriacao_mod
+                  name: data_criacao_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
-                  name: dataEstimada_mod
+                  name: data_estimada_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: status_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: fechada_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: posicao_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: prioridade_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: projeto_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: feedback_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: classificacao_id_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: usuarios_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: classificacao_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
         - addForeignKeyConstraint:
             baseTableName: tarefa_aud
@@ -661,6 +568,7 @@ databaseChangeLog:
             constraintName: tarefa_REV_fk
             referencedTableName: revinfo
             referencedColumnNames: rev
+            onDelete: CASCADE
   - changeSet:
       id: 12
       author: luccakominek
@@ -676,51 +584,33 @@ databaseChangeLog:
               - column:
                   name: id
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: nome
                   type: VARCHAR(255)
-                  constraints:
-                    nullable: false
               - column:
                   name: organizacao_id
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: REV
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: REVTYPE
                   type: TINYINT
-                  constraints:
-                    nullable: false
               - column:
                   name: id_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: nome_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: organizacao_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: usuarios_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
         - addForeignKeyConstraint:
             baseTableName: projeto_aud
@@ -728,6 +618,7 @@ databaseChangeLog:
             constraintName: projeto_REV_fk
             referencedTableName: revinfo
             referencedColumnNames: rev
+            onDelete: CASCADE
   - changeSet:
       id: 13
       author: luccakominek
@@ -743,79 +634,51 @@ databaseChangeLog:
               - column:
                   name: id
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: nome
                   type: VARCHAR(255)
-                  constraints:
-                    nullable: true
               - column:
                   name: email
                   type: VARCHAR(255)
-                  constraints:
-                    nullable: true
               - column:
                   name: keycloak_id
                   type: UUID
-                  constraints:
-                    nullable: true
               - column:
                   name: roles
                   type: VARCHAR(255)
-                  constraints:
-                    nullable: true
               - column:
                   name: REV
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: REVTYPE
                   type: TINYINT
-                  constraints:
-                    nullable: false
               - column:
                   name: nome_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: email_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: keycloak_id_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: roles_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: comentarios_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: projetos_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: tarefas_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
         - addForeignKeyConstraint:
             baseTableName: usuario_aud
@@ -838,61 +701,39 @@ databaseChangeLog:
               - column:
                   name: id
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: conteudo
                   type: VARCHAR(255)
-                  constraints:
-                    nullable: true
               - column:
                   name: tarefa_id
                   type: BIGINT
-                  constraints:
-                    nullable: true
               - column:
                   name: data_criacao
                   type: timestamp
-                  constraints:
-                    nullable: true
               - column:
                   name: usuario_id
                   type: BIGINT
-                  constraints:
-                    nullable: true
               - column:
                   name: REV
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: REVTYPE
                   type: TINYINT
-                  constraints:
-                    nullable: false
               - column:
                   name: conteudo_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: tarefa_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: data_criacao_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: usuario_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
         - addForeignKeyConstraint:
             baseTableName: comentario_aud
@@ -915,45 +756,29 @@ databaseChangeLog:
               - column:
                   name: id
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: nome
                   type: VARCHAR(255)
-                  constraints:
-                    nullable: true
               - column:
                   name: subclassificacao_id
                   type: BIGINT
-                  constraints:
-                    nullable: true
               - column:
                   name: REV
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: REVTYPE
                   type: TINYINT
-                  constraints:
-                    nullable: false
               - column:
                   name: id_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: nome_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
-                  name: subclassificacao_mod
+                  name: sub_classificacao_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
         - addForeignKeyConstraint:
             baseTableName: classificacao_aud
@@ -976,34 +801,22 @@ databaseChangeLog:
               - column:
                   name: id
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: nome
                   type: VARCHAR(255)
-                  constraints:
-                    nullable: true
               - column:
                   name: REV
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: REVTYPE
                   type: TINYINT
-                  constraints:
-                    nullable: false
               - column:
                   name: id_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: nome_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
         - addForeignKeyConstraint:
             baseTableName: subclassificacao_aud
@@ -1026,34 +839,22 @@ databaseChangeLog:
               - column:
                   name: usuario_id
                   type: bigint
-                  constraints:
-                    nullable: false
               - column:
                   name: projeto_id
                   type: bigint
-                  constraints:
-                    nullable: false
               - column:
                   name: REV
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: REVTYPE
                   type: TINYINT
-                  constraints:
-                    nullable: false
               - column:
                   name: usuario_id_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: projeto_id_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
         - addForeignKeyConstraint:
             baseTableName: usuario_projeto_aud
@@ -1076,34 +877,22 @@ databaseChangeLog:
               - column:
                   name: usuario_id
                   type: bigint
-                  constraints:
-                    nullable: false
               - column:
                   name: tarefa_id
                   type: bigint
-                  constraints:
-                    nullable: false
               - column:
                   name: REV
                   type: BIGINT
-                  constraints:
-                    nullable: false
               - column:
                   name: REVTYPE
                   type: TINYINT
-                  constraints:
-                    nullable: false
               - column:
                   name: usuario_id_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
               - column:
                   name: tarefa_id_mod
                   type: BOOLEAN
-                  constraints:
-                    nullable: false
                   defaultValueBoolean: false
         - addForeignKeyConstraint:
             baseTableName: usuario_tarefa_aud
@@ -1111,3 +900,11 @@ databaseChangeLog:
             constraintName: usuario_tarefa_REV_fk
             referencedTableName: revinfo
             referencedColumnNames: rev
+  - changeSet:
+      id: 19
+      author: luccakominek
+      changes:
+        - sqlFile:
+            path: 'populateDB.sql'
+            relativeToChangelogFile: true
+            endDelimiter: ';'

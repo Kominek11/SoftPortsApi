@@ -1,5 +1,6 @@
 package br.com.softports.application.configuration;
 
+import br.com.softports.core.internal.properties.KeycloakLoggedUserDataDefault;
 import br.com.softports.core.api.classificacao.repository.ClassificacaoRepository;
 import br.com.softports.core.api.comentario.repository.ComentarioRepository;
 import br.com.softports.core.api.common.service.HttpService;
@@ -14,12 +15,14 @@ import br.com.softports.core.api.projeto.usecase.AtualizarProjeto;
 import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
 import br.com.softports.core.api.projeto.usecase.CriarProjeto;
 import br.com.softports.core.api.projeto.usecase.DeletarProjeto;
+import br.com.softports.core.api.properties.KeycloakLoggedUserData;
 import br.com.softports.core.api.properties.KeycloakProperties;
 import br.com.softports.core.api.subclassificacao.repository.SubClassificacaoRepository;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
 import br.com.softports.core.api.tarefa.usecase.*;
 import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.api.usuario.usecase.*;
+import br.com.softports.core.internal.common.entity.audited.CustomRevisionListener;
 import br.com.softports.core.internal.common.usecase.expression.*;
 import br.com.softports.core.internal.organizacao.usecase.AtualizarOrganizacaoDefault;
 import br.com.softports.core.internal.organizacao.usecase.BuscarOrganizacoesDefault;
@@ -36,8 +39,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.concurrent.Executor;
 
 @Configuration
 public class UseCaseConfiguration {
@@ -279,5 +280,15 @@ public class UseCaseConfiguration {
     @Bean
     GerarPredicadoString gerarPredicadoString() {
         return new GerarPredicadoStringDefault();
+    }
+
+    @Bean
+    KeycloakLoggedUserData keycloakLoggedUserData() {
+        return new KeycloakLoggedUserDataDefault();
+    }
+
+    @Bean
+    public CustomRevisionListener customRevisionListener(KeycloakLoggedUserData keycloakLoggedUserData) {
+        return new CustomRevisionListener(keycloakLoggedUserData);
     }
 }
