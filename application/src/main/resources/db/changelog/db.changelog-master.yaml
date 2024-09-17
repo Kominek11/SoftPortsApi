@@ -401,6 +401,7 @@ databaseChangeLog:
         - createSequence:
             sequenceName: revinfo_seq
             startValue: 1
+            incrementBy: 50
         - preConditions:
             onFail: MARK_RAN
             not:
