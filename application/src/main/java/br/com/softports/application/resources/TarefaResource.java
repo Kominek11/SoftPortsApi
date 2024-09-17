@@ -14,6 +14,7 @@ import br.com.softports.core.api.projeto.usecase.DeletarProjeto;
 import br.com.softports.core.api.tarefa.dto.TarefaPosicaoResponse;
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.usecase.*;
+import br.com.softports.core.api.tarefa_aud.dto.TarefaAudResponse;
 import br.com.softports.core.internal.common.entity.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,7 @@ public class TarefaResource {
     private final AtualizarFeedbackTarefa atualizarFeedbackTarefa;
     private final AtualizarFechadoTarefa atualizarFechadoTarefa;
     private final AtualizarPosicoesTarefa atualizarPosicoesTarefa;
+    private final BuscarAuditoriaTarefa buscarAuditoriaTarefa;
 
     @GetMapping
     Pagina<TarefaResponse> buscarTarefas(
@@ -110,6 +112,16 @@ public class TarefaResource {
     List<TarefaPosicaoResponse> atualizarPosicoesTarefa(@RequestBody AtualizarPosicoesTarefaRequest
                                                                      atualizarPosicoesTarefaRequest) {
         return atualizarPosicoesTarefa.executar(atualizarPosicoesTarefaRequest.tarefas());
+    }
+
+    @GetMapping("/auditoria/{id}")
+    Pagina<TarefaAudResponse> buscarAuditoriaTarefa(
+            @PathVariable Long id,
+            @RequestParam(required = false, defaultValue = "10") Integer tamanhoPagina,
+            @RequestParam(required = false, defaultValue = "1") Integer numeroPagina,
+            @RequestParam(required = false, defaultValue = "id") String ordenadoPor,
+            @RequestParam(required = false, defaultValue = "asc") String direcao) {
+        return buscarAuditoriaTarefa.executar(id, tamanhoPagina, numeroPagina, ordenadoPor, direcao);
     }
 
     @DeleteMapping("/{id}")

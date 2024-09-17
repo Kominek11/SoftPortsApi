@@ -1,5 +1,6 @@
 package br.com.softports.application.configuration;
 
+import br.com.softports.core.api.tarefa_aud.repository.TarefaAudRepository;
 import br.com.softports.core.internal.properties.KeycloakLoggedUserDataDefault;
 import br.com.softports.core.api.classificacao.repository.ClassificacaoRepository;
 import br.com.softports.core.api.comentario.repository.ComentarioRepository;
@@ -140,6 +141,11 @@ public class UseCaseConfiguration {
                                                     ComentarioRepository comentarioRepository,
                                                     UsuarioRepository usuarioRepository) {
         return new IncluirComentarioTarefaDefault(tarefaRepository, comentarioRepository, usuarioRepository);
+    }
+
+    @Bean
+    BuscarAuditoriaTarefa buscarAuditoriaTarefa(TarefaAudRepository tarefaAudRepository) {
+        return new BuscarAuditoriaTarefaDefault(tarefaAudRepository);
     }
 
     @Bean

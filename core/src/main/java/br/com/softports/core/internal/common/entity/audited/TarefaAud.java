@@ -67,60 +67,59 @@ public class TarefaAud {
     @Column(name = "rev")
     private Long revision;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "revtype")
     private RevisionType revisionType;
 
     @Column(name = "titulo_mod", columnDefinition = "boolean default false")
-    private Boolean tituloMod;
+    private Boolean titulo_Mod;
 
     @Column(name = "descricao_mod", columnDefinition = "boolean default false")
-    private Boolean descricaoMod;
+    private Boolean descricao_Mod;
 
     @Column(name = "so_mod", columnDefinition = "boolean default false")
-    private Boolean soMod;
+    private Boolean so_Mod;
 
     @Column(name = "screenshots_mod", columnDefinition = "boolean default false")
-    private Boolean screenshotsMod;
+    private Boolean screenshots_Mod;
 
     @Column(name = "caminho_mod", columnDefinition = "boolean default false")
-    private Boolean caminhoMod;
+    private Boolean caminho_Mod;
 
-    @Column(name = "data_fechamento_mod", columnDefinition = "boolean default false")
-    private Boolean data_fechamento_mod;
+    @Column()
+    private Boolean dataFechamento_Mod;
 
-    @Column(name = "data_criacao_mod", columnDefinition = "boolean default false")
-    private Boolean data_criacao_mod;
+    @Column()
+    private Boolean dataCriacao_Mod;
 
-    @Column(name = "data_estimada_mod", columnDefinition = "boolean default false")
-    private Boolean data_estimada_mod;
+    @Column()
+    private Boolean dataEstimada_Mod;
 
     @Column(name = "status_mod", columnDefinition = "boolean default false")
-    private Boolean statusMod;
+    private Boolean status_Mod;
 
     @Column(name = "fechada_mod", columnDefinition = "boolean default false")
-    private Boolean fechadaMod;
+    private Boolean fechada_Mod;
 
     @Column(name = "posicao_mod", columnDefinition = "boolean default false")
-    private Boolean posicaoMod;
+    private Boolean posicao_Mod;
 
     @Column(name = "prioridade_mod", columnDefinition = "boolean default false")
-    private Boolean prioridadeMod;
+    private Boolean prioridade_Mod;
 
     @Column(name = "projeto_mod", columnDefinition = "boolean default false")
-    private Boolean projetoMod;
+    private Boolean projeto_Mod;
 
     @Column(name = "feedback_mod", columnDefinition = "boolean default false")
-    private Boolean feedbackMod;
+    private Boolean feedback_Mod;
 
-    @Column(name = "classificacao_id_mod", columnDefinition = "boolean default false")
-    private Boolean classificacaoIdMod;
+    @Column()
+    private Boolean classificacaoId_Mod;
 
     @Column(name = "usuarios_mod", columnDefinition = "boolean default false")
-    private Boolean usuariosMod;
+    private Boolean usuarios_Mod;
 
     @Column(name = "classificacao_mod", columnDefinition = "boolean default false")
-    private Boolean classificacaoMod;
+    private Boolean classificacao_Mod;
 
     @ManyToOne
     @JoinColumn(name = "rev", insertable = false, updatable = false)
