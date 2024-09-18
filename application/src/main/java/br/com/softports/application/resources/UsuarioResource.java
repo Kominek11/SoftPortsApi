@@ -32,7 +32,8 @@ public class UsuarioResource {
                                      criarUsuarioRequest.email(),
                                      criarUsuarioRequest.emailVerified(),
                                      criarUsuarioRequest.username(),
-                                     criarUsuarioRequest.realmRoles());
+                                     criarUsuarioRequest.realmRoles(),
+                                     criarUsuarioRequest.attributes());
     }
 
     @GetMapping

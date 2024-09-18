@@ -396,11 +396,15 @@ databaseChangeLog:
         onFail: MARK_RAN
         not:
           sequenceExists:
-            sequenceName: revinfo_seq
+            sequenceName: revinfo_id_seq
       changes:
         - createSequence:
+            sequenceName: revinfo_id_seq
+            startValue: 50
+            incrementBy: 50
+        - createSequence:
             sequenceName: revinfo_seq
-            startValue: 1
+            startValue: 50
             incrementBy: 50
         - preConditions:
             onFail: MARK_RAN
@@ -411,14 +415,11 @@ databaseChangeLog:
             tableName: revinfo
             columns:
               - column:
-                  name: rev
+                  name: id
                   type: BIGINT
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-              - column:
-                  name: id
-                  type: BIGINT
               - column:
                   name: revtstmp
                   type: BIGINT
@@ -567,7 +568,7 @@ databaseChangeLog:
             baseColumnNames: REV
             constraintName: tarefa_REV_fk
             referencedTableName: revinfo
-            referencedColumnNames: rev
+            referencedColumnNames: id
             onDelete: CASCADE
   - changeSet:
       id: 12
@@ -617,7 +618,7 @@ databaseChangeLog:
             baseColumnNames: REV
             constraintName: projeto_REV_fk
             referencedTableName: revinfo
-            referencedColumnNames: rev
+            referencedColumnNames: id
             onDelete: CASCADE
   - changeSet:
       id: 13
@@ -685,7 +686,7 @@ databaseChangeLog:
             baseColumnNames: REV
             constraintName: usuario_REV_fk
             referencedTableName: revinfo
-            referencedColumnNames: rev
+            referencedColumnNames: id
   - changeSet:
       id: 14
       author: luccakominek
@@ -740,7 +741,7 @@ databaseChangeLog:
             baseColumnNames: REV
             constraintName: comentario_REV_fk
             referencedTableName: revinfo
-            referencedColumnNames: rev
+            referencedColumnNames: id
   - changeSet:
       id: 15
       author: luccakominek
@@ -785,7 +786,7 @@ databaseChangeLog:
             baseColumnNames: REV
             constraintName: classificacao_REV_fk
             referencedTableName: revinfo
-            referencedColumnNames: rev
+            referencedColumnNames: id
   - changeSet:
       id: 16
       author: luccakominek
@@ -823,7 +824,7 @@ databaseChangeLog:
             baseColumnNames: REV
             constraintName: subclassificacao_REV_fk
             referencedTableName: revinfo
-            referencedColumnNames: rev
+            referencedColumnNames: id
   - changeSet:
       id: 17
       author: luccakominek
@@ -861,7 +862,7 @@ databaseChangeLog:
             baseColumnNames: REV
             constraintName: usuario_projeto_REV_fk
             referencedTableName: revinfo
-            referencedColumnNames: rev
+            referencedColumnNames: id
   - changeSet:
       id: 18
       author: luccakominek
@@ -899,7 +900,7 @@ databaseChangeLog:
             baseColumnNames: REV
             constraintName: usuario_tarefa_REV_fk
             referencedTableName: revinfo
-            referencedColumnNames: rev
+            referencedColumnNames: id
   - changeSet:
       id: 19
       author: luccakominek

@@ -170,10 +170,11 @@ public class UseCaseConfiguration {
     @Bean
     CriarUsuarioKeycloak criarUsuarioKeycloak(KeycloakProperties keycloakProperties,
                                               AtribuirRoleUsuarioKeycloak atribuirRoleUsuarioKeycloak,
+                                              AtribuirAttributesUsuarioKeycloak atribuirAttributesUsuarioKeycloak,
                                               ObterToken obterToken,
                                               HttpService httpService) {
         return new CriarUsuarioKeycloakDefault(keycloakProperties, atribuirRoleUsuarioKeycloak,
-                obterToken, httpService);
+                atribuirAttributesUsuarioKeycloak, obterToken, httpService);
     }
 
     @Bean
@@ -181,6 +182,13 @@ public class UseCaseConfiguration {
                                                             ObterToken obterToken,
                                                             HttpService httpService) {
         return new AtribuirRoleUsuarioKeycloakDefault(keycloakProperties, obterToken, httpService);
+    }
+
+    @Bean
+    AtribuirAttributesUsuarioKeycloak atribuirAttributesUsuarioKeycloak(KeycloakProperties keycloakProperties,
+                                                                      ObterToken obterToken,
+                                                                      HttpService httpService) {
+        return new AtribuirAttributesUsuarioKeycloakDefault(keycloakProperties, obterToken, httpService);
     }
 
     @Bean

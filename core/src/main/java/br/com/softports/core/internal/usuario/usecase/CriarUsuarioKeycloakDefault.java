@@ -7,6 +7,7 @@ import br.com.softports.core.api.usuario.dto.CredencialUsuarioKeycloak;
 import br.com.softports.core.api.usuario.dto.CriarUsuarioKeycloakRequest;
 import br.com.softports.core.api.usuario.dto.CriarUsuarioKeycloakResponse;
 import br.com.softports.core.api.usuario.dto.KeycloakRoleResponse;
+import br.com.softports.core.api.usuario.usecase.AtribuirAttributesUsuarioKeycloak;
 import br.com.softports.core.api.usuario.usecase.AtribuirRoleUsuarioKeycloak;
 import br.com.softports.core.api.usuario.usecase.CriarUsuarioKeycloak;
 import br.com.softports.core.api.usuario.usecase.ObterToken;
@@ -16,6 +17,7 @@ import br.com.softports.core.internal.common.utils.ObjectUtils;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -23,12 +25,14 @@ public class CriarUsuarioKeycloakDefault implements CriarUsuarioKeycloak {
 
     private final KeycloakProperties keycloakProperties;
     private final AtribuirRoleUsuarioKeycloak atribuirRoleUsuarioKeycloak;
+    private final AtribuirAttributesUsuarioKeycloak atribuirAttributesUsuarioKeycloak;
     private final ObterToken obterToken;
     private final HttpService httpService;
 
     @Override
     public UUID executar(String nome, String sobrenome, String email,
-                         Boolean emailVerified, String username, List<KeycloakRoleResponse> realmRoles) {
+                         Boolean emailVerified, String username, List<KeycloakRoleResponse> realmRoles,
+                         Map<String, Object> attributes) {
         String bearerToken = obterToken.executar();
         String urlCriarUsuario = keycloakProperties.urlEndPointUsers();
         CriarUsuarioKeycloakRequest payload = gerarRequest(nome, sobrenome, email,
@@ -45,6 +49,7 @@ public class CriarUsuarioKeycloakDefault implements CriarUsuarioKeycloak {
                 throw new GenericException(e.getMessage());
             }
             atribuirRoleUsuarioKeycloak.executar(usuarioId, realmRoles);
+            atribuirAttributesUsuarioKeycloak.executar(usuarioId, username, nome, sobrenome, email, attributes);
         } catch (Exception e) {
             throw new GenericException(e.getMessage());
         }

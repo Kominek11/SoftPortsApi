@@ -4,6 +4,7 @@ import br.com.softports.core.api.usuario.enumerate.UsuarioRole;
 import lombok.Builder;
 
 import java.util.List;
+import java.util.Map;
 
 @Builder
 public record CriarUsuarioRequest(
@@ -12,5 +13,6 @@ public record CriarUsuarioRequest(
         String email,
         Boolean emailVerified,
         String username,
-        List<KeycloakRoleResponse> realmRoles
+        List<KeycloakRoleResponse> realmRoles,
+        Map<String, Object> attributes
 ) {}

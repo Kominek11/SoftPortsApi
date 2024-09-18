@@ -12,10 +12,7 @@ import br.com.softports.core.internal.common.entity.Usuario;
 import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -28,13 +25,14 @@ public class CriarUsuarioDefault implements CriarUsuario {
 
     @Override
     public UsuarioResponse executar(String nome, String sobrenome, String email,
-                                    Boolean emailVerified, String username, List<KeycloakRoleResponse> realmRoles) {
+                                    Boolean emailVerified, String username, List<KeycloakRoleResponse> realmRoles,
+                                    Map<String, Object> attributes) {
         Optional<UUID> usuarioKeycloak = buscarUsuarioKeycloak.executar(email);
         if (usuarioKeycloak.isPresent())
             throw new RuntimeException("Usuário já existente");
         Usuario usuarioTemporario = criarUsuario(nome, email, realmRoles);
         UUID uuidUsuarioKeycloak =  criarUsuarioKeycloak.executar(nome, sobrenome, email,
-                emailVerified, username, realmRoles);
+                emailVerified, username, realmRoles, attributes);
         Usuario usuario = atualizarIdKeycloakUsuario(usuarioTemporario.getId(), uuidUsuarioKeycloak)
                 .orElseThrow(() -> new RuntimeException("Falha ao atualizar identificador do usuário"));
         return usuarioToUsuarioResponse.executar(usuario);

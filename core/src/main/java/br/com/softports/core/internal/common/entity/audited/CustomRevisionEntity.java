@@ -1,8 +1,6 @@
 package br.com.softports.core.internal.common.entity.audited;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.envers.DefaultRevisionEntity;
 import org.hibernate.envers.RevisionEntity;
 
@@ -13,6 +11,11 @@ import java.util.UUID;
 @RevisionEntity(CustomRevisionListener.class)
 @Table(name = "revinfo")
 public class CustomRevisionEntity extends DefaultRevisionEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "revinfo_id_seq")
+    @SequenceGenerator(name = "revinfo_id_seq", sequenceName = "revinfo_id_seq")
+    Integer id;
 
     @Column(name = "revtstmp", nullable = false)
     private Long revtstmp;
