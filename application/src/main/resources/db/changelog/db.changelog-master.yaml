@@ -409,7 +409,7 @@ databaseChangeLog:
                 tableName: revinfo
         - createTable:
             tableName: revinfo
-            columns: 
+            columns:
               - column:
                   name: rev
                   type: BIGINT
