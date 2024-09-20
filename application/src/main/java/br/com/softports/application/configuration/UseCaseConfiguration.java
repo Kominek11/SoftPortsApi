@@ -1,21 +1,22 @@
 package br.com.softports.application.configuration;
 
+import br.com.softports.core.api.classificacao.usecase.ClassificacaoToClassificacaoResponse;
+import br.com.softports.core.api.organizacao.usecase.*;
+import br.com.softports.core.api.projeto.usecase.*;
+import br.com.softports.core.api.subclassificacao.usecase.SubClassificacaoToSubClassificacaoResponse;
 import br.com.softports.core.api.tarefa_aud.repository.TarefaAudRepository;
+import br.com.softports.core.api.tarefa_aud.usecase.CustomRevisionEntityToCustomRevisionEntityResponse;
+import br.com.softports.core.api.tarefa_aud.usecase.TarefaAudToTarefaAudResponse;
+import br.com.softports.core.internal.classificacao.usecase.ClassificacaoToClassificacaoResponseDefault;
+import br.com.softports.core.internal.organizacao.usecase.*;
+import br.com.softports.core.internal.projeto.usecase.*;
 import br.com.softports.core.internal.properties.KeycloakLoggedUserDataDefault;
 import br.com.softports.core.api.classificacao.repository.ClassificacaoRepository;
 import br.com.softports.core.api.comentario.repository.ComentarioRepository;
 import br.com.softports.core.api.common.service.HttpService;
 import br.com.softports.core.api.common.usecase.expression.*;
 import br.com.softports.core.api.organizacao.repository.OrganizacaoRepository;
-import br.com.softports.core.api.organizacao.usecase.AtualizarOrganizacao;
-import br.com.softports.core.api.organizacao.usecase.BuscarOrganizacoes;
-import br.com.softports.core.api.organizacao.usecase.CriarOrganizacao;
-import br.com.softports.core.api.organizacao.usecase.DeletarOrganizacao;
 import br.com.softports.core.api.projeto.repository.ProjetoRepository;
-import br.com.softports.core.api.projeto.usecase.AtualizarProjeto;
-import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
-import br.com.softports.core.api.projeto.usecase.CriarProjeto;
-import br.com.softports.core.api.projeto.usecase.DeletarProjeto;
 import br.com.softports.core.api.properties.KeycloakLoggedUserData;
 import br.com.softports.core.api.properties.KeycloakProperties;
 import br.com.softports.core.api.subclassificacao.repository.SubClassificacaoRepository;
@@ -25,15 +26,10 @@ import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.api.usuario.usecase.*;
 import br.com.softports.core.internal.common.entity.audited.CustomRevisionListener;
 import br.com.softports.core.internal.common.usecase.expression.*;
-import br.com.softports.core.internal.organizacao.usecase.AtualizarOrganizacaoDefault;
-import br.com.softports.core.internal.organizacao.usecase.BuscarOrganizacoesDefault;
-import br.com.softports.core.internal.organizacao.usecase.CriarOrganizacaoDefault;
-import br.com.softports.core.internal.organizacao.usecase.DeletarOrganizacaoDefault;
-import br.com.softports.core.internal.projeto.usecase.AtualizarProjetoDefault;
-import br.com.softports.core.internal.projeto.usecase.BuscarProjetosDefault;
-import br.com.softports.core.internal.projeto.usecase.CriarProjetoDefault;
-import br.com.softports.core.internal.projeto.usecase.DeletarProjetoDefault;
+import br.com.softports.core.internal.subclassificacao.usecase.SubClassificacaoToSubClassificacaoResponseDefault;
 import br.com.softports.core.internal.tarefa.usecase.*;
+import br.com.softports.core.internal.tarefa_aud.usecase.CustomRevisionEntityToCustomRevisionEntityResponseDefault;
+import br.com.softports.core.internal.tarefa_aud.usecase.TarefaAudToTarefaAudResponseDefault;
 import br.com.softports.core.internal.usuario.usecase.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -53,18 +49,21 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    BuscarOrganizacoes buscarOrganizacoes(OrganizacaoRepository organizacaoRepository) {
-        return new BuscarOrganizacoesDefault(organizacaoRepository);
+    BuscarOrganizacoes buscarOrganizacoes(OrganizacaoRepository organizacaoRepository,
+                                          OrganizacaoToOrganizacaoResponse organizacaoToOrganizacaoResponse) {
+        return new BuscarOrganizacoesDefault(organizacaoRepository, organizacaoToOrganizacaoResponse);
     }
 
     @Bean
-    CriarOrganizacao criarOrganizacao(OrganizacaoRepository organizacaoRepository) {
-        return new CriarOrganizacaoDefault(organizacaoRepository);
+    CriarOrganizacao criarOrganizacao(OrganizacaoRepository organizacaoRepository,
+                                      OrganizacaoToOrganizacaoResponse organizacaoToOrganizacaoResponse) {
+        return new CriarOrganizacaoDefault(organizacaoRepository, organizacaoToOrganizacaoResponse);
     }
 
     @Bean
-    AtualizarOrganizacao atualizarOrganizacao(OrganizacaoRepository organizacaoRepository) {
-        return new AtualizarOrganizacaoDefault(organizacaoRepository);
+    AtualizarOrganizacao atualizarOrganizacao(OrganizacaoRepository organizacaoRepository,
+                                              OrganizacaoToOrganizacaoResponse organizacaoToOrganizacaoResponse) {
+        return new AtualizarOrganizacaoDefault(organizacaoRepository, organizacaoToOrganizacaoResponse);
     }
 
     @Bean
@@ -73,8 +72,9 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    BuscarProjetos buscarProjetos(ProjetoRepository projetoRepository) {
-        return new BuscarProjetosDefault(projetoRepository);
+    BuscarProjetos buscarProjetos(ProjetoRepository projetoRepository,
+                                  ProjetoToProjetoResponse projetoToProjetoResponse) {
+        return new BuscarProjetosDefault(projetoRepository, projetoToProjetoResponse);
     }
 
     @Bean
@@ -84,9 +84,12 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    AtualizarProjeto atualizarProjeto(ProjetoRepository projetoRepository, OrganizacaoRepository organizacaoRepository,
-                                      UsuarioRepository usuarioRepository) {
-        return new AtualizarProjetoDefault(projetoRepository, organizacaoRepository, usuarioRepository);
+    AtualizarProjeto atualizarProjeto(ProjetoRepository projetoRepository,
+                                      OrganizacaoRepository organizacaoRepository,
+                                      UsuarioRepository usuarioRepository,
+                                      ProjetoToProjetoResponse projetoToProjetoResponse) {
+        return new AtualizarProjetoDefault(projetoRepository, organizacaoRepository,
+                usuarioRepository, projetoToProjetoResponse);
     }
 
     @Bean
@@ -95,57 +98,66 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    BuscarTarefas buscarTarefas(TarefaRepository tarefaRepository, ComentarioRepository comentarioRepository,
-                                UsuarioRepository usuarioRepository) {
-        return new BuscarTarefasDefault(tarefaRepository, comentarioRepository, usuarioRepository);
+    BuscarTarefas buscarTarefas(TarefaRepository tarefaRepository, UsuarioRepository usuarioRepository,
+                                TarefaToTarefaResponse tarefaToTarefaResponse) {
+        return new BuscarTarefasDefault(tarefaRepository, usuarioRepository, tarefaToTarefaResponse);
     }
 
     @Bean
     CriarTarefa criarTarefa(TarefaRepository tarefaRepository, ProjetoRepository projetoRepository,
                             UsuarioRepository usuarioRepository, ClassificacaoRepository classificacaoRepository,
-                            SubClassificacaoRepository subClassificacaoRepository) {
+                            SubClassificacaoRepository subClassificacaoRepository,
+                            TarefaToTarefaResponse tarefaToTarefaResponse) {
         return new CriarTarefaDefault(tarefaRepository, projetoRepository,
-                usuarioRepository, classificacaoRepository, subClassificacaoRepository);
+                usuarioRepository, classificacaoRepository, subClassificacaoRepository, tarefaToTarefaResponse);
     }
 
     @Bean
     AtualizarTarefa atualizarTarefa(TarefaRepository tarefaRepository, ProjetoRepository projetoRepository,
                                     UsuarioRepository usuarioRepository, ClassificacaoRepository classificacaoRepository,
-                                    SubClassificacaoRepository subClassificacaoRepository) {
+                                    SubClassificacaoRepository subClassificacaoRepository,
+                                    TarefaToTarefaResponse tarefaToTarefaResponse) {
         return new AtualizarTarefaDefault(tarefaRepository, projetoRepository,
-                usuarioRepository, classificacaoRepository, subClassificacaoRepository);
+                usuarioRepository, classificacaoRepository, subClassificacaoRepository, tarefaToTarefaResponse);
     }
 
     @Bean
-    AtualizarStatusTarefa atualizarStatusTarefa(TarefaRepository tarefaRepository) {
-        return new AtualizarStatusTarefaDefault(tarefaRepository);
+    AtualizarStatusTarefa atualizarStatusTarefa(TarefaRepository tarefaRepository,
+                                                TarefaToTarefaResponse tarefaToTarefaResponse) {
+        return new AtualizarStatusTarefaDefault(tarefaRepository, tarefaToTarefaResponse);
     }
 
     @Bean
-    AtualizarFeedbackTarefa atualizarFeedbackTarefa(TarefaRepository tarefaRepository) {
-        return new AtualizarFeedbackTarefaDefault(tarefaRepository);
+    AtualizarFeedbackTarefa atualizarFeedbackTarefa(TarefaRepository tarefaRepository,
+                                                    TarefaToTarefaResponse tarefaToTarefaResponse) {
+        return new AtualizarFeedbackTarefaDefault(tarefaRepository, tarefaToTarefaResponse);
     }
 
     @Bean
-    AtualizarFechadoTarefa atualizarFechadoTarefa(TarefaRepository tarefaRepository) {
-        return new AtualizarFechadoTarefaDefault(tarefaRepository);
+    AtualizarFechadoTarefa atualizarFechadoTarefa(TarefaRepository tarefaRepository,
+                                                  TarefaToTarefaResponse tarefaToTarefaResponse) {
+        return new AtualizarFechadoTarefaDefault(tarefaRepository, tarefaToTarefaResponse);
     }
 
     @Bean
-    AtualizarPosicoesTarefa atualizarPosicoesTarefa(TarefaRepository tarefaRepository) {
-        return new AtualizarPosicoesTarefaDefault(tarefaRepository);
+    AtualizarPosicoesTarefa atualizarPosicoesTarefa(TarefaRepository tarefaRepository,
+                                                    TarefaToTarefaPosicaoResponse tarefaToTarefaPosicaoResponse) {
+        return new AtualizarPosicoesTarefaDefault(tarefaRepository, tarefaToTarefaPosicaoResponse);
     }
 
     @Bean
     IncluirComentarioTarefa incluirComentarioTarefa(TarefaRepository tarefaRepository,
                                                     ComentarioRepository comentarioRepository,
-                                                    UsuarioRepository usuarioRepository) {
-        return new IncluirComentarioTarefaDefault(tarefaRepository, comentarioRepository, usuarioRepository);
+                                                    UsuarioRepository usuarioRepository,
+                                                    TarefaToTarefaResponse tarefaToTarefaResponse) {
+        return new IncluirComentarioTarefaDefault(tarefaRepository, comentarioRepository,
+                usuarioRepository, tarefaToTarefaResponse);
     }
 
     @Bean
-    BuscarAuditoriaTarefa buscarAuditoriaTarefa(TarefaAudRepository tarefaAudRepository) {
-        return new BuscarAuditoriaTarefaDefault(tarefaAudRepository);
+    BuscarAuditoriaTarefa buscarAuditoriaTarefa(TarefaAudRepository tarefaAudRepository,
+                                                TarefaAudToTarefaAudResponse tarefaAudToTarefaAudResponse) {
+        return new BuscarAuditoriaTarefaDefault(tarefaAudRepository, tarefaAudToTarefaAudResponse);
     }
 
     @Bean
@@ -154,8 +166,9 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    BuscarUsuarios buscarUsuarios(UsuarioRepository usuarioRepository) {
-        return new BuscarUsuariosDefault(usuarioRepository);
+    BuscarUsuarios buscarUsuarios(UsuarioRepository usuarioRepository,
+                                  UsuarioToUsuarioResponse usuarioToUsuarioResponse) {
+        return new BuscarUsuariosDefault(usuarioRepository, usuarioToUsuarioResponse);
     }
 
     @Bean
@@ -223,11 +236,6 @@ public class UseCaseConfiguration {
     ObterToken obterToken(KeycloakProperties keycloakProperties,
                           HttpService httpService) {
         return new ObterTokenDefault(keycloakProperties, httpService);
-    }
-
-    @Bean
-    UsuarioToUsuarioResponse usuarioToUsuarioResponse() {
-        return new UsuarioToUsuarioResponseDefault();
     }
 
     @Bean
@@ -305,4 +313,60 @@ public class UseCaseConfiguration {
     public CustomRevisionListener customRevisionListener(KeycloakLoggedUserData keycloakLoggedUserData) {
         return new CustomRevisionListener(keycloakLoggedUserData);
     }
+
+    @Bean
+    TarefaToTarefaResponse tarefaToTarefaResponse(
+            ProjetoToProjetoResponse projetoToProjetoResponse,
+            UsuarioToUsuarioResponse usuarioToUsuarioResponse,
+            ClassificacaoToClassificacaoResponse classificacaoToClassificacaoResponse) {
+        return new TarefaToTarefaResponseDefault(projetoToProjetoResponse, usuarioToUsuarioResponse,
+                classificacaoToClassificacaoResponse);
+    }
+
+    @Bean
+    TarefaAudToTarefaAudResponse tarefaAudToTarefaAudResponse(
+            CustomRevisionEntityToCustomRevisionEntityResponse customRevisionEntityToCustomRevisionEntityResponse) {
+        return new TarefaAudToTarefaAudResponseDefault(
+                customRevisionEntityToCustomRevisionEntityResponse
+        );
+    }
+
+    @Bean
+    CustomRevisionEntityToCustomRevisionEntityResponse customRevisionEntityToCustomRevisionEntityResponse() {
+        return new CustomRevisionEntityToCustomRevisionEntityResponseDefault();
+    }
+
+    @Bean
+    TarefaToTarefaPosicaoResponse tarefaToTarefaPosicaoResponse() {
+        return new TarefaToTarefaPosicaoResponseDefault();
+    }
+
+    @Bean
+    ProjetoToProjetoResponse projetoToProjetoResponse(
+            OrganizacaoToOrganizacaoResponse organizacaoToOrganizacaoResponse) {
+        return new ProjetoToProjetoResponseDefault(organizacaoToOrganizacaoResponse);
+    }
+
+    @Bean
+    OrganizacaoToOrganizacaoResponse organizacaoToOrganizacaoResponse() {
+        return new OrganizacaoToOrganizacaoResponseDefault();
+    }
+
+    @Bean
+    UsuarioToUsuarioResponse usuarioToUsuarioResponse() {
+        return new UsuarioToUsuarioResponseDefault();
+    }
+
+    @Bean
+    ClassificacaoToClassificacaoResponse classificacaoToClassificacaoResponse(
+            SubClassificacaoToSubClassificacaoResponse subClassificacaoToSubClassificacaoResponse) {
+        return new ClassificacaoToClassificacaoResponseDefault(subClassificacaoToSubClassificacaoResponse);
+    }
+
+    @Bean
+    SubClassificacaoToSubClassificacaoResponse subClassificacaoToSubClassificacaoResponse() {
+        return new SubClassificacaoToSubClassificacaoResponseDefault();
+    }
+
+
 }

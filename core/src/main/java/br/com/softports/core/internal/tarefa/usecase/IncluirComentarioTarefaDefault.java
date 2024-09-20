@@ -10,6 +10,7 @@ import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
 import br.com.softports.core.api.tarefa.usecase.AtualizarStatusTarefa;
 import br.com.softports.core.api.tarefa.usecase.IncluirComentarioTarefa;
+import br.com.softports.core.api.tarefa.usecase.TarefaToTarefaResponse;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
 import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.internal.comentario.expression.ComentarioExpressions;
@@ -28,6 +29,7 @@ public class IncluirComentarioTarefaDefault implements IncluirComentarioTarefa {
     private final TarefaRepository tarefaRepository;
     private final ComentarioRepository comentarioRepository;
     private final UsuarioRepository usuarioRepository;
+    private final TarefaToTarefaResponse tarefaToTarefaResponse;
 
     @Override
     public TarefaResponse executar(Long id, String conteudo, Long usuarioId) {
@@ -41,83 +43,6 @@ public class IncluirComentarioTarefaDefault implements IncluirComentarioTarefa {
         comentario.setDataCriacao(LocalDateTime.now());
         comentario.setUsuario(usuario);
         comentarioRepository.salvar(comentario);
-        return gerarTarefaResponse(tarefa);
+        return tarefaToTarefaResponse.executar(tarefa);
     }
-
-    private TarefaResponse gerarTarefaResponse(Tarefa tarefa) {
-        BooleanBuilder filtroComentario = new BooleanBuilder().and(ComentarioExpressions.tarefaId(tarefa.getId()));
-        List<Comentario> comentarios = comentarioRepository.buscarTodos(filtroComentario);
-        return TarefaResponse.builder()
-                .id(tarefa.getId())
-                .descricao(tarefa.getDescricao())
-                .so(tarefa.getSo())
-                .screenshots(tarefa.getScreenshots())
-                .caminho(tarefa.getCaminho())
-                .dataFechamento(tarefa.getDataFechamento())
-                .dataCriacao(tarefa.getDataCriacao())
-                .status(tarefa.getStatus())
-                .projeto(gerarProjetoResponse(tarefa.getProjeto()))
-                .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
-                .comentarios(gerarComentarioResponseList(comentarios))
-                .classificacao(gerarClassificacaoResponse(tarefa.getClassificacao()))
-                .prioridade(tarefa.getPrioridade())
-                .build();
-    }
-
-    private ProjetoResponse gerarProjetoResponse(Projeto projeto) {
-        return new ProjetoResponse(
-                projeto.getId(),
-                projeto.getNome(),
-                gerarOrganizacaoResponse(projeto.getOrganizacao())
-        );
-    }
-
-    private Set<UsuarioResponse> gerarUsuarioResponse(Set<Usuario> usuarios) {
-        Set<UsuarioResponse> usuarioResponseSet = new HashSet<>();
-        usuarios.forEach(item -> usuarioResponseSet.add(
-                new UsuarioResponse(
-                        item.getId(),
-                        item.getNome(),
-                        item.getEmail(),
-                        item.getKeycloakId(),
-                        item.getRoles() == null ? new ArrayList<>() :List.of(item.getRoles().split(","))
-                )
-        ));
-        return usuarioResponseSet;
-    }
-
-    private OrganizacaoResponse gerarOrganizacaoResponse(Organizacao organizacao) {
-        return new OrganizacaoResponse(
-                organizacao.getId(),
-                organizacao.getNome()
-        );
-    }
-
-    private List<ComentarioResponse> gerarComentarioResponseList(List<Comentario> comentarios) {
-        List<ComentarioResponse> comentarioResponseList = new ArrayList<>();
-        comentarios.forEach(item -> {
-            comentarioResponseList.add(new ComentarioResponse(
-                    item.getId(),
-                    item.getConteudo(),
-                    item.getDataCriacao(),
-                    item.getUsuario().getNome()
-            ));
-        });
-        return comentarioResponseList;
-    }
-
-    private ClassificacaoResponse gerarClassificacaoResponse(Classificacao classificacao) {
-        return new ClassificacaoResponse(
-                classificacao.getId(),
-                gerarSubClassificacaoResponse(classificacao.getSubClassificacao()).id()
-        );
-    }
-
-    private SubClassificacaoResponse gerarSubClassificacaoResponse(SubClassificacao subClassificacao) {
-        return new SubClassificacaoResponse(
-                subClassificacao.getId(),
-                subClassificacao.getNome()
-        );
-    }
-
 }

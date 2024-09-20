@@ -6,6 +6,7 @@ import br.com.softports.core.api.organizacao.usecase.AtualizarOrganizacao;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.projeto.repository.ProjetoRepository;
 import br.com.softports.core.api.projeto.usecase.AtualizarProjeto;
+import br.com.softports.core.api.projeto.usecase.ProjetoToProjetoResponse;
 import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.internal.common.entity.Organizacao;
 import br.com.softports.core.internal.common.entity.Projeto;
@@ -26,6 +27,7 @@ public class AtualizarProjetoDefault implements AtualizarProjeto {
     private final ProjetoRepository projetoRepository;
     private final OrganizacaoRepository organizacaoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final ProjetoToProjetoResponse projetoToProjetoResponse;
 
     @Override
     public ProjetoResponse executar(Long id, String nome, Long organizacaoId, List<Long> usuarios) {
@@ -43,21 +45,6 @@ public class AtualizarProjetoDefault implements AtualizarProjeto {
         projeto.setOrganizacao(organizacao);
         projeto.setUsuarios(usuariosSet);
         projetoRepository.salvar(projeto);
-        return gerarProjetoResponse(projeto);
-    }
-
-    private ProjetoResponse gerarProjetoResponse(Projeto projeto) {
-        return new ProjetoResponse(
-                projeto.getId(),
-                projeto.getNome(),
-                gerarOrganizacaoResponse((projeto.getOrganizacao()))
-        );
-    }
-
-    private OrganizacaoResponse gerarOrganizacaoResponse(Organizacao organizacao) {
-        return new OrganizacaoResponse(
-                organizacao.getId(),
-                organizacao.getNome()
-        );
+        return projetoToProjetoResponse.executar(projeto);
     }
 }

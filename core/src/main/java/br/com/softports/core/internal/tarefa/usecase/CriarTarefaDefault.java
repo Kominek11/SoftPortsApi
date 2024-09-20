@@ -10,6 +10,7 @@ import br.com.softports.core.api.subclassificacao.repository.SubClassificacaoRep
 import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
 import br.com.softports.core.api.tarefa.usecase.CriarTarefa;
+import br.com.softports.core.api.tarefa.usecase.TarefaToTarefaResponse;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
 import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.internal.classificacao.expression.ClassificacaoExpressions;
@@ -32,6 +33,7 @@ public class CriarTarefaDefault implements CriarTarefa {
     private final UsuarioRepository usuarioRepository;
     private final ClassificacaoRepository classificacaoRepository;
     private final SubClassificacaoRepository subClassificacaoRepository;
+    private final TarefaToTarefaResponse tarefaToTarefaResponse;
 
     @Override
     public TarefaResponse executar(String titulo, String descricao,
@@ -68,7 +70,7 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setUsuarios(usuarios);
         tarefa.setPrioridade(prioridade);
         tarefaRepository.salvar(tarefa);
-        return gerarTarefaResponse(tarefa);
+        return tarefaToTarefaResponse.executar(tarefa);
     }
 
     @Override
@@ -108,75 +110,10 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setUsuarios(usuarios);
         tarefa.setPrioridade(prioridade);
         tarefaRepository.salvar(tarefa);
-        return gerarTarefaResponse(tarefa);
-    }
-
-
-    private TarefaResponse gerarTarefaResponse(Tarefa tarefa) {
-        return TarefaResponse.builder()
-                .id(tarefa.getId())
-                .descricao(tarefa.getDescricao())
-                .so(tarefa.getSo())
-                .screenshots(tarefa.getScreenshots())
-                .caminho(tarefa.getCaminho())
-                .dataFechamento(tarefa.getDataFechamento())
-                .dataCriacao(tarefa.getDataCriacao())
-                .dataEstimada(tarefa.getDataEstimada())
-                .status(tarefa.getStatus())
-                .fechada(tarefa.getFechada())
-                .posicao(tarefa.getPosicao())
-                .projeto(gerarProjetoResponse(tarefa.getProjeto()))
-                .usuarios(gerarUsuarioResponse(tarefa.getUsuarios()))
-                .classificacao(gerarClassificacaoResponse(tarefa.getClassificacao()))
-                .prioridade(tarefa.getPrioridade())
-                .build();
+        return tarefaToTarefaResponse.executar(tarefa);
     }
 
     private Long gerarPosicaoTarefa(Long status) {
         return tarefaRepository.findMaxPosicao(status).orElse(0L) + 1;
     }
-
-    private ProjetoResponse gerarProjetoResponse(Projeto projeto) {
-        return new ProjetoResponse(
-                projeto.getId(),
-                projeto.getNome(),
-                gerarOrganizacaoResponse(projeto.getOrganizacao())
-        );
-    }
-
-    private Set<UsuarioResponse> gerarUsuarioResponse(Set<Usuario> usuarios) {
-        Set<UsuarioResponse> usuarioResponseSet = new HashSet<>();
-        usuarios.forEach(item -> usuarioResponseSet.add(
-                new UsuarioResponse(
-                        item.getId(),
-                        item.getNome(),
-                        item.getEmail(),
-                        item.getKeycloakId(),
-                        item.getRoles() == null ? new ArrayList<>() :List.of(item.getRoles().split(","))
-                )
-        ));
-        return usuarioResponseSet;
-    }
-
-    private OrganizacaoResponse gerarOrganizacaoResponse(Organizacao organizacao) {
-        return new OrganizacaoResponse(
-                organizacao.getId(),
-                organizacao.getNome()
-        );
-    }
-
-    private ClassificacaoResponse gerarClassificacaoResponse(Classificacao classificacao) {
-        return new ClassificacaoResponse(
-                classificacao.getId(),
-                gerarSubClassificacaoResponse(classificacao.getSubClassificacao()).id()
-        );
-    }
-
-    private SubClassificacaoResponse gerarSubClassificacaoResponse(SubClassificacao subClassificacao) {
-        return new SubClassificacaoResponse(
-                subClassificacao.getId(),
-                subClassificacao.getNome()
-        );
-    }
-
 }

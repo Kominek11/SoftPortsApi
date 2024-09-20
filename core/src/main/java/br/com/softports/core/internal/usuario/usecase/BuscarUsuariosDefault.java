@@ -8,6 +8,7 @@ import br.com.softports.core.api.tarefa.dto.TarefaResponse;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
 import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.api.usuario.usecase.BuscarUsuarios;
+import br.com.softports.core.api.usuario.usecase.UsuarioToUsuarioResponse;
 import br.com.softports.core.internal.common.entity.Organizacao;
 import br.com.softports.core.internal.common.entity.Tarefa;
 import br.com.softports.core.internal.common.entity.Usuario;
@@ -24,6 +25,7 @@ import java.util.List;
 public class BuscarUsuariosDefault implements BuscarUsuarios {
 
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioToUsuarioResponse usuarioToUsuarioResponse;
 
     @Override
     public Pagina<UsuarioResponse> executar(Integer tamanhoPagina, Integer numeroPagina,
@@ -39,7 +41,7 @@ public class BuscarUsuariosDefault implements BuscarUsuarios {
                             ordenadoPor,
                             direcao)
                     .stream()
-                    .map(this::gerarUsuarioResponse)
+                    .map(usuarioToUsuarioResponse::executar)
                     .toList();
         return paginar(tamanhoPagina, numeroPagina, usuarios, filtro);
     }
@@ -48,7 +50,7 @@ public class BuscarUsuariosDefault implements BuscarUsuarios {
     public UsuarioResponse executar(Long id) {
         BooleanBuilder filtro = new BooleanBuilder().and(UsuarioExpressions.id(id));
         Usuario usuario = usuarioRepository.buscar(filtro).orElseThrow();
-        return gerarUsuarioResponse(usuario);
+        return usuarioToUsuarioResponse.executar(usuario);
     }
 
     private Pagina<UsuarioResponse> paginar(Integer tamanhoPagina, Integer numeroPagina,
@@ -56,15 +58,5 @@ public class BuscarUsuariosDefault implements BuscarUsuarios {
         Long usuarioQuantidade = usuarioRepository.contar(filtro);
         int quantidadePaginas = (int) Math.ceil((double) usuarioQuantidade / tamanhoPagina);
         return new Pagina<>(true, numeroPagina, quantidadePaginas, tamanhoPagina, usuarioQuantidade, usuarios);
-    }
-
-    private UsuarioResponse gerarUsuarioResponse(Usuario usuario) {
-        return new UsuarioResponse(
-                usuario.getId(),
-                usuario.getNome(),
-                usuario.getEmail(),
-                usuario.getKeycloakId(),
-                usuario.getRoles() == null ? new ArrayList<>() :List.of(usuario.getRoles().split(","))
-        );
     }
 }

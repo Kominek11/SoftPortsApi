@@ -7,6 +7,7 @@ import br.com.softports.core.api.organizacao.usecase.BuscarOrganizacoes;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.projeto.repository.ProjetoRepository;
 import br.com.softports.core.api.projeto.usecase.BuscarProjetos;
+import br.com.softports.core.api.projeto.usecase.ProjetoToProjetoResponse;
 import br.com.softports.core.internal.common.entity.Organizacao;
 import br.com.softports.core.internal.common.entity.Projeto;
 import br.com.softports.core.internal.organizacao.expression.OrganizacaoExpressions;
@@ -20,6 +21,7 @@ import java.util.List;
 public class BuscarProjetosDefault implements BuscarProjetos {
 
     private final ProjetoRepository projetoRepository;
+    private final ProjetoToProjetoResponse projetoToProjetoResponse;
 
     @Override
     public Pagina<ProjetoResponse> executar(Integer tamanhoPagina, Integer numeroPagina,
@@ -31,7 +33,7 @@ public class BuscarProjetosDefault implements BuscarProjetos {
                             ordenadoPor,
                             direcao)
                     .stream()
-                    .map(this::gerarProjetoResponse)
+                    .map(projetoToProjetoResponse::executar)
                     .toList();
         return paginar(tamanhoPagina, numeroPagina, projetos, null);
     }
@@ -40,7 +42,7 @@ public class BuscarProjetosDefault implements BuscarProjetos {
     public ProjetoResponse executar(Long id) {
         BooleanBuilder filtro = new BooleanBuilder().and(ProjetoExpressions.id(id));
         Projeto projeto = projetoRepository.buscar(filtro).orElseThrow();
-        return gerarProjetoResponse(projeto);
+        return projetoToProjetoResponse.executar(projeto);
     }
 
     private Pagina<ProjetoResponse> paginar(Integer tamanhoPagina, Integer numeroPagina,
@@ -48,20 +50,5 @@ public class BuscarProjetosDefault implements BuscarProjetos {
         Long projetoQuantidade = projetoRepository.contar(filtro);
         int quantidadePaginas = (int) Math.ceil((double) projetoQuantidade / tamanhoPagina);
         return new Pagina<>(true, numeroPagina, quantidadePaginas, tamanhoPagina, projetoQuantidade, projetos);
-    }
-
-    private ProjetoResponse gerarProjetoResponse(Projeto projeto) {
-        return new ProjetoResponse(
-                projeto.getId(),
-                projeto.getNome(),
-                gerarOrganizacaoResponse(projeto.getOrganizacao())
-        );
-    }
-
-    private OrganizacaoResponse gerarOrganizacaoResponse(Organizacao organizacao) {
-        return new OrganizacaoResponse(
-                organizacao.getId(),
-                organizacao.getNome()
-        );
     }
 }
