@@ -79,8 +79,9 @@ public class UseCaseConfiguration {
 
     @Bean
     CriarProjeto criarProjeto(ProjetoRepository projetoRepository, OrganizacaoRepository organizacaoRepository,
-                              UsuarioRepository usuarioRepository) {
-        return new CriarProjetoDefault(projetoRepository, organizacaoRepository, usuarioRepository);
+                              UsuarioRepository usuarioRepository, ProjetoToProjetoResponse projetoToProjetoResponse) {
+        return new CriarProjetoDefault(projetoRepository, organizacaoRepository, usuarioRepository,
+                projetoToProjetoResponse);
     }
 
     @Bean

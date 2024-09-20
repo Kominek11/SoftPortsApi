@@ -6,6 +6,7 @@ import br.com.softports.core.api.organizacao.usecase.CriarOrganizacao;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.projeto.repository.ProjetoRepository;
 import br.com.softports.core.api.projeto.usecase.CriarProjeto;
+import br.com.softports.core.api.projeto.usecase.ProjetoToProjetoResponse;
 import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.internal.common.entity.Organizacao;
 import br.com.softports.core.internal.common.entity.Projeto;
@@ -25,6 +26,7 @@ public class CriarProjetoDefault implements CriarProjeto {
     private final ProjetoRepository projetoRepository;
     private final OrganizacaoRepository organizacaoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final ProjetoToProjetoResponse projetoToProjetoResponse;
 
     @Override
     public ProjetoResponse executar(String nome, Long organizacaoId, List<Long> usuarios) {
@@ -41,21 +43,6 @@ public class CriarProjetoDefault implements CriarProjeto {
         projeto.setOrganizacao(organizacao);
         projeto.setUsuarios(usuariosSet);
         projetoRepository.salvar(projeto);
-        return gerarProjetoResponse(projeto);
-    }
-
-    private ProjetoResponse gerarProjetoResponse(Projeto projeto) {
-        return new ProjetoResponse(
-                projeto.getId(),
-                projeto.getNome(),
-                gerarOrganizacaoResponse(projeto.getOrganizacao())
-        );
-    }
-
-    private OrganizacaoResponse gerarOrganizacaoResponse(Organizacao organizacao) {
-        return new OrganizacaoResponse(
-                organizacao.getId(),
-                organizacao.getNome()
-        );
+        return projetoToProjetoResponse.executar(projeto);
     }
 }
