@@ -6,10 +6,7 @@ import br.com.softports.core.api.tarefa.usecase.BuscarTarefas;
 import br.com.softports.core.api.usuario.dto.AtualizarUsuarioRequest;
 import br.com.softports.core.api.usuario.dto.CriarUsuarioRequest;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
-import br.com.softports.core.api.usuario.usecase.AtualizarUsuario;
-import br.com.softports.core.api.usuario.usecase.BuscarUsuarios;
-import br.com.softports.core.api.usuario.usecase.CriarUsuario;
-import br.com.softports.core.api.usuario.usecase.DeletarUsuario;
+import br.com.softports.core.api.usuario.usecase.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +21,7 @@ public class UsuarioResource {
     private final CriarUsuario criarUsuario;
     private final DeletarUsuario deletarUsuario;
     private final AtualizarUsuario atualizarUsuario;
+    private final AtualizarFotoUsuario atualizarFotoUsuario;
 
     @PostMapping
     UsuarioResponse criarUsuario(@RequestBody CriarUsuarioRequest criarUsuarioRequest) {
@@ -33,7 +31,8 @@ public class UsuarioResource {
                                      criarUsuarioRequest.emailVerified(),
                                      criarUsuarioRequest.username(),
                                      criarUsuarioRequest.realmRoles(),
-                                     criarUsuarioRequest.attributes());
+                                     criarUsuarioRequest.attributes(),
+                                     criarUsuarioRequest.foto());
     }
 
     @GetMapping
@@ -58,7 +57,14 @@ public class UsuarioResource {
         return atualizarUsuario.executar(id,
                                          atualizarUsuarioRequest.firstName(),
                                          atualizarUsuarioRequest.email(),
-                                         atualizarUsuarioRequest.username());
+                                         atualizarUsuarioRequest.username(),
+                                         atualizarUsuarioRequest.foto());
+    }
+
+    @PutMapping("foto/{id}")
+    UsuarioResponse atualizarFotoUsuario(@PathVariable UUID id,
+                                         @RequestBody byte[] foto) {
+        return atualizarFotoUsuario.executar(id, foto);
     }
 
     @DeleteMapping("{id}")

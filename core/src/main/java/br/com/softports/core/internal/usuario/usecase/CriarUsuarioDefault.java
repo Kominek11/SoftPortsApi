@@ -26,11 +26,11 @@ public class CriarUsuarioDefault implements CriarUsuario {
     @Override
     public UsuarioResponse executar(String nome, String sobrenome, String email,
                                     Boolean emailVerified, String username, List<KeycloakRoleResponse> realmRoles,
-                                    Map<String, Object> attributes) {
+                                    Map<String, Object> attributes, byte[] foto) {
         Optional<UUID> usuarioKeycloak = buscarUsuarioKeycloak.executar(email);
         if (usuarioKeycloak.isPresent())
             throw new RuntimeException("Usuário já existente");
-        Usuario usuarioTemporario = criarUsuario(nome, email, realmRoles);
+        Usuario usuarioTemporario = criarUsuario(nome, email, realmRoles, foto);
         UUID uuidUsuarioKeycloak =  criarUsuarioKeycloak.executar(nome, sobrenome, email,
                 emailVerified, username, realmRoles, attributes);
         Usuario usuario = atualizarIdKeycloakUsuario(usuarioTemporario.getId(), uuidUsuarioKeycloak)
@@ -38,13 +38,15 @@ public class CriarUsuarioDefault implements CriarUsuario {
         return usuarioToUsuarioResponse.executar(usuario);
     }
 
-    public Usuario criarUsuario(String nomeSobrenome, String email, List<KeycloakRoleResponse> realmRoles) {
+    public Usuario criarUsuario(String nomeSobrenome, String email, List<KeycloakRoleResponse> realmRoles,
+                                byte[] foto) {
         Usuario usuario = new Usuario();
         usuario.setNome(nomeSobrenome);
         usuario.setEmail(email);
         usuario.setRoles(realmRoles.stream()
                 .map(KeycloakRoleResponse::name)
                 .collect(Collectors.joining(", ")));
+        usuario.setFoto(foto);
         return usuarioRepository.salvar(usuario);
     }
 

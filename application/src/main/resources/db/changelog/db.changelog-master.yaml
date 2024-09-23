@@ -69,6 +69,9 @@ databaseChangeLog:
               - column:
                   name: roles
                   type: varchar
+              - column:
+                  name: foto
+                  type: bytea
 
   - changeSet:
       id: 3
@@ -648,6 +651,9 @@ databaseChangeLog:
                   name: roles
                   type: VARCHAR(255)
               - column:
+                  name: foto
+                  type: bytea
+              - column:
                   name: REV
                   type: BIGINT
               - column:
@@ -679,6 +685,10 @@ databaseChangeLog:
                   defaultValueBoolean: false
               - column:
                   name: tarefas_mod
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  name: foto_mod
                   type: BOOLEAN
                   defaultValueBoolean: false
         - addForeignKeyConstraint:

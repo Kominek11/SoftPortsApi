@@ -220,6 +220,12 @@ public class UseCaseConfiguration {
     }
 
     @Bean
+    AtualizarFotoUsuario atualizarFotoUsuario(UsuarioRepository usuarioRepository,
+                                              UsuarioToUsuarioResponse usuarioToUsuarioResponse) {
+        return new AtualizarFotoUsuarioDefault(usuarioRepository, usuarioToUsuarioResponse);
+    }
+
+    @Bean
     DeletarUsuario deletarUsuario(DeletarUsuarioKeycloak deletarUsuarioKeycloak,
                                   UsuarioRepository usuarioRepository,
                                   TarefaRepository tarefaRepository) {

@@ -14,5 +14,6 @@ public record CriarUsuarioRequest(
         Boolean emailVerified,
         String username,
         List<KeycloakRoleResponse> realmRoles,
-        Map<String, Object> attributes
+        Map<String, Object> attributes,
+        byte[] foto
 ) {}

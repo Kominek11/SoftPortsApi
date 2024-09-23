@@ -10,5 +10,5 @@ import java.util.Map;
 public interface CriarUsuario {
     UsuarioResponse executar(String nome, String sobrenome, String email,
                              Boolean emailVerified, String username, List<KeycloakRoleResponse> realmRoles,
-                             Map<String, Object> attributes);
+                             Map<String, Object> attributes, byte[] foto);
 }

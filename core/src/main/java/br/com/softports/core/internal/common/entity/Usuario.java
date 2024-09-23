@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
 
+import java.sql.Blob;
 import java.util.Set;
 import java.util.UUID;
 
@@ -33,6 +34,9 @@ public class Usuario {
 
     @Column
     String roles;
+
+    @Column
+    byte[] foto;
 
     @ManyToMany(mappedBy = "usuarios")
     Set<Tarefa> tarefas;

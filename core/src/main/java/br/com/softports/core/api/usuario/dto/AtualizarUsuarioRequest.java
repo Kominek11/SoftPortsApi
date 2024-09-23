@@ -8,5 +8,6 @@ import java.util.List;
 public record AtualizarUsuarioRequest(
         String firstName,
         String email,
-        String username
+        String username,
+        byte[] foto
 ) {}

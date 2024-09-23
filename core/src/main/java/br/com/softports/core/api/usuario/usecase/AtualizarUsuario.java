@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AtualizarUsuario {
-    UsuarioResponse executar(UUID id, String nome, String email, String username);
+    UsuarioResponse executar(UUID id, String nome, String email, String username, byte[] foto);
 }

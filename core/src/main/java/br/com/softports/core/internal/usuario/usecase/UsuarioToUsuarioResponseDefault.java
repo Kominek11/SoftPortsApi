@@ -21,6 +21,7 @@ public class UsuarioToUsuarioResponseDefault implements UsuarioToUsuarioResponse
                 .roles(usuario.getRoles() == null ?
                         new ArrayList<>() :
                         List.of(usuario.getRoles().split(",")))
+                .foto(usuario.getFoto())
                 .build();
     }
 }
