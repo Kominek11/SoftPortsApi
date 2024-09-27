@@ -104,7 +104,9 @@ public class TarefaResource {
     }
 
     @PutMapping("/comentario/{id}")
-    TarefaResponse incluirComentarioTarefa(@PathVariable Long id, String conteudo, Long usuarioId) {
+    TarefaResponse incluirComentarioTarefa(@PathVariable Long id,
+                                           @RequestParam String conteudo,
+                                           @RequestParam Long usuarioId) {
         return incluirComentarioTarefa.executar(id, conteudo, usuarioId);
     }
 

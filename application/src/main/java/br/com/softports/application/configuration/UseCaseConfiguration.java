@@ -1,6 +1,7 @@
 package br.com.softports.application.configuration;
 
 import br.com.softports.core.api.classificacao.usecase.ClassificacaoToClassificacaoResponse;
+import br.com.softports.core.api.comentario.usecase.ComentarioToComentarioResponse;
 import br.com.softports.core.api.organizacao.usecase.*;
 import br.com.softports.core.api.projeto.usecase.*;
 import br.com.softports.core.api.subclassificacao.usecase.SubClassificacaoToSubClassificacaoResponse;
@@ -8,6 +9,7 @@ import br.com.softports.core.api.tarefa_aud.repository.TarefaAudRepository;
 import br.com.softports.core.api.tarefa_aud.usecase.CustomRevisionEntityToCustomRevisionEntityResponse;
 import br.com.softports.core.api.tarefa_aud.usecase.TarefaAudToTarefaAudResponse;
 import br.com.softports.core.internal.classificacao.usecase.ClassificacaoToClassificacaoResponseDefault;
+import br.com.softports.core.internal.comentario.usecase.ComentarioToComentarioResponseDefault;
 import br.com.softports.core.internal.organizacao.usecase.*;
 import br.com.softports.core.internal.projeto.usecase.*;
 import br.com.softports.core.internal.properties.KeycloakLoggedUserDataDefault;
@@ -325,9 +327,17 @@ public class UseCaseConfiguration {
     TarefaToTarefaResponse tarefaToTarefaResponse(
             ProjetoToProjetoResponse projetoToProjetoResponse,
             UsuarioToUsuarioResponse usuarioToUsuarioResponse,
-            ClassificacaoToClassificacaoResponse classificacaoToClassificacaoResponse) {
+            ClassificacaoToClassificacaoResponse classificacaoToClassificacaoResponse,
+            ComentarioRepository comentarioRepository,
+            ComentarioToComentarioResponse comentarioToComentarioResponse) {
         return new TarefaToTarefaResponseDefault(projetoToProjetoResponse, usuarioToUsuarioResponse,
-                classificacaoToClassificacaoResponse);
+                classificacaoToClassificacaoResponse, comentarioRepository,
+                comentarioToComentarioResponse);
+    }
+
+    @Bean
+    ComentarioToComentarioResponse comentarioToComentarioResponse() {
+        return new ComentarioToComentarioResponseDefault();
     }
 
     @Bean
@@ -339,8 +349,12 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    CustomRevisionEntityToCustomRevisionEntityResponse customRevisionEntityToCustomRevisionEntityResponse() {
-        return new CustomRevisionEntityToCustomRevisionEntityResponseDefault();
+    CustomRevisionEntityToCustomRevisionEntityResponse customRevisionEntityToCustomRevisionEntityResponse(
+            UsuarioRepository usuarioRepository
+    ) {
+        return new CustomRevisionEntityToCustomRevisionEntityResponseDefault(
+                usuarioRepository
+        );
     }
 
     @Bean

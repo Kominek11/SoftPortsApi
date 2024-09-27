@@ -2,6 +2,7 @@ package br.com.softports.core.api.tarefa.dto;
 
 import br.com.softports.core.api.classificacao.dto.ClassificacaoResponse;
 import br.com.softports.core.api.comentario.dto.ComentarioResponse;
+import br.com.softports.core.api.common.dto.Pagina;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.usuario.dto.UsuarioResponse;
 import br.com.softports.core.internal.common.entity.Classificacao;
@@ -30,6 +31,6 @@ public record TarefaResponse(
         ProjetoResponse projeto,
         String feedback,
         Set<UsuarioResponse> usuarios,
-        List<ComentarioResponse> comentarios,
+        Pagina<ComentarioResponse> comentarios,
         ClassificacaoResponse classificacao
 ) {}

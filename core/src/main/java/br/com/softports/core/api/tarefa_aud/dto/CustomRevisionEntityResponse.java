@@ -7,5 +7,5 @@ import java.util.UUID;
 public record CustomRevisionEntityResponse(
         int id,
         Long revtstmp,
-        UUID keycloakId
+        String nome
 ) {}
