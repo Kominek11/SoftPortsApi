@@ -65,7 +65,7 @@ public class Tarefa {
     @Column
     String feedback;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_tarefa",
             joinColumns = @JoinColumn(name = "tarefa_id"),

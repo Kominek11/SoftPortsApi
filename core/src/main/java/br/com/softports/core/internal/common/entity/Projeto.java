@@ -30,7 +30,7 @@ public class Projeto {
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     Organizacao organizacao;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuario_projeto",
             joinColumns = @JoinColumn(name = "projeto_id"),

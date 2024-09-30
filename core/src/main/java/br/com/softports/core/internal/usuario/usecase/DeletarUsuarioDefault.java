@@ -10,6 +10,7 @@ import br.com.softports.core.internal.common.entity.Usuario;
 import br.com.softports.core.internal.tarefa.expression.TarefaExpressions;
 import br.com.softports.core.internal.usuario.expression.UsuarioExpressions;
 import com.querydsl.core.BooleanBuilder;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import java.util.*;
@@ -22,6 +23,7 @@ public class DeletarUsuarioDefault implements DeletarUsuario {
     private final TarefaRepository tarefaRepository;
 
     @Override
+    @Transactional
     public void executar(UUID usuarioId) {
         BooleanBuilder filtroUsuario = new BooleanBuilder()
                 .and(UsuarioExpressions.keycloakId(usuarioId));
@@ -31,11 +33,6 @@ public class DeletarUsuarioDefault implements DeletarUsuario {
         usuariosSet.add(usuario);
         BooleanBuilder filtroTarefas = new BooleanBuilder()
                 .and(TarefaExpressions.usuarios(usuariosSet));
-        List<Tarefa> tarefasList = tarefaRepository.buscarTodos(filtroTarefas);
-        tarefasList.forEach(tarefa -> {
-            tarefa.getUsuarios().remove(usuario);
-            tarefaRepository.salvar(tarefa);
-        });
         deletarUsuarioKeycloak.executar(usuarioId);
         usuarioRepository.apagar(usuario);
     }

@@ -24,7 +24,7 @@ public record TarefaAudResponse(
         String feedback,
         Long classificacaoId,
         Long revision,
-        String revisionType,
+        byte revtype,
         Boolean tituloModificado,
         Boolean descricaoModificado,
         Boolean soModificado,

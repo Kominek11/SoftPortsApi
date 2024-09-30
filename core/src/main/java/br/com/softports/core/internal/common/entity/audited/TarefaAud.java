@@ -15,8 +15,7 @@ import java.util.Date;
 @Setter
 @Getter
 public class TarefaAud {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @Column
@@ -64,11 +63,13 @@ public class TarefaAud {
     @Column(name = "classificacao_id")
     private Long classificacaoId;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rev")
     private Long revision;
 
     @Column(name = "revtype")
-    private RevisionType revisionType;
+    private byte revtype;
 
     @Column(name = "titulo_mod", columnDefinition = "boolean default false")
     private Boolean titulo_Mod;

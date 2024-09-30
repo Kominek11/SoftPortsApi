@@ -32,6 +32,7 @@ public class BuscarAuditoriaTarefaDefault implements BuscarAuditoriaTarefa {
                         ordenadoPor,
                         direcao)
                 .stream()
+                .distinct()
                 .map(tarefaAudToTarefaAudResponse::executar)
                 .toList();
         return paginar(tamanhoPagina, numeroPagina, tarefasAud, filtroTarefaAud);

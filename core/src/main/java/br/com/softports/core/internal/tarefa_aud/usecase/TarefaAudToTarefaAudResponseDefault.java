@@ -39,7 +39,7 @@ public class TarefaAudToTarefaAudResponseDefault implements TarefaAudToTarefaAud
                 .feedback(tarefaAud.getFeedback())
                 .classificacaoId(tarefaAud.getClassificacaoId())
                 .revision(tarefaAud.getRevision())
-                .revisionType(tarefaAud.getRevisionType().name())
+                .revtype(tarefaAud.getRevtype())
                 .tituloModificado(tarefaAud.getTitulo_Mod())
                 .descricaoModificado(tarefaAud.getDescricao_Mod())
                 .soModificado(tarefaAud.getSo_Mod())

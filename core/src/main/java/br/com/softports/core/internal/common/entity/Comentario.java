@@ -32,7 +32,7 @@ public class Comentario {
     @Column
     LocalDateTime dataCriacao;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id", nullable = false)
     Usuario usuario;
 }

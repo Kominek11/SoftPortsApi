@@ -12,7 +12,7 @@ public interface AtualizarTarefa {
 
     TarefaResponse executar(Long id, String titulo,
                             String descricao, String so,
-                            String caminho, Date dataFechamento,
+                            String caminho,
                             Date dataEstimada,
                             Long status,
                             Boolean fechada, Long posicao,
@@ -23,7 +23,7 @@ public interface AtualizarTarefa {
 
     TarefaResponse executar(Long id, String titulo,
                             String descricao, String so,
-                            String caminho, Date dataFechamento,
+                            String caminho,
                             Date dataEstimada,
                             Long status,
                             Boolean fechada, Long posicao,

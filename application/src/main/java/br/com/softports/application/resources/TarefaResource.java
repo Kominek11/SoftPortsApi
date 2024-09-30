@@ -80,7 +80,7 @@ public class TarefaResource {
     TarefaResponse atualizarTarefa(@RequestBody AtualizarTarefaRequest atualizarTarefaRequest) {
         return atualizarTarefa.executar(atualizarTarefaRequest.id(), atualizarTarefaRequest.titulo(),
                 atualizarTarefaRequest.descricao(), atualizarTarefaRequest.so(), atualizarTarefaRequest.caminho(),
-                atualizarTarefaRequest.dataFechamento(), atualizarTarefaRequest.dataEstimada(),
+                atualizarTarefaRequest.dataEstimada(),
                 atualizarTarefaRequest.status(), atualizarTarefaRequest.fechada(),
                 atualizarTarefaRequest.posicao(),  atualizarTarefaRequest.projetoId(),
                 atualizarTarefaRequest.usuarioIds(), atualizarTarefaRequest.screenshots(),
