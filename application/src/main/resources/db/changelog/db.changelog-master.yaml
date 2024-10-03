@@ -873,6 +873,7 @@ databaseChangeLog:
             constraintName: usuario_projeto_REV_fk
             referencedTableName: revinfo
             referencedColumnNames: id
+
   - changeSet:
       id: 18
       author: luccakominek
@@ -913,6 +914,108 @@ databaseChangeLog:
             referencedColumnNames: id
   - changeSet:
       id: 19
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          sequenceExists:
+            sequenceName: derivado_id_seq
+      changes:
+        - createSequence:
+            sequenceName: derivado_id_seq
+            startValue: 1
+        - preConditions:
+            onFail: MARK_RAN
+            not:
+              tableExists:
+                tableName: derivado
+        - createTable:
+            tableName: derivado
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  autoIncrement: true
+              - column:
+                  name: nome
+                  type: varchar
+              - column:
+                  name: projeto_id
+                  type: bigint
+        - addForeignKeyConstraint:
+            baseTableName: derivado
+            baseColumnNames: projeto_id
+            constraintName: derivado_projeto_fk
+            referencedTableName: projeto
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 20
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          sequenceExists:
+            sequenceName: derivado_tarefa_matriz_id_seq
+      changes:
+        - createSequence:
+            sequenceName: derivado_tarefa_matriz_id_seq
+            startValue: 1
+        - preConditions:
+            onFail: MARK_RAN
+            not:
+              tableExists:
+                tableName: derivado_tarefa_matriz
+        - createTable:
+            tableName: derivado_tarefa_matriz
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  autoIncrement: true
+              - column:
+                  name: derivado_id
+                  type: bigint
+              - column:
+                  name: tarefa_id
+                  type: bigint
+              - column:
+                  name: valor
+                  type: boolean
+              - column:
+                  name: projeto_id
+                  type: bigint
+        - addForeignKeyConstraint:
+            baseTableName: derivado_tarefa_matriz
+            baseColumnNames: derivado_id
+            constraintName: derivado_derivado_tarefa_matriz_fk
+            referencedTableName: derivado
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: derivado_tarefa_matriz
+            baseColumnNames: tarefa_id
+            constraintName: tarefa_derivado_tarefa_matriz_fk
+            referencedTableName: tarefa
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: derivado_tarefa_matriz
+            baseColumnNames: projeto_id
+            constraintName: projeto_derivado_tarefa_matriz_fk
+            referencedTableName: projeto
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 21
       author: luccakominek
       changes:
         - sqlFile:

@@ -2,6 +2,16 @@ package br.com.softports.application.configuration;
 
 import br.com.softports.core.api.classificacao.usecase.ClassificacaoToClassificacaoResponse;
 import br.com.softports.core.api.comentario.usecase.ComentarioToComentarioResponse;
+import br.com.softports.core.api.derivado.repository.DerivadoRepository;
+import br.com.softports.core.api.derivado.usecase.BuscarDerivados;
+import br.com.softports.core.api.derivado.usecase.CriarDerivado;
+import br.com.softports.core.api.derivado.usecase.CriarDerivadoLista;
+import br.com.softports.core.api.derivado.usecase.DerivadoToDerivadoResponse;
+import br.com.softports.core.api.derivado_tarefa_matriz.repository.DerivadoTarefaMatrizRepository;
+import br.com.softports.core.api.derivado_tarefa_matriz.usecase.BuscarDerivadosTarefaMatriz;
+import br.com.softports.core.api.derivado_tarefa_matriz.usecase.CriarDerivadoTarefaMatriz;
+import br.com.softports.core.api.derivado_tarefa_matriz.usecase.CriarDerivadoTarefaMatrizLista;
+import br.com.softports.core.api.derivado_tarefa_matriz.usecase.DerivadoTarefaMatrizToDerivadoTarefaMatrizResponse;
 import br.com.softports.core.api.organizacao.usecase.*;
 import br.com.softports.core.api.projeto.usecase.*;
 import br.com.softports.core.api.subclassificacao.usecase.SubClassificacaoToSubClassificacaoResponse;
@@ -10,6 +20,14 @@ import br.com.softports.core.api.tarefa_aud.usecase.CustomRevisionEntityToCustom
 import br.com.softports.core.api.tarefa_aud.usecase.TarefaAudToTarefaAudResponse;
 import br.com.softports.core.internal.classificacao.usecase.ClassificacaoToClassificacaoResponseDefault;
 import br.com.softports.core.internal.comentario.usecase.ComentarioToComentarioResponseDefault;
+import br.com.softports.core.internal.derivado.usecase.BuscarDerivadosDefault;
+import br.com.softports.core.internal.derivado.usecase.CriarDerivadoDefault;
+import br.com.softports.core.internal.derivado.usecase.CriarDerivadoListaDefault;
+import br.com.softports.core.internal.derivado.usecase.DerivadoToDerivadoResponseDefault;
+import br.com.softports.core.internal.derivado_tarefa_matriz.usecase.BuscarDerivadosTarefaMatrizDefault;
+import br.com.softports.core.internal.derivado_tarefa_matriz.usecase.CriarDerivadoTarefaMatrizDefault;
+import br.com.softports.core.internal.derivado_tarefa_matriz.usecase.CriarDerivadoTarefaMatrizListaDefault;
+import br.com.softports.core.internal.derivado_tarefa_matriz.usecase.DerivadoTarefaMatrizToDerivadoTarefaMatrizResponseDefault;
 import br.com.softports.core.internal.organizacao.usecase.*;
 import br.com.softports.core.internal.projeto.usecase.*;
 import br.com.softports.core.internal.properties.KeycloakLoggedUserDataDefault;
@@ -389,5 +407,70 @@ public class UseCaseConfiguration {
         return new SubClassificacaoToSubClassificacaoResponseDefault();
     }
 
+    @Bean
+    CriarDerivado criarDerivado(ProjetoRepository projetoRepository, DerivadoRepository derivadoRepository,
+                                DerivadoToDerivadoResponse derivadoToDerivadoResponse) {
+        return new CriarDerivadoDefault(projetoRepository, derivadoRepository, derivadoToDerivadoResponse);
+    }
 
+    @Bean
+    BuscarDerivados buscarDerivados(DerivadoRepository derivadoRepository,
+                                    DerivadoToDerivadoResponse derivadoToDerivadoResponse) {
+        return new BuscarDerivadosDefault(derivadoRepository, derivadoToDerivadoResponse);
+    }
+
+    @Bean
+    DerivadoToDerivadoResponse derivadoToDerivadoResponse(
+            ProjetoToProjetoResponse projetoToProjetoResponse) {
+        return new DerivadoToDerivadoResponseDefault(projetoToProjetoResponse);
+    }
+
+    @Bean
+    BuscarDerivadosTarefaMatriz buscarDerivadosTarefaMatriz(DerivadoTarefaMatrizRepository
+                                                            derivadoTarefaMatrizRepository,
+                                                            DerivadoTarefaMatrizToDerivadoTarefaMatrizResponse
+                                                            derivadoTarefaMatrizToDerivadoTarefaMatrizResponse) {
+        return new BuscarDerivadosTarefaMatrizDefault(derivadoTarefaMatrizRepository,
+                derivadoTarefaMatrizToDerivadoTarefaMatrizResponse);
+    }
+
+    @Bean
+    CriarDerivadoTarefaMatriz criarDerivadoTarefaMatriz(DerivadoRepository derivadoRepository,
+                                                        TarefaRepository tarefaRepository,
+                                                        ProjetoRepository projetoRepository,
+                                                        DerivadoTarefaMatrizRepository derivadoTarefaMatrizRepository,
+                                                        DerivadoTarefaMatrizToDerivadoTarefaMatrizResponse
+                                                        derivadoTarefaMatrizToDerivadoTarefaMatrizResponse) {
+        return new CriarDerivadoTarefaMatrizDefault(derivadoRepository, tarefaRepository,
+                projetoRepository, derivadoTarefaMatrizRepository,
+                derivadoTarefaMatrizToDerivadoTarefaMatrizResponse);
+    }
+
+    @Bean
+    DerivadoTarefaMatrizToDerivadoTarefaMatrizResponse derivadoTarefaMatrizToDerivadoTarefaMatrizResponse(
+            DerivadoToDerivadoResponse derivadoToDerivadoResponse,
+            TarefaToTarefaResponse tarefaToTarefaResponse,
+            ProjetoToProjetoResponse projetoToProjetoResponse) {
+        return new DerivadoTarefaMatrizToDerivadoTarefaMatrizResponseDefault(derivadoToDerivadoResponse,
+                tarefaToTarefaResponse, projetoToProjetoResponse);
+    }
+
+    @Bean
+    CriarDerivadoLista criarDerivadoLista(ProjetoRepository projetoRepository,
+                                          DerivadoRepository derivadoRepository,
+                                          DerivadoToDerivadoResponse derivadoToDerivadoResponse) {
+        return new CriarDerivadoListaDefault(projetoRepository, derivadoRepository, derivadoToDerivadoResponse);
+    }
+
+    @Bean
+    CriarDerivadoTarefaMatrizLista criarDerivadoTarefaMatrizLista(DerivadoRepository derivadoRepository,
+                                                                  TarefaRepository tarefaRepository,
+                                                                  ProjetoRepository projetoRepository,
+                                                                  DerivadoTarefaMatrizRepository derivadoTarefaMatrizRepository,
+                                                                  DerivadoTarefaMatrizToDerivadoTarefaMatrizResponse
+                                                                  derivadoTarefaMatrizToDerivadoTarefaMatrizResponse) {
+        return new CriarDerivadoTarefaMatrizListaDefault(derivadoRepository, tarefaRepository,
+                projetoRepository, derivadoTarefaMatrizRepository,
+                derivadoTarefaMatrizToDerivadoTarefaMatrizResponse);
+    }
 }
