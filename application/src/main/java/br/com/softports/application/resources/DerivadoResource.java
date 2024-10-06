@@ -11,6 +11,7 @@ import br.com.softports.core.api.derivado.dto.DerivadoResponse;
 import br.com.softports.core.api.derivado.usecase.BuscarDerivados;
 import br.com.softports.core.api.derivado.usecase.CriarDerivado;
 import br.com.softports.core.api.derivado.usecase.CriarDerivadoLista;
+import br.com.softports.core.api.derivado.usecase.DeletarDerivado;
 import br.com.softports.core.api.derivado_tarefa_matriz.dto.DerivadoTarefaMatrizResponse;
 import br.com.softports.core.api.derivado_tarefa_matriz.usecase.BuscarDerivadosTarefaMatriz;
 import br.com.softports.core.api.derivado_tarefa_matriz.usecase.CriarDerivadoTarefaMatriz;
@@ -36,6 +37,7 @@ public class DerivadoResource {
     private final CriarDerivadoTarefaMatriz criarDerivadoTarefaMatriz;
     private final CriarDerivadoLista criarDerivadoLista;
     private final CriarDerivadoTarefaMatrizLista criarDerivadoTarefaMatrizLista;
+    private final DeletarDerivado deletarDerivado;
 
     @GetMapping
     Pagina<DerivadoResponse> buscarDerivados(
@@ -83,5 +85,10 @@ public class DerivadoResource {
         return criarDerivadoTarefaMatrizLista.executar(
                 criarDerivadoTarefaMatrizRequest.derivadoTarefaMatrizListaResponses()
         );
+    }
+
+    @DeleteMapping("{id}")
+    void deletarDerivado(@PathVariable Long id) {
+        deletarDerivado.executar(id);
     }
 }

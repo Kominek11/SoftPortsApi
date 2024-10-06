@@ -22,4 +22,8 @@ public class DerivadoTarefaMatrizExpressions {
     public static BooleanExpression projetoId(Long projetoId) {
         return Objects.nonNull(projetoId) ? DERIVADO_TAREFA_MATRIZ.projeto.id.eq(projetoId) : null;
     }
+
+    public static BooleanExpression valor(Boolean valor) {
+        return Objects.nonNull(valor) ? DERIVADO_TAREFA_MATRIZ.valor.eq(valor) : null;
+    }
 }

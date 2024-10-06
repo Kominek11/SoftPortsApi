@@ -3,10 +3,7 @@ package br.com.softports.application.configuration;
 import br.com.softports.core.api.classificacao.usecase.ClassificacaoToClassificacaoResponse;
 import br.com.softports.core.api.comentario.usecase.ComentarioToComentarioResponse;
 import br.com.softports.core.api.derivado.repository.DerivadoRepository;
-import br.com.softports.core.api.derivado.usecase.BuscarDerivados;
-import br.com.softports.core.api.derivado.usecase.CriarDerivado;
-import br.com.softports.core.api.derivado.usecase.CriarDerivadoLista;
-import br.com.softports.core.api.derivado.usecase.DerivadoToDerivadoResponse;
+import br.com.softports.core.api.derivado.usecase.*;
 import br.com.softports.core.api.derivado_tarefa_matriz.repository.DerivadoTarefaMatrizRepository;
 import br.com.softports.core.api.derivado_tarefa_matriz.usecase.BuscarDerivadosTarefaMatriz;
 import br.com.softports.core.api.derivado_tarefa_matriz.usecase.CriarDerivadoTarefaMatriz;
@@ -20,10 +17,7 @@ import br.com.softports.core.api.tarefa_aud.usecase.CustomRevisionEntityToCustom
 import br.com.softports.core.api.tarefa_aud.usecase.TarefaAudToTarefaAudResponse;
 import br.com.softports.core.internal.classificacao.usecase.ClassificacaoToClassificacaoResponseDefault;
 import br.com.softports.core.internal.comentario.usecase.ComentarioToComentarioResponseDefault;
-import br.com.softports.core.internal.derivado.usecase.BuscarDerivadosDefault;
-import br.com.softports.core.internal.derivado.usecase.CriarDerivadoDefault;
-import br.com.softports.core.internal.derivado.usecase.CriarDerivadoListaDefault;
-import br.com.softports.core.internal.derivado.usecase.DerivadoToDerivadoResponseDefault;
+import br.com.softports.core.internal.derivado.usecase.*;
 import br.com.softports.core.internal.derivado_tarefa_matriz.usecase.BuscarDerivadosTarefaMatrizDefault;
 import br.com.softports.core.internal.derivado_tarefa_matriz.usecase.CriarDerivadoTarefaMatrizDefault;
 import br.com.softports.core.internal.derivado_tarefa_matriz.usecase.CriarDerivadoTarefaMatrizListaDefault;
@@ -417,6 +411,11 @@ public class UseCaseConfiguration {
     BuscarDerivados buscarDerivados(DerivadoRepository derivadoRepository,
                                     DerivadoToDerivadoResponse derivadoToDerivadoResponse) {
         return new BuscarDerivadosDefault(derivadoRepository, derivadoToDerivadoResponse);
+    }
+
+    @Bean
+    DeletarDerivado deletarDerivado(DerivadoRepository derivadoRepository) {
+        return new DeletarDerivadoDefault(derivadoRepository);
     }
 
     @Bean
