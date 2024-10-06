@@ -71,4 +71,15 @@ public class TarefaExpressions {
         Date dataFimFormatada = Date.from(dataFim.atStartOfDay(ZoneId.systemDefault()).toInstant());
         return TAREFA.dataFechamento.between(dataInicioFormatada, dataFimFormatada);
     }
+
+    public static BooleanExpression anoCorrente() {
+        LocalDate primeiroDiaAno = LocalDate.now().withDayOfYear(1);
+        LocalDate ultimoDiaAno = LocalDate.now().withDayOfYear(LocalDate.now().lengthOfYear());
+
+        Date dataInicioFormatada = Date.from(primeiroDiaAno.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date dataFimFormatada = Date.from(ultimoDiaAno.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        return TAREFA.dataFechamento.between(dataInicioFormatada, dataFimFormatada);
+    }
+
 }
