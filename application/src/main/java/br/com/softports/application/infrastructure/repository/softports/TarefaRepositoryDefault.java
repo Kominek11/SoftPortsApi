@@ -10,6 +10,9 @@ import br.com.softports.core.api.projeto.dto.ProjetoResponse;
 import br.com.softports.core.api.tarefa.repository.TarefaRepository;
 import br.com.softports.core.internal.common.entity.*;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.DateTemplate;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -102,35 +105,25 @@ public class TarefaRepositoryDefault extends RepositorioDefault<Tarefa, Long> im
 
         int currentYear = LocalDate.now().getYear();
 
-        Date startDate = java.sql.Date.valueOf(LocalDate.of(currentYear, 1, 1));
-        Date endDate = java.sql.Date.valueOf(LocalDate.of(currentYear, 12, 31));
-
         return queryFactory
                 .select(Projections.constructor(DadoDashboardPorAnoResponse.class,
-                        JPAExpressions.select(tarefa.id.count())
-                                .from(tarefa)
-                                .where(tarefa.fechada.eq(false)
-                                        .and(tarefa.classificacao.id.eq(1L))
-                                        .and(tarefa.dataCriacao.goe(startDate))
-                                        .and(tarefa.dataCriacao.loe(endDate))),
-
-                        JPAExpressions.select(tarefa.id.count())
-                                .from(tarefa)
-                                .where(tarefa.fechada.eq(false)
-                                        .and(tarefa.classificacao.id.eq(2L))
-                                        .and(tarefa.dataCriacao.goe(startDate))
-                                        .and(tarefa.dataCriacao.loe(endDate))),
-
-                        JPAExpressions.select(tarefa.id.count())
-                                .from(tarefa)
-                                .where(tarefa.fechada.eq(false)
-                                        .and(tarefa.classificacao.id.eq(3L))
-                                        .and(tarefa.dataCriacao.goe(startDate))
-                                        .and(tarefa.dataCriacao.loe(endDate))),
-                        tarefa.dataCriacao
+                        tarefa.dataCriacao.year().as("year"),
+                        tarefa.dataCriacao.month().as("month"),
+                        new CaseBuilder()
+                                .when(tarefa.classificacao.id.eq(1L)).then(1)
+                                .otherwise(0).sum().as("valorIncidente"),
+                        new CaseBuilder()
+                                .when(tarefa.classificacao.id.eq(2L)).then(1)
+                                .otherwise(0).sum().as("valorProblema"),
+                        new CaseBuilder()
+                                .when(tarefa.classificacao.id.eq(3L)).then(1)
+                                .otherwise(0).sum().as("valorMudanca")
                 ))
                 .from(tarefa)
-                .where(tarefa.fechada.eq(false))
+                .where(tarefa.fechada.eq(false)
+                        .and(tarefa.dataCriacao.year().eq(currentYear)))
+                .groupBy(tarefa.dataCriacao.year(), tarefa.dataCriacao.month())
+                .orderBy(tarefa.dataCriacao.year().asc(), tarefa.dataCriacao.month().asc())
                 .fetch();
     }
 }

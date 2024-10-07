@@ -6,8 +6,9 @@ import java.util.Date;
 
 @Builder
 public record DadoDashboardPorAnoResponse(
-        Long valorIncidente,
-        Long valorProblema,
-        Long valorMudanca,
-        Date data
+        Integer year,
+        Integer month,
+        Integer valorIncidente,
+        Integer valorProblema,
+        Integer valorMudanca
 ) {}

@@ -25,7 +25,10 @@ public class BuscarDashboardDefault implements BuscarDashboard {
 
     @Override
     public DashboardResponse executar() {
-        tarefaRepository.contarTarefasPorAno();
-        return new DashboardResponse(tarefaRepository.contarTarefas(), tarefaRepository.contarTarefasPorProjeto());
+        return new DashboardResponse(
+                tarefaRepository.contarTarefas(),
+                tarefaRepository.contarTarefasPorProjeto(),
+                tarefaRepository.contarTarefasPorAno()
+        );
     }
 }

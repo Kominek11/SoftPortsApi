@@ -9,5 +9,6 @@ import java.util.List;
 @Builder
 public record DashboardResponse(
         DadoDashboardResponse dados,
-        List<DadoDashboardPorProjetoResponse> dadosPorAno
+        List<DadoDashboardPorProjetoResponse> dadosPorProjeto,
+        List<DadoDashboardPorAnoResponse> dadosPorAno
 ) {}
