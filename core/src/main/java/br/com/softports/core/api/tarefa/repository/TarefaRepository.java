@@ -4,6 +4,7 @@ import br.com.softports.core.api.common.repository.Repositorio;
 import br.com.softports.core.api.dashboard.dto.DadoDashboardPorAnoResponse;
 import br.com.softports.core.api.dashboard.dto.DadoDashboardPorProjetoResponse;
 import br.com.softports.core.api.dashboard.dto.DadoDashboardResponse;
+import br.com.softports.core.api.dashboard.dto.MetricaPorPrioridadeResponse;
 import br.com.softports.core.internal.common.entity.Tarefa;
 
 import java.util.List;
@@ -20,4 +21,8 @@ public interface TarefaRepository extends Repositorio<Tarefa> {
     List<DadoDashboardPorProjetoResponse> contarTarefasPorProjeto();
 
     List<DadoDashboardPorAnoResponse> contarTarefasPorAno();
+
+    double calcularDensidadeDeConflito();
+
+    List<MetricaPorPrioridadeResponse> calcularDensidadeDeConflitoPorPrioridade();
 }

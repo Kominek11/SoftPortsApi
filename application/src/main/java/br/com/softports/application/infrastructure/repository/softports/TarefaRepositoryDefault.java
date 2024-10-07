@@ -1,9 +1,6 @@
 package br.com.softports.application.infrastructure.repository.softports;
 
-import br.com.softports.core.api.dashboard.dto.DadoDashboardPorAnoResponse;
-import br.com.softports.core.api.dashboard.dto.DadoDashboardPorProjetoResponse;
-import br.com.softports.core.api.dashboard.dto.DadoDashboardResponse;
-import br.com.softports.core.api.dashboard.dto.DashboardResponse;
+import br.com.softports.core.api.dashboard.dto.*;
 import br.com.softports.core.api.organizacao.dto.OrganizacaoResponse;
 import br.com.softports.core.api.organizacao.repository.OrganizacaoRepository;
 import br.com.softports.core.api.projeto.dto.ProjetoResponse;
@@ -16,6 +13,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -125,5 +123,49 @@ public class TarefaRepositoryDefault extends RepositorioDefault<Tarefa, Long> im
                 .groupBy(tarefa.dataCriacao.year(), tarefa.dataCriacao.month())
                 .orderBy(tarefa.dataCriacao.year().asc(), tarefa.dataCriacao.month().asc())
                 .fetch();
+    }
+
+    @Override
+    public double calcularDensidadeDeConflito() {
+        QDerivadoTarefaMatriz derivadoTarefaMatriz = QDerivadoTarefaMatriz.derivadoTarefaMatriz;
+        QTarefa tarefa = QTarefa.tarefa;
+
+        Long numeroDeConflitos = queryFactory
+                .select(derivadoTarefaMatriz.count())
+                .from(derivadoTarefaMatriz)
+                .where(derivadoTarefaMatriz.valor.isTrue())
+                .fetchOne();
+
+        Long numeroTotalDeDerivados = queryFactory
+                .select(derivadoTarefaMatriz.count())
+                .from(derivadoTarefaMatriz)
+                .fetchOne();
+
+        Long numeroTotalDeTarefas = queryFactory
+                .select(tarefa.count())
+                .from(tarefa)
+                .fetchOne();
+
+        return (double) numeroDeConflitos / (numeroTotalDeDerivados + numeroTotalDeTarefas) * 100;
+    }
+
+    @Override
+    public List<MetricaPorPrioridadeResponse> calcularDensidadeDeConflitoPorPrioridade() {
+        String sql = "SELECT new br.com.softports.core.api.dashboard.dto.MetricaPorPrioridadeResponse(" +
+                     "subquery.prioridade, " +
+                     "(CAST(subquery.numeroDeConflitos AS float) / (CAST(subquery.numeroTotalDeDerivados AS float) + " +
+                     "CAST(subquery.numeroTotalDeTarefas AS float))) * 100) " +
+                     "FROM (" +
+                     "SELECT t.prioridade AS prioridade, " +
+                     "COUNT(CASE WHEN dtm.valor = true THEN 1 END) AS numeroDeConflitos, " +
+                     "COUNT(d.id) AS numeroTotalDeDerivados, " +
+                     "(SELECT COUNT(*) FROM Tarefa t2 WHERE t2.prioridade = t.prioridade) AS numeroTotalDeTarefas " +
+                     "FROM DerivadoTarefaMatriz dtm " +
+                     "JOIN Tarefa t ON dtm.tarefa.id = t.id " +
+                     "JOIN Derivado d ON dtm.derivado.id = d.id " +
+                     "GROUP BY t.prioridade) AS subquery";
+
+        TypedQuery<MetricaPorPrioridadeResponse> query = entityManager.createQuery(sql, MetricaPorPrioridadeResponse.class);
+        return query.getResultList();
     }
 }

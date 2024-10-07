@@ -3,6 +3,7 @@ package br.com.softports.application.configuration;
 import br.com.softports.core.api.classificacao.usecase.ClassificacaoToClassificacaoResponse;
 import br.com.softports.core.api.comentario.usecase.ComentarioToComentarioResponse;
 import br.com.softports.core.api.dashboard.usecase.BuscarDashboard;
+import br.com.softports.core.api.dashboard.usecase.BuscarMetricas;
 import br.com.softports.core.api.derivado.repository.DerivadoRepository;
 import br.com.softports.core.api.derivado.usecase.*;
 import br.com.softports.core.api.derivado_tarefa_matriz.repository.DerivadoTarefaMatrizRepository;
@@ -19,6 +20,7 @@ import br.com.softports.core.api.tarefa_aud.usecase.TarefaAudToTarefaAudResponse
 import br.com.softports.core.internal.classificacao.usecase.ClassificacaoToClassificacaoResponseDefault;
 import br.com.softports.core.internal.comentario.usecase.ComentarioToComentarioResponseDefault;
 import br.com.softports.core.internal.dashboard.usecase.BuscarDashboardDefault;
+import br.com.softports.core.internal.dashboard.usecase.BuscarMetricasDefault;
 import br.com.softports.core.internal.derivado.usecase.*;
 import br.com.softports.core.internal.derivado_tarefa_matriz.usecase.BuscarDerivadosTarefaMatrizDefault;
 import br.com.softports.core.internal.derivado_tarefa_matriz.usecase.CriarDerivadoTarefaMatrizDefault;
@@ -478,5 +480,10 @@ public class UseCaseConfiguration {
     @Bean
     BuscarDashboard buscarDashboard(TarefaRepository tarefaRepository) {
         return new BuscarDashboardDefault(tarefaRepository);
+    }
+
+    @Bean
+    BuscarMetricas buscarMetricas(TarefaRepository tarefaRepository) {
+        return new BuscarMetricasDefault(tarefaRepository);
     }
 }
