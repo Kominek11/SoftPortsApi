@@ -13,6 +13,8 @@ import br.com.softports.core.api.derivado_tarefa_matriz.usecase.CriarDerivadoTar
 import br.com.softports.core.api.derivado_tarefa_matriz.usecase.DerivadoTarefaMatrizToDerivadoTarefaMatrizResponse;
 import br.com.softports.core.api.organizacao.usecase.*;
 import br.com.softports.core.api.projeto.usecase.*;
+import br.com.softports.core.api.solicitacao.repository.SolicitacaoRepository;
+import br.com.softports.core.api.solicitacao.usecase.*;
 import br.com.softports.core.api.subclassificacao.usecase.SubClassificacaoToSubClassificacaoResponse;
 import br.com.softports.core.api.tarefa_aud.repository.TarefaAudRepository;
 import br.com.softports.core.api.tarefa_aud.usecase.CustomRevisionEntityToCustomRevisionEntityResponse;
@@ -44,6 +46,7 @@ import br.com.softports.core.api.usuario.repository.UsuarioRepository;
 import br.com.softports.core.api.usuario.usecase.*;
 import br.com.softports.core.internal.common.entity.audited.CustomRevisionListener;
 import br.com.softports.core.internal.common.usecase.expression.*;
+import br.com.softports.core.internal.solicitacao.usecase.*;
 import br.com.softports.core.internal.subclassificacao.usecase.SubClassificacaoToSubClassificacaoResponseDefault;
 import br.com.softports.core.internal.tarefa.usecase.*;
 import br.com.softports.core.internal.tarefa_aud.usecase.CustomRevisionEntityToCustomRevisionEntityResponseDefault;
@@ -485,5 +488,93 @@ public class UseCaseConfiguration {
     @Bean
     BuscarMetricas buscarMetricas(TarefaRepository tarefaRepository) {
         return new BuscarMetricasDefault(tarefaRepository);
+    }
+
+    @Bean
+    BuscarSolicitacoes buscarSolicitacoes(SolicitacaoRepository solicitacaoRepository, UsuarioRepository usuarioRepository,
+                                          SolicitacaoToSolicitacaoResponse solicitacaoToSolicitacaoResponse) {
+        return new BuscarSolicitacoesDefault(solicitacaoRepository, usuarioRepository, solicitacaoToSolicitacaoResponse);
+    }
+
+    @Bean
+    SolicitacaoToSolicitacaoResponse solicitacaoToSolicitacaoResponse(
+            ProjetoToProjetoResponse projetoToProjetoResponse,
+            UsuarioToUsuarioResponse usuarioToUsuarioResponse,
+            ClassificacaoToClassificacaoResponse classificacaoToClassificacaoResponse) {
+        return new SolicitacaoToSolicitacaoResponseDefault(projetoToProjetoResponse, usuarioToUsuarioResponse,
+                classificacaoToClassificacaoResponse);
+    }
+
+    @Bean
+    SolicitacaoToSolicitacaoPosicaoResponse solicitacaoToSolicitacaoPosicaoResponse() {
+        return new SolicitacaoToSolicitacaoPosicaoResponseDefault();
+    }
+
+    @Bean
+    CriarSolicitacao criarSolicitacao(SolicitacaoRepository solicitacaoRepository, ProjetoRepository projetoRepository,
+                                      UsuarioRepository usuarioRepository, ClassificacaoRepository classificacaoRepository,
+                                      SubClassificacaoRepository subClassificacaoRepository,
+                                      SolicitacaoToSolicitacaoResponse solicitacaoToSolicitacaoResponse) {
+        return new CriarSolicitacaoDefault(solicitacaoRepository, projetoRepository,
+                usuarioRepository, classificacaoRepository, subClassificacaoRepository,
+                solicitacaoToSolicitacaoResponse);
+    }
+
+    @Bean
+    AtualizarSolicitacao atualizarSolicitacao(SolicitacaoRepository solicitacaoRepository, ProjetoRepository projetoRepository,
+                                              UsuarioRepository usuarioRepository, ClassificacaoRepository classificacaoRepository,
+                                              SubClassificacaoRepository subClassificacaoRepository,
+                                              SolicitacaoToSolicitacaoResponse solicitacaoToSolicitacaoResponse) {
+        return new AtualizarSolicitacaoDefault(solicitacaoRepository, projetoRepository,
+                usuarioRepository, classificacaoRepository, subClassificacaoRepository,
+                solicitacaoToSolicitacaoResponse);
+    }
+
+    @Bean
+    AtualizarStatusSolicitacao atualizarStatusSolicitacao(
+            SolicitacaoRepository solicitacaoRepository,
+            SolicitacaoToSolicitacaoResponse solicitacaoToSolicitacaoResponse
+    ) {
+        return new AtualizarStatusSolicitacaoDefault(solicitacaoRepository, solicitacaoToSolicitacaoResponse);
+    }
+
+    @Bean
+    AtualizarFeedbackSolicitacao atualizarFeedbackSolicitacao(
+            SolicitacaoRepository solicitacaoRepository,
+            SolicitacaoToSolicitacaoResponse solicitacaoToSolicitacaoResponse
+    ) {
+        return new AtualizarFeedbackSolicitacaoDefault(solicitacaoRepository, solicitacaoToSolicitacaoResponse);
+    }
+
+    @Bean
+    AtualizarFechadoSolicitacao atualizarFechadoSolicitacao(
+            SolicitacaoRepository solicitacaoRepository,
+            SolicitacaoToSolicitacaoResponse solicitacaoToSolicitacaoResponse
+    ) {
+        return new AtualizarFechadoSolicitacaoDefault(solicitacaoRepository, solicitacaoToSolicitacaoResponse);
+    }
+
+    @Bean
+    AtualizarPosicoesSolicitacao atualizarPosicoesSolicitacao(
+            SolicitacaoRepository solicitacaoRepository,
+            SolicitacaoToSolicitacaoPosicaoResponse solicitacaoToSolicitacaoPosicaoResponse
+    ) {
+        return new AtualizarPosicoesSolicitacaoDefault(solicitacaoRepository, solicitacaoToSolicitacaoPosicaoResponse);
+    }
+
+    @Bean
+    DeletarSolicitacao deletarSolicitacao(
+            SolicitacaoRepository solicitacaoRepository
+    ) {
+        return new DeletarSolicitacaoDefault(solicitacaoRepository);
+    }
+
+    @Bean
+    AprovarSolicitacao aprovarSolicitacao(
+            SolicitacaoRepository solicitacaoRepository,
+            TarefaRepository tarefaRepository,
+            TarefaToTarefaResponse tarefaToTarefaResponse
+    ) {
+        return new AprovarSolicitacaoDefault(solicitacaoRepository, tarefaRepository, tarefaToTarefaResponse);
     }
 }

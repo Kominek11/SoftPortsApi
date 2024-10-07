@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import java.sql.Blob;
 import java.util.Set;
@@ -40,6 +41,10 @@ public class Usuario {
 
     @ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER)
     Set<Tarefa> tarefas;
+
+    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER)
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    Set<Solicitacao> solicitacoes;
 
     @ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER)
     Set<Projeto> projetos;

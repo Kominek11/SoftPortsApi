@@ -1017,6 +1017,126 @@ databaseChangeLog:
   - changeSet:
       id: 21
       author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          sequenceExists:
+            sequenceName: solicitacao_id_seq
+      changes:
+        - createSequence:
+            sequenceName: solicitacao_id_seq
+            startValue: 1
+        - preConditions:
+            onFail: MARK_RAN
+            not:
+              tableExists:
+                tableName: solicitacao
+        - createTable:
+            tableName: solicitacao
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  autoIncrement: true
+              - column:
+                  name: titulo
+                  type: varchar
+              - column:
+                  name: descricao
+                  type: varchar
+              - column:
+                  name: so
+                  type: varchar
+              - column:
+                  name: screenshots
+                  type: bytea[]
+              - column:
+                  name: caminho
+                  type: varchar
+              - column:
+                  name: data_fechamento
+                  type: date
+              - column:
+                  name: data_criacao
+                  type: date
+              - column:
+                  name: data_estimada
+                  type: date
+              - column:
+                  name: prioridade
+                  type: bigint
+              - column:
+                  name: status
+                  type: bigint
+              - column:
+                  name: fechada
+                  type: boolean
+              - column:
+                  name: posicao
+                  type: bigint
+              - column:
+                  name: projeto_id
+                  type: bigint
+              - column:
+                  name: feedback
+                  type: text
+              - column:
+                  name: classificacao_id
+                  type: bigint
+        - addForeignKeyConstraint:
+            baseTableName: solicitacao
+            baseColumnNames: projeto_id
+            constraintName: solicitacao_projeto_fk
+            referencedTableName: projeto
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: solicitacao
+            baseColumnNames: classificacao_id
+            constraintName: solicitacao_classificacao_fk
+            referencedTableName: classificacao
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 22
+      author: luccakominek
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: usuario_solicitacao
+      changes:
+        - createTable:
+            tableName: usuario_solicitacao
+            columns:
+              - column:
+                  name: usuario_id
+                  type: bigint
+              - column:
+                  name: solicitacao_id
+                  type: bigint
+        - addForeignKeyConstraint:
+            baseTableName: usuario_solicitacao
+            baseColumnNames: usuario_id
+            constraintName: usuario_solicitacao_usuario_fk
+            referencedTableName: usuario
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: usuario_solicitacao
+            baseColumnNames: solicitacao_id
+            constraintName: usuario_solicitacao_solicitacao_fk
+            referencedTableName: solicitacao
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 23
+      author: luccakominek
       changes:
         - sqlFile:
             path: 'populateDB.sql'
