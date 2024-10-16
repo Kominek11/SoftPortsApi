@@ -45,16 +45,21 @@ public class CriarTarefaDefault implements CriarTarefa {
                                    Long prioridade) {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
-        BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(usuarioId));
-        Usuario usuario = usuarioRepository.buscar(filtroUsuario).orElseThrow();
         Set<Usuario> usuarios = new HashSet<>();
-        usuarios.add(usuario);
-        BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(classificacaoId));
-        Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
-        BooleanBuilder filtroSubClassificacao = new BooleanBuilder().and(SubClassificacaoExpressions.id(subclassificacaoId));
-        SubClassificacao subClassificacao = subClassificacaoRepository.buscar(filtroSubClassificacao).orElseThrow();
-        classificacao.setSubClassificacao(subClassificacao);
+        if (usuarioId != null) {
+            BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(usuarioId));
+            Usuario usuario = usuarioRepository.buscar(filtroUsuario).orElseThrow();
+            usuarios.add(usuario);
+        }
         Tarefa tarefa = new Tarefa();
+        if (classificacaoId != null) {
+            BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(classificacaoId));
+            Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
+            BooleanBuilder filtroSubClassificacao = new BooleanBuilder().and(SubClassificacaoExpressions.id(subclassificacaoId));
+            SubClassificacao subClassificacao = subClassificacaoRepository.buscar(filtroSubClassificacao).orElseThrow();
+            classificacao.setSubClassificacao(subClassificacao);
+            tarefa.setClassificacao(classificacao);
+        }
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
         tarefa.setSo(so);
@@ -62,7 +67,6 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setCaminho(caminho);
         tarefa.setDataEstimada(dataEstimada);
         tarefa.setDataCriacao(new Date());
-        tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
         tarefa.setFechada(false);
         tarefa.setPosicao(gerarPosicaoTarefa(tarefa.getStatus()));
@@ -84,17 +88,22 @@ public class CriarTarefaDefault implements CriarTarefa {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
         Set<Usuario> usuarios = new HashSet<>();
-        usuarioIds.forEach(item -> {
-                    BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(item));
-                    Usuario usuario = usuarioRepository.buscar(filtroUsuario).orElseThrow();
-                    usuarios.add(usuario);
-        });
-        BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(classificacaoId));
-        Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
-        BooleanBuilder filtroSubClassificacao = new BooleanBuilder().and(SubClassificacaoExpressions.id(subclassificacaoId));
-        SubClassificacao subClassificacao = subClassificacaoRepository.buscar(filtroSubClassificacao).orElseThrow();
-        classificacao.setSubClassificacao(subClassificacao);
+        if (usuarioIds != null) {
+            usuarioIds.forEach(item -> {
+                BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(item));
+                Usuario usuario = usuarioRepository.buscar(filtroUsuario).orElseThrow();
+                usuarios.add(usuario);
+            });
+        }
         Tarefa tarefa = new Tarefa();
+        if(classificacaoId != null) {
+            BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(classificacaoId));
+            Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
+            BooleanBuilder filtroSubClassificacao = new BooleanBuilder().and(SubClassificacaoExpressions.id(subclassificacaoId));
+            SubClassificacao subClassificacao = subClassificacaoRepository.buscar(filtroSubClassificacao).orElseThrow();
+            classificacao.setSubClassificacao(subClassificacao);
+            tarefa.setClassificacao(classificacao);
+        }
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
         tarefa.setSo(so);
@@ -102,7 +111,6 @@ public class CriarTarefaDefault implements CriarTarefa {
         tarefa.setCaminho(caminho);
         tarefa.setDataEstimada(dataEstimada);
         tarefa.setDataCriacao(new Date());
-        tarefa.setClassificacao(classificacao);
         tarefa.setStatus(status);
         tarefa.setFechada(false);
         tarefa.setPosicao(gerarPosicaoTarefa(tarefa.getStatus()));

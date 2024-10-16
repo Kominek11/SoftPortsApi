@@ -45,12 +45,15 @@ public class CriarSolicitacaoDefault implements CriarSolicitacao {
         Usuario usuario = usuarioRepository.buscar(filtroUsuario).orElseThrow();
         Set<Usuario> usuarios = new HashSet<>();
         usuarios.add(usuario);
-        BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(classificacaoId));
-        Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
-        BooleanBuilder filtroSubClassificacao = new BooleanBuilder().and(SubClassificacaoExpressions.id(subclassificacaoId));
-        SubClassificacao subClassificacao = subClassificacaoRepository.buscar(filtroSubClassificacao).orElseThrow();
-        classificacao.setSubClassificacao(subClassificacao);
         Solicitacao solicitacao = new Solicitacao();
+        if (classificacaoId != null) {
+            BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(classificacaoId));
+            Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
+            BooleanBuilder filtroSubClassificacao = new BooleanBuilder().and(SubClassificacaoExpressions.id(subclassificacaoId));
+            SubClassificacao subClassificacao = subClassificacaoRepository.buscar(filtroSubClassificacao).orElseThrow();
+            classificacao.setSubClassificacao(subClassificacao);
+            solicitacao.setClassificacao(classificacao);
+        }
         solicitacao.setTitulo(titulo);
         solicitacao.setDescricao(descricao);
         solicitacao.setSo(so);
@@ -58,7 +61,6 @@ public class CriarSolicitacaoDefault implements CriarSolicitacao {
         solicitacao.setCaminho(caminho);
         solicitacao.setDataEstimada(dataEstimada);
         solicitacao.setDataCriacao(new Date());
-        solicitacao.setClassificacao(classificacao);
         solicitacao.setStatus(status);
         solicitacao.setFechada(false);
         solicitacao.setPosicao(gerarPosicaoSolicitacao(solicitacao.getStatus()));
@@ -80,17 +82,22 @@ public class CriarSolicitacaoDefault implements CriarSolicitacao {
         BooleanBuilder filtroProjeto = new BooleanBuilder().and(ProjetoExpressions.id(projetoId));
         Projeto projeto = projetoRepository.buscar(filtroProjeto).orElseThrow();
         Set<Usuario> usuarios = new HashSet<>();
-        usuarioIds.forEach(item -> {
-                    BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(item));
-                    Usuario usuario = usuarioRepository.buscar(filtroUsuario).orElseThrow();
-                    usuarios.add(usuario);
-        });
-        BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(classificacaoId));
-        Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
-        BooleanBuilder filtroSubClassificacao = new BooleanBuilder().and(SubClassificacaoExpressions.id(subclassificacaoId));
-        SubClassificacao subClassificacao = subClassificacaoRepository.buscar(filtroSubClassificacao).orElseThrow();
-        classificacao.setSubClassificacao(subClassificacao);
+        if (usuarioIds != null) {
+            usuarioIds.forEach(item -> {
+                BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(item));
+                Usuario usuario = usuarioRepository.buscar(filtroUsuario).orElseThrow();
+                usuarios.add(usuario);
+            });
+        }
         Solicitacao solicitacao = new Solicitacao();
+        if (classificacaoId != null) {
+            BooleanBuilder filtroClassificacao = new BooleanBuilder().and(ClassificacaoExpressions.id(classificacaoId));
+            Classificacao classificacao = classificacaoRepository.buscar(filtroClassificacao).orElseThrow();
+            BooleanBuilder filtroSubClassificacao = new BooleanBuilder().and(SubClassificacaoExpressions.id(subclassificacaoId));
+            SubClassificacao subClassificacao = subClassificacaoRepository.buscar(filtroSubClassificacao).orElseThrow();
+            classificacao.setSubClassificacao(subClassificacao);
+            solicitacao.setClassificacao(classificacao);
+        }
         solicitacao.setTitulo(titulo);
         solicitacao.setDescricao(descricao);
         solicitacao.setSo(so);
@@ -98,7 +105,6 @@ public class CriarSolicitacaoDefault implements CriarSolicitacao {
         solicitacao.setCaminho(caminho);
         solicitacao.setDataEstimada(dataEstimada);
         solicitacao.setDataCriacao(new Date());
-        solicitacao.setClassificacao(classificacao);
         solicitacao.setStatus(status);
         solicitacao.setFechada(false);
         solicitacao.setPosicao(gerarPosicaoSolicitacao(solicitacao.getStatus()));

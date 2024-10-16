@@ -47,13 +47,13 @@ public class TarefaToTarefaResponseDefault implements TarefaToTarefaResponse {
                 .dataEstimada(tarefa.getDataEstimada())
                 .fechada(tarefa.getFechada())
                 .status(tarefa.getStatus())
-                .projeto(projetoToProjetoResponse.executar(tarefa.getProjeto()))
+                .projeto(tarefa.getProjeto() != null ? projetoToProjetoResponse.executar(tarefa.getProjeto()) : null)
                 .feedback(tarefa.getFeedback())
-                .usuarios(tarefa.getUsuarios().stream()
-                    .map(usuarioToUsuarioResponse::executar)
-                    .collect(Collectors.toSet()))
-                .classificacao(classificacaoToClassificacaoResponse
-                        .executar(tarefa.getClassificacao()))
+                .usuarios(tarefa.getUsuarios() != null ? tarefa.getUsuarios().stream()
+                        .map(usuarioToUsuarioResponse::executar)
+                        .collect(Collectors.toSet()) : null)
+                .classificacao(tarefa.getClassificacao() != null ? classificacaoToClassificacaoResponse
+                        .executar(tarefa.getClassificacao()) : null)
                 .prioridade(tarefa.getPrioridade())
                 .comentarios(paginar(10, 1 , comentarios, filtro))
                 .build();
