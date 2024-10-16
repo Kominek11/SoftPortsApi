@@ -28,12 +28,11 @@ public class DeletarUsuarioDefault implements DeletarUsuario {
         BooleanBuilder filtroUsuario = new BooleanBuilder()
                 .and(UsuarioExpressions.keycloakId(usuarioId));
         Usuario usuario = usuarioRepository.buscar(filtroUsuario).orElseThrow();
-        Set<Usuario> usuariosSet = new HashSet<>();
-        usuario.setComentarios(null);
-        usuariosSet.add(usuario);
-        BooleanBuilder filtroTarefas = new BooleanBuilder()
-                .and(TarefaExpressions.usuarios(usuariosSet));
         deletarUsuarioKeycloak.executar(usuarioId);
+        usuario.getTarefas().size();
+        usuario.getSolicitacoes().size();
+        usuario.getProjetos().size();
+        usuario.getComentarios().size();
         usuarioRepository.apagar(usuario);
     }
 }
