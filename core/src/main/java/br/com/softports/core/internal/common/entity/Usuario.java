@@ -39,16 +39,16 @@ public class Usuario {
     @Column
     byte[] foto;
 
-    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY)
     Set<Tarefa> tarefas;
 
-    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY)
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     Set<Solicitacao> solicitacoes;
 
-    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY)
     Set<Projeto> projetos;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     Set<Comentario> comentarios;
 }

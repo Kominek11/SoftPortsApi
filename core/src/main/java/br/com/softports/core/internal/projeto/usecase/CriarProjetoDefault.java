@@ -32,12 +32,9 @@ public class CriarProjetoDefault implements CriarProjeto {
     public ProjetoResponse executar(String nome, Long organizacaoId, List<Long> usuarios) {
         BooleanBuilder filtro = new BooleanBuilder().and(OrganizacaoExpressions.id(organizacaoId));
         Organizacao organizacao = organizacaoRepository.buscar(filtro).orElseThrow();
-        Set<Usuario> usuariosSet = new HashSet<>();
-        usuarios.forEach(item -> {
-            BooleanBuilder filtroUsuario = new BooleanBuilder().and(UsuarioExpressions.id(item));
-            Usuario usuario = usuarioRepository.buscar(filtroUsuario).orElseThrow();
-            usuariosSet.add(usuario);
-        });
+        BooleanBuilder filtroUsuarios = new BooleanBuilder().and(UsuarioExpressions.ids(usuarios));
+        List<Usuario> usuariosList = usuarioRepository.buscarTodos(filtroUsuarios);
+        Set<Usuario> usuariosSet = new HashSet<>(usuariosList);
         Projeto projeto = new Projeto();
         projeto.setNome(nome);
         projeto.setOrganizacao(organizacao);

@@ -4,6 +4,7 @@ import br.com.softports.core.internal.common.entity.QTarefa;
 import br.com.softports.core.internal.common.entity.QUsuario;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,6 +18,10 @@ public class UsuarioExpressions {
 
     public static BooleanExpression id(Long usuarioId) {
         return Objects.nonNull(usuarioId) ? USUARIO.id.eq(usuarioId) : null;
+    }
+
+    public static BooleanExpression ids(List<Long> usuarioIds) {
+        return Objects.nonNull(usuarioIds) && !usuarioIds.isEmpty() ? USUARIO.id.in(usuarioIds) : null;
     }
 
     public static BooleanExpression projetoId(Long projetoId) {

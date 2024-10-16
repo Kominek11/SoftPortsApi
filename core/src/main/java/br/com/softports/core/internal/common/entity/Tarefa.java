@@ -65,7 +65,7 @@ public class Tarefa {
     @Column
     String feedback;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "usuario_tarefa",
             joinColumns = @JoinColumn(name = "tarefa_id"),
