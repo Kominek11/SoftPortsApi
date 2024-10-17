@@ -33,13 +33,15 @@ public class SolicitacaoToSolicitacaoResponseDefault implements SolicitacaoToSol
                 .dataEstimada(solicitacao.getDataEstimada())
                 .fechada(solicitacao.getFechada())
                 .status(solicitacao.getStatus())
-                .projeto(projetoToProjetoResponse.executar(solicitacao.getProjeto()))
+                .projeto(solicitacao.getProjeto() != null ?
+                        projetoToProjetoResponse.executar(solicitacao.getProjeto()) :
+                        null)
                 .feedback(solicitacao.getFeedback())
-                .usuarios(solicitacao.getUsuarios().stream()
-                    .map(usuarioToUsuarioResponse::executar)
-                    .collect(Collectors.toSet()))
-                .classificacao(classificacaoToClassificacaoResponse
-                        .executar(solicitacao.getClassificacao()))
+                .usuarios(solicitacao.getUsuarios() != null ? solicitacao.getUsuarios().stream()
+                        .map(usuarioToUsuarioResponse::executar)
+                        .collect(Collectors.toSet()) : null)
+                .classificacao(solicitacao.getClassificacao() != null ? classificacaoToClassificacaoResponse
+                        .executar(solicitacao.getClassificacao()) : null)
                 .prioridade(solicitacao.getPrioridade())
                 .build();
     }
