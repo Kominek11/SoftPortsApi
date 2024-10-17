@@ -13,10 +13,10 @@ public class BuscarMetricasDefault implements BuscarMetricas {
     private final TarefaRepository tarefaRepository;
 
     @Override
-    public MetricasResponse executar() {
+    public MetricasResponse executar(Long projetoId) {
         return new MetricasResponse(
-                tarefaRepository.calcularDensidadeDeConflito(),
-                tarefaRepository.calcularDensidadeDeConflitoPorPrioridade()
+                tarefaRepository.calcularDensidadeDeConflito(projetoId),
+                tarefaRepository.calcularDensidadeDeConflitoPorPrioridade(projetoId)
         );
     }
 }

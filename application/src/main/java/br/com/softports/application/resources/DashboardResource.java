@@ -6,6 +6,7 @@ import br.com.softports.core.api.dashboard.usecase.BuscarDashboard;
 import br.com.softports.core.api.dashboard.usecase.BuscarMetricas;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +25,8 @@ public class DashboardResource {
         return buscarDashboard.executar();
     }
 
-    @GetMapping("metricas")
-    MetricasResponse buscarMetricas(){
-        return buscarMetricas.executar();
+    @GetMapping("metricas/{projetoId}")
+    MetricasResponse buscarMetricas(@PathVariable Long projetoId){
+        return buscarMetricas.executar(projetoId);
     }
 }

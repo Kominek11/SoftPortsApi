@@ -22,7 +22,7 @@ public interface TarefaRepository extends Repositorio<Tarefa> {
 
     List<DadoDashboardPorAnoResponse> contarTarefasPorAno();
 
-    double calcularDensidadeDeConflito();
+    double calcularDensidadeDeConflito(Long projetoId);
 
-    List<MetricaPorPrioridadeResponse> calcularDensidadeDeConflitoPorPrioridade();
+    List<MetricaPorPrioridadeResponse> calcularDensidadeDeConflitoPorPrioridade(Long projetoId);
 }

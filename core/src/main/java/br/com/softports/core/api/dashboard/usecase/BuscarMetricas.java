@@ -4,5 +4,5 @@ import br.com.softports.core.api.dashboard.dto.MetricasResponse;
 
 public interface BuscarMetricas {
 
-    MetricasResponse executar();
+    MetricasResponse executar(Long projetoId);
 }

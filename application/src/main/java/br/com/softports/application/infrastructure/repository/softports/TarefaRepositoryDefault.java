@@ -126,46 +126,51 @@ public class TarefaRepositoryDefault extends RepositorioDefault<Tarefa, Long> im
     }
 
     @Override
-    public double calcularDensidadeDeConflito() {
+    public double calcularDensidadeDeConflito(Long projetoId) {
         QDerivadoTarefaMatriz derivadoTarefaMatriz = QDerivadoTarefaMatriz.derivadoTarefaMatriz;
         QTarefa tarefa = QTarefa.tarefa;
 
         Long numeroDeConflitos = queryFactory
                 .select(derivadoTarefaMatriz.count())
                 .from(derivadoTarefaMatriz)
-                .where(derivadoTarefaMatriz.valor.isTrue())
+                .where(derivadoTarefaMatriz.valor.isTrue()
+                        .and(derivadoTarefaMatriz.projeto.id.eq(projetoId)))
                 .fetchOne();
 
         Long numeroTotalDeDerivados = queryFactory
                 .select(derivadoTarefaMatriz.count())
                 .from(derivadoTarefaMatriz)
+                .where(derivadoTarefaMatriz.projeto.id.eq(projetoId))
                 .fetchOne();
 
         Long numeroTotalDeTarefas = queryFactory
                 .select(tarefa.count())
                 .from(tarefa)
+                .where(tarefa.projeto.id.eq(projetoId))
                 .fetchOne();
 
         return (double) numeroDeConflitos / (numeroTotalDeDerivados + numeroTotalDeTarefas) * 100;
     }
 
     @Override
-    public List<MetricaPorPrioridadeResponse> calcularDensidadeDeConflitoPorPrioridade() {
+    public List<MetricaPorPrioridadeResponse> calcularDensidadeDeConflitoPorPrioridade(Long projetoId) {
         String sql = "SELECT new br.com.softports.core.api.dashboard.dto.MetricaPorPrioridadeResponse(" +
-                     "subquery.prioridade, " +
-                     "(CAST(subquery.numeroDeConflitos AS float) / (CAST(subquery.numeroTotalDeDerivados AS float) + " +
-                     "CAST(subquery.numeroTotalDeTarefas AS float))) * 100) " +
-                     "FROM (" +
-                     "SELECT t.prioridade AS prioridade, " +
-                     "COUNT(CASE WHEN dtm.valor = true THEN 1 END) AS numeroDeConflitos, " +
-                     "COUNT(d.id) AS numeroTotalDeDerivados, " +
-                     "(SELECT COUNT(*) FROM Tarefa t2 WHERE t2.prioridade = t.prioridade) AS numeroTotalDeTarefas " +
-                     "FROM DerivadoTarefaMatriz dtm " +
-                     "JOIN Tarefa t ON dtm.tarefa.id = t.id " +
-                     "JOIN Derivado d ON dtm.derivado.id = d.id " +
-                     "GROUP BY t.prioridade) AS subquery";
+                "subquery.prioridade, " +
+                "(CAST(subquery.numeroDeConflitos AS float) / (CAST(subquery.numeroTotalDeDerivados AS float) + " +
+                "CAST(subquery.numeroTotalDeTarefas AS float))) * 100) " +
+                "FROM (" +
+                "SELECT t.prioridade AS prioridade, " +
+                "COUNT(CASE WHEN dtm.valor = true THEN 1 END) AS numeroDeConflitos, " +
+                "COUNT(d.id) AS numeroTotalDeDerivados, " +
+                "(SELECT COUNT(*) FROM Tarefa t2 WHERE t2.prioridade = t.prioridade AND t2.projeto.id = :projetoId) AS numeroTotalDeTarefas " +
+                "FROM DerivadoTarefaMatriz dtm " +
+                "JOIN Tarefa t ON dtm.tarefa.id = t.id " +
+                "JOIN Derivado d ON dtm.derivado.id = d.id " +
+                "WHERE t.projeto.id = :projetoId AND d.projeto.id = :projetoId AND dtm.projeto.id = :projetoId " +
+                "GROUP BY t.prioridade) AS subquery";
 
         TypedQuery<MetricaPorPrioridadeResponse> query = entityManager.createQuery(sql, MetricaPorPrioridadeResponse.class);
+        query.setParameter("projetoId", projetoId);
         return query.getResultList();
     }
 }
