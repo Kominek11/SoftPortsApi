@@ -58,8 +58,9 @@ public class TarefaAudToTarefaAudResponseDefault implements TarefaAudToTarefaAud
                 .usuariosModificado(tarefaAud.getUsuarios_Mod())
                 .classificacaoModificado(tarefaAud.getClassificacao_Mod())
                 .customRevisionEntityResponse(
-                        customRevisionEntityToCustomRevisionEntityResponse
-                                .executar(tarefaAud.getCustomRevisionEntity())
+                        tarefaAud.getCustomRevisionEntity() != null
+                                ? customRevisionEntityToCustomRevisionEntityResponse.executar(tarefaAud.getCustomRevisionEntity())
+                                : null
                 )
                 .build();
     }
